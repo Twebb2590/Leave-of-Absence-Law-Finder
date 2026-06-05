@@ -1,0 +1,130 @@
+{
+  "jurisdiction": "US-CA",
+  "jurisdiction_name": "California",
+  "laws": [
+    {
+      "id": "ca_paid_sick_leave",
+      "name": "California Paid Sick Leave Law",
+      "abbreviation": "CPSL",
+      "statute_code": "Cal. Lab. Code § 246-249",
+      "effective_date": "2015-01-01",
+      "description": "California requires most employers to provide paid sick leave to employees. Employees accrue at least 1 day per 30 hours worked or receive 3 days upfront annually.",
+      "leave_types": [
+        {
+          "type": "sick",
+          "duration": {
+            "value": 3,
+            "unit": "days",
+            "notes": "Minimum per year; or 1 day per 30 hours worked"
+          },
+          "paid": true,
+          "eligibility": {
+            "min_employment_duration": "90 days",
+            "min_employer_size": 1,
+            "other_requirements": [
+              "Applies to all private employers regardless of size"
+            ]
+          },
+          "notice_requirement": "As soon as practicable",
+          "job_protection": true
+        }
+      ],
+      "official_url": "https://www.dir.ca.gov/dlse/paid_sick_leave.html",
+      "last_updated": "2024-01-01T00:00:00Z",
+      "notes": "Can be used for employee's own health condition, care for family members, or domestic violence/sexual assault related needs."
+    },
+    {
+      "id": "ca_family_care_leave",
+      "name": "California Family Care Leave",
+      "abbreviation": "CFCL",
+      "statute_code": "Cal. Lab. Code § 230.8",
+      "effective_date": "2004-01-01",
+      "description": "California employees can use up to 5 unpaid days per year to care for a family member with serious health condition.",
+      "leave_types": [
+        {
+          "type": "parental",
+          "duration": {
+            "value": 5,
+            "unit": "days",
+            "notes": "Per year for family care"
+          },
+          "paid": false,
+          "eligibility": {
+            "min_employment_duration": "12 months",
+            "min_employer_size": 5,
+            "other_requirements": [
+              "Worked at least 1,250 hours in past 12 months"
+            ]
+          },
+          "notice_requirement": "30 days advance notice when foreseeable",
+          "job_protection": true
+        }
+      ],
+      "official_url": "https://www.dir.ca.gov/dlse/family_care_leave.html",
+      "last_updated": "2024-01-01T00:00:00Z",
+      "notes": "Applies to employers with 5 or more employees. Complements FMLA protections."
+    },
+    {
+      "id": "ca_pregnancy_disability_leave",
+      "name": "California Pregnancy Disability Leave",
+      "abbreviation": "CPDL",
+      "statute_code": "Cal. Gov. Code § 12945",
+      "effective_date": "1980-01-01",
+      "description": "California requires employers to provide up to 4 months of unpaid, job-protected leave for pregnancy-related disabilities.",
+      "leave_types": [
+        {
+          "type": "medical",
+          "duration": {
+            "value": 4,
+            "unit": "months",
+            "notes": "For pregnancy-related conditions"
+          },
+          "paid": false,
+          "eligibility": {
+            "min_employment_duration": "0",
+            "min_employer_size": 5,
+            "other_requirements": [
+              "Employee must be pregnant or have pregnancy-related condition"
+            ]
+          },
+          "notice_requirement": "As soon as practicable",
+          "job_protection": true
+        }
+      ],
+      "official_url": "https://www.dfeh.ca.gov/",
+      "last_updated": "2024-01-01T00:00:00Z",
+      "notes": "Applies to employers with 5 or more employees. Separate from FMLA."
+    },
+    {
+      "id": "ca_voting_leave",
+      "name": "California Voting Leave",
+      "abbreviation": "CVL",
+      "statute_code": "Cal. Labor Code § 14200",
+      "effective_date": "1992-01-01",
+      "description": "California requires employers to provide 2 hours of paid time off for voting in any statewide election.",
+      "leave_types": [
+        {
+          "type": "voting",
+          "duration": {
+            "value": 2,
+            "unit": "hours",
+            "notes": "Per election day"
+          },
+          "paid": true,
+          "eligibility": {
+            "min_employment_duration": "0",
+            "other_requirements": [
+              "Registered voter",
+              "Not enough time outside work hours to vote"
+            ]
+          },
+          "notice_requirement": "Notify employer before election day if possible",
+          "job_protection": true
+        }
+      ],
+      "official_url": "https://www.sos.ca.gov/elections/voter-registration/",
+      "last_updated": "2024-01-01T00:00:00Z",
+      "notes": "Applies to all employers. Time off should be taken before or after work when possible."
+    }
+  ]
+}
