@@ -44,6 +44,46 @@
             color: #666;
         }
 
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .tab-button {
+            padding: 12px 24px;
+            border: none;
+            background: #f0f0f0;
+            color: #333;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 1em;
+        }
+
+        .tab-button.active {
+            background: #333;
+            color: white;
+        }
+
+        .tab-button:hover {
+            background: #555;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
         .search-filters {
             background: white;
             padding: 30px;
@@ -77,7 +117,8 @@
         }
 
         .filter-group input,
-        .filter-group select {
+        .filter-group select,
+        .filter-group textarea {
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 6px;
@@ -85,10 +126,17 @@
             transition: border-color 0.3s, box-shadow 0.3s;
             background: white;
             color: #333;
+            font-family: inherit;
+        }
+
+        .filter-group textarea {
+            resize: vertical;
+            min-height: 100px;
         }
 
         .filter-group input:focus,
-        .filter-group select:focus {
+        .filter-group select:focus,
+        .filter-group textarea:focus {
             outline: none;
             border-color: #666;
             box-shadow: 0 0 0 3px rgba(102, 102, 102, 0.1);
@@ -128,6 +176,41 @@
 
         .btn-reset:hover {
             background: #d0d0d0;
+        }
+
+        .reason-suggestions {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+
+        .reason-suggestions h4 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .suggestion-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .suggestion-chip {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.3s;
+        }
+
+        .suggestion-chip:hover {
+            background: #f0f0f0;
+            border-color: #333;
         }
 
         .results {
@@ -280,6 +363,24 @@
             text-decoration: underline;
             color: #555;
         }
+
+        .matched-reason {
+            background: #f0f8f0;
+            border-left: 4px solid #2d5a2d;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+
+        .matched-reason h3 {
+            color: #2d5a2d;
+            margin-bottom: 8px;
+        }
+
+        .matched-reason p {
+            color: #555;
+            font-size: 0.95em;
+        }
     </style>
 </head>
 <body>
@@ -289,11 +390,70 @@
             <p>Search and compare leave of absence laws across US Federal and State regulations</p>
         </header>
 
-        <div class="search-filters">
-            <div class="filter-row">
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('search')">🔍 Search Laws</button>
+            <button class="tab-button" onclick="switchTab('reason')">💭 Tell Me My Leave Options</button>
+        </div>
+
+        <!-- Search Tab -->
+        <div id="search" class="tab-content active">
+            <div class="search-filters">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="stateFilter">State / Jurisdiction</label>
+                        <select id="stateFilter">
+                            <option value="">All States & Federal</option>
+                            <option value="US-FEDERAL">Federal Laws</option>
+                            <option value="US-CA">California</option>
+                            <option value="US-NY">New York</option>
+                            <option value="US-TX">Texas</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="leaveTypeFilter">Type of Leave</label>
+                        <select id="leaveTypeFilter">
+                            <option value="">All Types</option>
+                            <option value="sick">Sick Leave</option>
+                            <option value="parental">Parental Leave</option>
+                            <option value="bereavement">Bereavement Leave</option>
+                            <option value="medical">Medical Leave</option>
+                            <option value="military">Military Leave</option>
+                            <option value="jury_duty">Jury Duty</option>
+                            <option value="voting">Voting Leave</option>
+                            <option value="domestic_violence">Domestic Violence Leave</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="searchInput">Search by Keyword</label>
+                        <input type="text" id="searchInput" placeholder="e.g., 'paid leave', 'FMLA'...">
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button class="btn-reset" onclick="resetFilters()">Reset Filters</button>
+                    <button class="btn-search" onclick="searchLaws()">Search</button>
+                </div>
+            </div>
+
+            <div class="stats">
+                Showing <strong id="resultCount">0</strong> laws
+            </div>
+
+            <div id="results" class="results"></div>
+
+            <div id="noResults" class="no-results" style="display: none;">
+                No laws found matching your search. Try adjusting your filters.
+            </div>
+        </div>
+
+        <!-- Reason Tab -->
+        <div id="reason" class="tab-content">
+            <div class="search-filters">
                 <div class="filter-group">
-                    <label for="stateFilter">State / Jurisdiction</label>
-                    <select id="stateFilter">
+                    <label for="stateReasonFilter">State / Jurisdiction</label>
+                    <select id="stateReasonFilter">
                         <option value="">All States & Federal</option>
                         <option value="US-FEDERAL">Federal Laws</option>
                         <option value="US-CA">California</option>
@@ -303,40 +463,34 @@
                 </div>
 
                 <div class="filter-group">
-                    <label for="leaveTypeFilter">Type of Leave</label>
-                    <select id="leaveTypeFilter">
-                        <option value="">All Types</option>
-                        <option value="sick">Sick Leave</option>
-                        <option value="parental">Parental Leave</option>
-                        <option value="bereavement">Bereavement Leave</option>
-                        <option value="medical">Medical Leave</option>
-                        <option value="military">Military Leave</option>
-                        <option value="jury_duty">Jury Duty</option>
-                        <option value="voting">Voting Leave</option>
-                        <option value="domestic_violence">Domestic Violence Leave</option>
-                    </select>
+                    <label for="leaveReason">What's your reason for taking leave?</label>
+                    <textarea id="leaveReason" placeholder="Type your leave reason here. For example: 'I need to stay home because I have the flu' or 'I'm adopting a baby' or 'A family member passed away'"></textarea>
+                    <div class="reason-suggestions">
+                        <h4>Quick suggestions:</h4>
+                        <div class="suggestion-list">
+                            <span class="suggestion-chip" onclick="setSuggestion('I am sick with an illness')">🤒 I'm sick</span>
+                            <span class="suggestion-chip" onclick="setSuggestion('I have a medical appointment')">🏥 Medical appointment</span>
+                            <span class="suggestion-chip" onclick="setSuggestion('I'm taking parental leave for a newborn')">👶 Parental leave</span>
+                            <span class="suggestion-chip" onclick="setSuggestion('A family member has passed away')">🕊️ Bereavement</span>
+                            <span class="suggestion-chip" onclick="setSuggestion('I am a victim of domestic violence')">🛡️ Domestic violence</span>
+                            <span class="suggestion-chip" onclick="setSuggestion('I need to vote in an election')">🗳️ Voting</span>
+                            <span class="suggestion-chip" onclick="setSuggestion('I am summoned for jury duty')">⚖️ Jury duty</span>
+                            <span class="suggestion-chip" onclick="setSuggestion('I am called to active military duty')">🪖 Military service</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="filter-group">
-                    <label for="searchInput">Search by Keyword</label>
-                    <input type="text" id="searchInput" placeholder="e.g., 'paid leave', 'FMLA'...">
+                <div class="button-row">
+                    <button class="btn-reset" onclick="resetReasonFilters()">Clear</button>
+                    <button class="btn-search" onclick="findApplicableLaws()">Find My Leave Options</button>
                 </div>
             </div>
 
-            <div class="button-row">
-                <button class="btn-reset" onclick="resetFilters()">Reset Filters</button>
-                <button class="btn-search" onclick="searchLaws()">Search</button>
+            <div id="reasonResults" class="results" style="margin-top: 30px;"></div>
+
+            <div id="noReasonResults" class="no-results" style="display: none; margin-top: 30px;">
+                No laws found matching your leave reason. Try rephrasing or searching manually in the Search tab.
             </div>
-        </div>
-
-        <div class="stats">
-            Showing <strong id="resultCount">0</strong> laws
-        </div>
-
-        <div id="results" class="results"></div>
-
-        <div id="noResults" class="no-results" style="display: none;">
-            No laws found matching your search. Try adjusting your filters.
         </div>
     </div>
 
@@ -347,6 +501,18 @@
 
     <script>
         let allLaws = [];
+
+        // Leave reason keywords for matching
+        const reasonKeywords = {
+            sick: ['sick', 'illness', 'flu', 'cold', 'health', 'doctor', 'medical', 'appointment', 'condition', 'treatment'],
+            parental: ['baby', 'newborn', 'birth', 'pregnant', 'pregnancy', 'adopt', 'adoption', 'foster', 'bonding', 'parent'],
+            bereavement: ['died', 'death', 'funeral', 'passed away', 'deceased', 'mourning', 'family member'],
+            medical: ['surgery', 'hospital', 'treatment', 'serious health', 'health condition', 'care for family'],
+            domestic_violence: ['domestic violence', 'abuse', 'assault', 'stalking', 'victim', 'safety'],
+            voting: ['vote', 'voting', 'election', 'poll'],
+            jury_duty: ['jury', 'court', 'legal proceedings', 'witness'],
+            military: ['military', 'active duty', 'deployment', 'armed forces', 'service']
+        };
 
         // Load data from JSON files
         async function loadData() {
@@ -381,22 +547,116 @@
             }
         }
 
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function setSuggestion(text) {
+            document.getElementById('leaveReason').value = text;
+        }
+
+        function findApplicableLaws() {
+            const reason = document.getElementById('leaveReason').value.toLowerCase();
+            const state = document.getElementById('stateReasonFilter').value;
+
+            if (!reason.trim()) {
+                alert('Please enter or select a leave reason');
+                return;
+            }
+
+            // Find matching leave types
+            let matchedTypes = [];
+            for (const [leaveType, keywords] of Object.entries(reasonKeywords)) {
+                if (keywords.some(keyword => reason.includes(keyword))) {
+                    matchedTypes.push(leaveType);
+                }
+            }
+
+            // Filter laws by matched leave types and state
+            let filtered = allLaws.filter(law => {
+                if (state && law.jurisdiction !== state) return false;
+                return law.leave_types.some(lt => matchedTypes.includes(lt.type));
+            });
+
+            displayReasonResults(filtered, reason, matchedTypes);
+        }
+
+        function displayReasonResults(laws, reason, matchedTypes) {
+            const resultsDiv = document.getElementById('reasonResults');
+            const noResultsDiv = document.getElementById('noReasonResults');
+
+            if (laws.length === 0) {
+                resultsDiv.innerHTML = '';
+                noResultsDiv.style.display = 'block';
+                return;
+            }
+
+            noResultsDiv.style.display = 'none';
+            
+            let html = `
+                <div class="matched-reason">
+                    <h3>✅ Found Matching Leave Laws</h3>
+                    <p><strong>Your reason:</strong> "${reason}"</p>
+                    <p><strong>Applicable leave types:</strong> ${matchedTypes.map(t => t.replace(/_/g, ' ')).join(', ')}</p>
+                </div>
+            `;
+
+            html += laws.map(law => `
+                <div class="law-card">
+                    <div class="jurisdiction">${law.jurisdiction_name}</div>
+                    <h3>${law.name}</h3>
+                    ${law.abbreviation ? `<span class="abbreviation">${law.abbreviation}</span>` : ''}
+                    <p>${law.description}</p>
+                    
+                    <div class="leave-types">
+                        <strong>Leave Types:</strong><br>
+                        ${law.leave_types.map(lt => `
+                            <span class="leave-type-tag ${lt.paid ? 'paid-badge' : 'unpaid-badge'}">
+                                ${lt.type.replace(/_/g, ' ')} 
+                                ${lt.paid !== null ? (lt.paid ? '(Paid)' : '(Unpaid)') : ''}
+                                ${lt.duration && lt.duration.value ? ` - ${lt.duration.value} ${lt.duration.unit}` : ''}
+                            </span>
+                        `).join('')}
+                    </div>
+
+                    ${law.official_url ? `
+                        <a href="${law.official_url}" target="_blank" class="official-link">
+                            📖 Official Source
+                        </a>
+                    ` : ''}
+                    
+                    <p style="margin-top: 15px; font-size: 0.85em; color: #999;">
+                        <strong>Statute:</strong> ${law.statute_code}
+                    </p>
+                </div>
+            `).join('');
+
+            resultsDiv.innerHTML = html;
+        }
+
         function searchLaws() {
             const state = document.getElementById('stateFilter').value;
             const leaveType = document.getElementById('leaveTypeFilter').value;
             const keyword = document.getElementById('searchInput').value.toLowerCase();
 
             let filtered = allLaws.filter(law => {
-                // Filter by state
                 if (state && law.jurisdiction !== state) return false;
 
-                // Filter by leave type
                 if (leaveType) {
                     const hasLeaveType = law.leave_types.some(lt => lt.type === leaveType);
                     if (!hasLeaveType) return false;
                 }
 
-                // Filter by keyword
                 if (keyword) {
                     const searchableText = (
                         law.name + ' ' +
@@ -466,9 +726,20 @@
             searchLaws();
         }
 
+        function resetReasonFilters() {
+            document.getElementById('stateReasonFilter').value = '';
+            document.getElementById('leaveReason').value = '';
+            document.getElementById('reasonResults').innerHTML = '';
+            document.getElementById('noReasonResults').style.display = 'none';
+        }
+
         // Trigger search on Enter key
         document.getElementById('searchInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') searchLaws();
+        });
+
+        document.getElementById('leaveReason').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') findApplicableLaws();
         });
 
         // Load data when page loads
