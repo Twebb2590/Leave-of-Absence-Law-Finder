@@ -1,0 +1,128 @@
+{
+  "jurisdiction": "US-NY",
+  "jurisdiction_name": "New York",
+  "laws": [
+    {
+      "id": "ny_paid_sick_leave",
+      "name": "New York Paid Sick Leave Law",
+      "abbreviation": "NYPSL",
+      "statute_code": "N.Y. Labor Law § 196-d",
+      "effective_date": "2020-01-01",
+      "description": "New York requires employers to provide paid sick leave to employees. Accrual and use requirements vary by employer size and location.",
+      "leave_types": [
+        {
+          "type": "sick",
+          "duration": {
+            "value": 5,
+            "unit": "days",
+            "notes": "Minimum; can accrue or front-load"
+          },
+          "paid": true,
+          "eligibility": {
+            "min_employment_duration": "0",
+            "min_employer_size": 1,
+            "other_requirements": [
+              "Applies to all private employers"
+            ]
+          },
+          "notice_requirement": "As soon as practicable",
+          "job_protection": true
+        }
+      ],
+      "official_url": "https://www.ny.gov/sites/default/files/atoms/files/Paid%20Sick%20Leave%20Law%20-%20General%20Employer%20Frequently%20Asked%20Questions.pdf",
+      "last_updated": "2024-01-01T00:00:00Z",
+      "notes": "Can be used for employee's illness, preventive care, or for domestic violence/sexual assault related needs. Employers with fewer than 5 employees in same location get 5 days; larger employers get 5-7 days."
+    },
+    {
+      "id": "ny_family_leave",
+      "name": "New York Paid Family Leave",
+      "abbreviation": "NYPFL",
+      "statute_code": "N.Y. Social Services Law § 204-b",
+      "effective_date": "2018-01-01",
+      "description": "New York provides paid family leave for eligible employees to bond with a new child, care for a family member with serious health condition, or for military family leave.",
+      "leave_types": [
+        {
+          "type": "parental",
+          "duration": {
+            "value": 12,
+            "unit": "weeks",
+            "notes": "2024 benefit year amount; increasing annually"
+          },
+          "paid": true,
+          "eligibility": {
+            "min_employment_duration": "0",
+            "min_employer_size": 1,
+            "other_requirements": [
+              "Worked for employer for at least 26 weeks"
+            ]
+          },
+          "notice_requirement": "30 days advance notice when possible",
+          "job_protection": true
+        }
+      ],
+      "official_url": "https://www.ny.gov/new-york-paid-family-leave",
+      "last_updated": "2024-01-01T00:00:00Z",
+      "notes": "Paid through New York Paid Family Leave Insurance program. Replaces portion of employee wages. Applies to private employers only."
+    },
+    {
+      "id": "ny_jury_duty",
+      "name": "New York Jury Duty Leave",
+      "abbreviation": "NYJD",
+      "statute_code": "N.Y. Judiciary Law § 519",
+      "effective_date": "1975-01-01",
+      "description": "New York prohibits employers from firing or penalizing employees for jury duty service.",
+      "leave_types": [
+        {
+          "type": "jury_duty",
+          "duration": {
+            "value": 0,
+            "unit": "days",
+            "notes": "Duration depends on trial length"
+          },
+          "paid": false,
+          "eligibility": {
+            "min_employment_duration": "0",
+            "other_requirements": [
+              "Summoned for jury service"
+            ]
+          },
+          "notice_requirement": "Court summons",
+          "job_protection": true
+        }
+      ],
+      "official_url": "https://www.nycourts.gov/",
+      "last_updated": "2024-01-01T00:00:00Z",
+      "notes": "First three days of jury service are paid by employer. Compensation after three days varies by court."
+    },
+    {
+      "id": "ny_bereavement",
+      "name": "New York Bereavement Leave",
+      "abbreviation": "NYBL",
+      "statute_code": "N.Y. Labor Law § 201-d",
+      "effective_date": "2021-01-01",
+      "description": "New York requires employers to provide reasonable unpaid bereavement leave for employees to attend the funeral of a family member.",
+      "leave_types": [
+        {
+          "type": "bereavement",
+          "duration": {
+            "value": 3,
+            "unit": "days",
+            "notes": "Reasonable time; at least 3 days"
+          },
+          "paid": false,
+          "eligibility": {
+            "min_employment_duration": "0",
+            "other_requirements": [
+              "Death of immediate family member"
+            ]
+          },
+          "notice_requirement": "As soon as practicable",
+          "job_protection": true
+        }
+      ],
+      "official_url": "https://www.ny.gov/new-york-paid-family-leave",
+      "last_updated": "2024-01-01T00:00:00Z",
+      "notes": "Applies to employers with 3+ employees. Employees entitled to unpaid bereavement leave, some employers may provide paid leave."
+    }
+  ]
+}
