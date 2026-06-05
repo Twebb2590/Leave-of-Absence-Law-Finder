@@ -3,95 +3,157 @@
   "jurisdiction_name": "Texas",
   "laws": [
     {
-      "id": "tx_sick_leave",
-      "name": "Texas Sick Leave",
-      "abbreviation": "TSL",
-      "statute_code": "Texas Labor Code § 61.001",
-      "effective_date": "2009-09-01",
-      "description": "Texas does not have a state-mandated sick leave law. Employers are not required to provide paid sick leave, though some choose to do so.",
+      "id": "texas-paid-sick-leave-local",
+      "name": "Texas Paid Sick Leave (Local Ordinances)",
+      "abbreviation": "TPSL",
+      "statute_code": "Note: No state-wide mandate; varies by local city ordinance",
+      "effective_date": "2020-01-01",
+      "description": "Texas does not mandate paid sick leave statewide. However, some cities like Austin and Dallas have local ordinances requiring paid sick leave for certain employers.",
       "leave_types": [
         {
           "type": "sick",
           "duration": {
-            "value": 0,
+            "value": 5,
             "unit": "days",
-            "notes": "No state mandate; employer discretion"
+            "notes": "Per year (varies by local ordinance)"
           },
-          "paid": null,
+          "paid": true,
           "eligibility": {
-            "min_employment_duration": "Employer determined",
+            "min_employment_duration": "90 days",
+            "min_employer_size": 15,
             "other_requirements": [
-              "Not mandated by state law"
+              "Local ordinance applies (varies by city)",
+              "Austin: Applies to employers with 15+ employees",
+              "Dallas: Applies to contractors and service workers"
             ]
           },
-          "notice_requirement": "Employer determined",
-          "job_protection": false
+          "notice_requirement": "Notice to employer",
+          "job_protection": true
         }
       ],
       "official_url": "https://www.twc.texas.gov/",
       "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Texas is an at-will employment state. FMLA applies to covered employers federally."
+      "notes": "Texas has no state-wide paid sick leave requirement. Check local city ordinances for applicability. Some employers voluntarily provide sick leave."
     },
     {
-      "id": "tx_jury_duty",
+      "id": "texas-voting-leave",
+      "name": "Texas Voting Leave",
+      "abbreviation": "VL",
+      "statute_code": "Texas Election Code § 276.001-276.026",
+      "effective_date": "2012-01-01",
+      "description": "Voters are entitled to reasonable time off to vote during early voting or on election day.",
+      "leave_types": [
+        {
+          "type": "voting",
+          "duration": {
+            "value": 2,
+            "unit": "hours",
+            "notes": "Reasonable time; typically up to 2 hours"
+          },
+          "paid": true,
+          "eligibility": {
+            "other_requirements": [
+              "Registered voter in Texas",
+              "Insufficient time outside work hours to vote"
+            ]
+          },
+          "notice_requirement": "Notice when practicable",
+          "job_protection": true
+        }
+      ],
+      "official_url": "https://www.sos.texas.gov/elections/",
+      "last_updated": "2024-01-01T00:00:00Z",
+      "notes": "Employer cannot penalize employee for voting. Time is unpaid but may be required to be allowed."
+    },
+    {
+      "id": "texas-jury-duty",
       "name": "Texas Jury Duty Leave",
-      "abbreviation": "TXJD",
-      "statute_code": "Texas Code of Criminal Procedure § 22.09",
-      "effective_date": "1975-01-01",
-      "description": "Texas prohibits employers from penalizing employees for jury duty service.",
+      "abbreviation": "JDL",
+      "statute_code": "Texas Government Code § 62.016; Penal Code § 38.31",
+      "effective_date": "1985-01-01",
+      "description": "Employees cannot be punished for jury service. Employers are prohibited from discharging, threatening, or coercing employees for jury duty.",
       "leave_types": [
         {
           "type": "jury_duty",
           "duration": {
             "value": 0,
             "unit": "days",
-            "notes": "Duration depends on trial length"
+            "notes": "Duration depends on trial"
           },
           "paid": false,
           "eligibility": {
-            "min_employment_duration": "0",
             "other_requirements": [
               "Summoned for jury service"
             ]
           },
-          "notice_requirement": "Court summons",
+          "notice_requirement": "Court provides summons",
           "job_protection": true
         }
       ],
       "official_url": "https://www.txcourts.gov/",
       "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Employers cannot fire or threaten employees for jury duty service. Jury duty pay varies by court."
+      "notes": "Protection applies to potential and actual jurors. Retaliation is a criminal offense in Texas."
     },
     {
-      "id": "tx_voting",
-      "name": "Texas Voting Leave",
-      "abbreviation": "TXVL",
-      "statute_code": "Texas Election Code § 122.001",
-      "effective_date": "1985-01-01",
-      "description": "Texas allows employees reasonable time off to vote in any election without loss of pay.",
+      "id": "texas-fmla-compliance",
+      "name": "Federal FMLA as Applied in Texas",
+      "abbreviation": "FMLA",
+      "statute_code": "29 U.S.C. § 2601 et seq. (Federal Law; applies to Texas employers with 50+ employees)",
+      "effective_date": "1993-08-05",
+      "description": "Texas employers with 50+ employees must comply with federal FMLA. Texas does not provide broader state-level protections.",
       "leave_types": [
         {
-          "type": "voting",
+          "type": "medical",
           "duration": {
-            "value": 1,
-            "unit": "hours",
-            "notes": "Or more if needed; reasonable time"
+            "value": 12,
+            "unit": "weeks",
+            "notes": "Per 12-month period"
           },
-          "paid": true,
+          "paid": false,
           "eligibility": {
-            "min_employment_duration": "0",
+            "min_employment_duration": "12 months",
+            "min_employer_size": 50,
             "other_requirements": [
-              "Registered voter",
-              "Not enough time before/after work to vote"
+              "Worked at least 1,250 hours in past 12 months"
             ]
           },
-          "notice_requirement": "Employer may require advance notice",
+          "notice_requirement": "30 days advance notice when foreseeable",
           "job_protection": true
         }
       ],
-      "official_url": "https://www.sos.texas.gov/elections/",
+      "official_url": "https://www.dol.gov/agencies/whd/fmla/",
       "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Applies to all employers. Time off should be taken before or after work if possible."
+      "notes": "Texas employers with 50+ employees must comply with FMLA. Smaller employers are generally not required to provide protected leave unless covered by local ordinances."
+    },
+    {
+      "id": "texas-military-leave",
+      "name": "Texas Military Leave",
+      "abbreviation": "ML",
+      "statute_code": "Texas Government Code § 437.001 et seq.",
+      "effective_date": "1981-01-01",
+      "description": "Employees who are members of the Texas Military Department are entitled to military leave during inactive duty training and active duty.",
+      "leave_types": [
+        {
+          "type": "military",
+          "duration": {
+            "value": 15,
+            "unit": "days",
+            "notes": "Per fiscal year for inactive duty training; unlimited for active duty"
+          },
+          "paid": true,
+          "eligibility": {
+            "other_requirements": [
+              "Member of Texas military forces",
+              "Called to active duty or training"
+            ]
+          },
+          "notice_requirement": "Notice when militarily practicable",
+          "job_protection": true
+        }
+      ],
+      "official_url": "https://tmd.texas.gov/",
+      "last_updated": "2024-01-01T00:00:00Z",
+      "notes": "Applies to employers with Texas military members. Also includes federal military duty protections under USERRA."
     }
   ]
 }
