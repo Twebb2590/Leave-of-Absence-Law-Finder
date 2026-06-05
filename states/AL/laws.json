@@ -1,0 +1,66 @@
+{
+  "jurisdiction": "US-AL",
+  "jurisdiction_name": "Alabama",
+  "laws": [
+    {
+      "id": "al_sick_leave",
+      "name": "Alabama Sick Leave Law",
+      "abbreviation": "ASL",
+      "statute_code": "Ala. Code § 34-8-2",
+      "effective_date": "2020-01-01",
+      "description": "Alabama does not have a state-mandated sick leave law. However, employers may choose to provide sick leave as part of their employment policies.",
+      "leave_types": [
+        {
+          "type": "sick",
+          "duration": {
+            "value": 0,
+            "unit": "days",
+            "notes": "No state mandate; employer discretion"
+          },
+          "paid": null,
+          "eligibility": {
+            "min_employment_duration": "Employer determined",
+            "other_requirements": [
+              "Not mandated by state law"
+            ]
+          },
+          "notice_requirement": "Employer determined",
+          "job_protection": false
+        }
+      ],
+      "official_url": "https://www.alabamaworks.com/",
+      "last_updated": "2024-01-01T00:00:00Z",
+      "notes": "Alabama is an at-will employment state with limited leave protections. FMLA applies federally to covered employers."
+    },
+    {
+      "id": "al_jury_duty",
+      "name": "Alabama Jury Duty Leave",
+      "abbreviation": "AYJD",
+      "statute_code": "Ala. Code § 12-16-1",
+      "effective_date": "1975-01-01",
+      "description": "Alabama prohibits employers from firing or penalizing employees for jury duty service.",
+      "leave_types": [
+        {
+          "type": "jury_duty",
+          "duration": {
+            "value": 0,
+            "unit": "days",
+            "notes": "Duration depends on trial length"
+          },
+          "paid": false,
+          "eligibility": {
+            "min_employment_duration": "0",
+            "other_requirements": [
+              "Summoned for jury service"
+            ]
+          },
+          "notice_requirement": "Court summons",
+          "job_protection": true
+        }
+      ],
+      "official_url": "https://www.alaocourts.org/",
+      "last_updated": "2024-01-01T00:00:00Z",
+      "notes": "Employers cannot retaliate against employees for jury service. Compensation for jury duty varies by court."
+    }
+  ]
+}
