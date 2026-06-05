@@ -3,74 +3,121 @@
   "jurisdiction_name": "New York",
   "laws": [
     {
-      "id": "ny_paid_sick_leave",
+      "id": "new-york-paid-sick-leave",
       "name": "New York Paid Sick Leave Law",
       "abbreviation": "NYPSL",
-      "statute_code": "N.Y. Labor Law § 196-d",
+      "statute_code": "New York Labor Law § 196-d",
       "effective_date": "2020-01-01",
-      "description": "New York requires employers to provide paid sick leave to employees. Accrual and use requirements vary by employer size and location.",
+      "description": "Requires employers to provide paid sick leave. Employers with 4+ employees must provide at least 5 days/40 hours per year.",
       "leave_types": [
         {
           "type": "sick",
           "duration": {
             "value": 5,
             "unit": "days",
-            "notes": "Minimum; can accrue or front-load"
+            "notes": "Minimum per year (40 hours)"
           },
           "paid": true,
           "eligibility": {
-            "min_employment_duration": "0",
-            "min_employer_size": 1,
+            "min_employment_duration": "90 days",
+            "min_employer_size": 4,
             "other_requirements": [
-              "Applies to all private employers"
+              "Covers employee's own illness, preventive care, or family member illness"
             ]
           },
-          "notice_requirement": "As soon as practicable",
+          "notice_requirement": "Reasonable advance notice when foreseeable",
           "job_protection": true
         }
       ],
-      "official_url": "https://www.ny.gov/sites/default/files/atoms/files/Paid%20Sick%20Leave%20Law%20-%20General%20Employer%20Frequently%20Asked%20Questions.pdf",
+      "official_url": "https://www.ny.gov/programs/paid-sick-leave",
       "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Can be used for employee's illness, preventive care, or for domestic violence/sexual assault related needs. Employers with fewer than 5 employees in same location get 5 days; larger employers get 5-7 days."
+      "notes": "Applies to private employers with 4+ employees. Can be used for diagnosis, care, or treatment of existing health condition."
     },
     {
-      "id": "ny_family_leave",
+      "id": "new-york-paid-family-leave",
       "name": "New York Paid Family Leave",
       "abbreviation": "NYPFL",
-      "statute_code": "N.Y. Social Services Law § 204-b",
+      "statute_code": "New York Social Services Law § 224-a et seq.",
       "effective_date": "2018-01-01",
-      "description": "New York provides paid family leave for eligible employees to bond with a new child, care for a family member with serious health condition, or for military family leave.",
+      "description": "Provides paid leave for eligible employees. Currently up to 12 weeks at 67% pay for specified family and medical reasons.",
       "leave_types": [
         {
           "type": "parental",
           "duration": {
             "value": 12,
             "unit": "weeks",
-            "notes": "2024 benefit year amount; increasing annually"
+            "notes": "Per 12-month period; pay at 67% of average weekly wage"
           },
           "paid": true,
           "eligibility": {
-            "min_employment_duration": "0",
-            "min_employer_size": 1,
+            "min_employment_duration": "26 weeks worked",
             "other_requirements": [
-              "Worked for employer for at least 26 weeks"
+              "Birth of child or bonding with newborn",
+              "Adoption or foster care placement"
             ]
           },
-          "notice_requirement": "30 days advance notice when possible",
+          "notice_requirement": "30 days advance notice when foreseeable",
+          "job_protection": true
+        },
+        {
+          "type": "medical",
+          "duration": {
+            "value": 12,
+            "unit": "weeks",
+            "notes": "Per 12-month period; pay at 67% of average weekly wage"
+          },
+          "paid": true,
+          "eligibility": {
+            "min_employment_duration": "26 weeks worked",
+            "other_requirements": [
+              "Employee's serious health condition",
+              "Family member's serious health condition"
+            ]
+          },
+          "notice_requirement": "30 days advance notice when foreseeable",
           "job_protection": true
         }
       ],
-      "official_url": "https://www.ny.gov/new-york-paid-family-leave",
+      "official_url": "https://paidfamilyleave.ny.gov/",
       "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Paid through New York Paid Family Leave Insurance program. Replaces portion of employee wages. Applies to private employers only."
+      "notes": "Covers birth, bonding, adoption, foster care, and serious health conditions. Coordinated with FMLA."
     },
     {
-      "id": "ny_jury_duty",
+      "id": "new-york-domestic-violence-leave",
+      "name": "New York Domestic Violence Leave Law",
+      "abbreviation": "DVLL",
+      "statute_code": "New York Labor Law § 740",
+      "effective_date": "2003-01-01",
+      "description": "Employees who are victims of domestic violence, sexual assault, or stalking may take reasonable leave for legal, medical, or safety needs.",
+      "leave_types": [
+        {
+          "type": "domestic_violence",
+          "duration": {
+            "value": 0,
+            "unit": "days",
+            "notes": "Reasonable time; duration varies"
+          },
+          "paid": true,
+          "eligibility": {
+            "other_requirements": [
+              "Victim of domestic violence, sexual assault, or stalking"
+            ]
+          },
+          "notice_requirement": "Notice when practicable",
+          "job_protection": true
+        }
+      ],
+      "official_url": "https://www.ny.gov/programs/family-violence-information-and-resources",
+      "last_updated": "2024-01-01T00:00:00Z",
+      "notes": "Cannot be penalized for taking leave for legal proceedings, medical treatment, or safety planning related to domestic violence."
+    },
+    {
+      "id": "new-york-jury-duty",
       "name": "New York Jury Duty Leave",
-      "abbreviation": "NYJD",
-      "statute_code": "N.Y. Judiciary Law § 519",
-      "effective_date": "1975-01-01",
-      "description": "New York prohibits employers from firing or penalizing employees for jury duty service.",
+      "abbreviation": "JDL",
+      "statute_code": "New York Judiciary Law § 519, Labor Law § 740",
+      "effective_date": "1980-01-01",
+      "description": "Employers cannot penalize employees for jury service or court-ordered appearance.",
       "leave_types": [
         {
           "type": "jury_duty",
@@ -79,50 +126,77 @@
             "unit": "days",
             "notes": "Duration depends on trial length"
           },
-          "paid": false,
+          "paid": true,
           "eligibility": {
-            "min_employment_duration": "0",
             "other_requirements": [
               "Summoned for jury service"
             ]
           },
-          "notice_requirement": "Court summons",
+          "notice_requirement": "Court provides summons",
           "job_protection": true
         }
       ],
       "official_url": "https://www.nycourts.gov/",
       "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "First three days of jury service are paid by employer. Compensation after three days varies by court."
+      "notes": "Protection against discharge or discrimination."
     },
     {
-      "id": "ny_bereavement",
-      "name": "New York Bereavement Leave",
-      "abbreviation": "NYBL",
-      "statute_code": "N.Y. Labor Law § 201-d",
-      "effective_date": "2021-01-01",
-      "description": "New York requires employers to provide reasonable unpaid bereavement leave for employees to attend the funeral of a family member.",
+      "id": "new-york-voting-leave",
+      "name": "New York Voting Leave",
+      "abbreviation": "VL",
+      "statute_code": "New York Election Law § 3-110",
+      "effective_date": "1980-01-01",
+      "description": "Employees may take up to 2 hours off work to vote without loss of pay if they have insufficient time outside work hours.",
       "leave_types": [
         {
-          "type": "bereavement",
+          "type": "voting",
           "duration": {
-            "value": 3,
-            "unit": "days",
-            "notes": "Reasonable time; at least 3 days"
+            "value": 2,
+            "unit": "hours"
           },
-          "paid": false,
+          "paid": true,
           "eligibility": {
-            "min_employment_duration": "0",
             "other_requirements": [
-              "Death of immediate family member"
+              "Registered voter",
+              "Insufficient time outside work hours to vote"
             ]
           },
-          "notice_requirement": "As soon as practicable",
+          "notice_requirement": "Notice before election day when practicable",
           "job_protection": true
         }
       ],
-      "official_url": "https://www.ny.gov/new-york-paid-family-leave",
+      "official_url": "https://www.elections.ny.gov/",
       "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Applies to employers with 3+ employees. Employees entitled to unpaid bereavement leave, some employers may provide paid leave."
+      "notes": "Time is taken at beginning or end of work day at employer's discretion."
+    },
+    {
+      "id": "new-york-military-leave",
+      "name": "New York Military Leave of Absence",
+      "abbreviation": "ML",
+      "statute_code": "New York Military Law § 242 et seq.",
+      "effective_date": "1976-01-01",
+      "description": "Employees on military leave are entitled to job reinstatement and benefits continuation.",
+      "leave_types": [
+        {
+          "type": "military",
+          "duration": {
+            "value": 0,
+            "unit": "days",
+            "notes": "Duration per military service requirement"
+          },
+          "paid": false,
+          "eligibility": {
+            "other_requirements": [
+              "Active military duty or training"
+            ]
+          },
+          "notice_requirement": "When militarily practicable",
+          "job_protection": true
+        }
+      ],
+      "official_url": "https://dmna.ny.gov/",
+      "last_updated": "2024-01-01T00:00:00Z",
+      "notes": "Protects rights of employees on active duty. Re-employment rights apply."
     }
   ]
 }
