@@ -3,128 +3,173 @@
   "jurisdiction_name": "California",
   "laws": [
     {
-      "id": "ca_paid_sick_leave",
+      "id": "california-paid-sick-leave",
       "name": "California Paid Sick Leave Law",
       "abbreviation": "CPSL",
-      "statute_code": "Cal. Lab. Code § 246-249",
+      "statute_code": "California Labor Code § 246-249",
       "effective_date": "2015-01-01",
-      "description": "California requires most employers to provide paid sick leave to employees. Employees accrue at least 1 day per 30 hours worked or receive 3 days upfront annually.",
+      "description": "Requires employers to provide paid sick leave to all employees. Employees accrue at least 1 day per month or 5 days per year.",
       "leave_types": [
         {
           "type": "sick",
           "duration": {
-            "value": 3,
+            "value": 5,
             "unit": "days",
-            "notes": "Minimum per year; or 1 day per 30 hours worked"
+            "notes": "Minimum per year or 1 day per month accrual"
           },
           "paid": true,
           "eligibility": {
             "min_employment_duration": "90 days",
-            "min_employer_size": 1,
             "other_requirements": [
-              "Applies to all private employers regardless of size"
+              "Applies to all employers",
+              "Covers employee's own health condition or that of family member"
             ]
           },
-          "notice_requirement": "As soon as practicable",
+          "notice_requirement": "Reasonable advance notice when foreseeable",
           "job_protection": true
         }
       ],
-      "official_url": "https://www.dir.ca.gov/dlse/paid_sick_leave.html",
+      "official_url": "https://www.dir.ca.gov/dol_homepage/paid-sick-days.html",
       "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Can be used for employee's own health condition, care for family members, or domestic violence/sexual assault related needs."
+      "notes": "Can be used for preventive care, diagnosis, or treatment. Employees can use up to 40 hours or 5 days per year, whichever is greater."
     },
     {
-      "id": "ca_family_care_leave",
-      "name": "California Family Care Leave",
-      "abbreviation": "CFCL",
-      "statute_code": "Cal. Lab. Code § 230.8",
-      "effective_date": "2004-01-01",
-      "description": "California employees can use up to 5 unpaid days per year to care for a family member with serious health condition.",
+      "id": "california-family-rights-act",
+      "name": "California Family Rights Act",
+      "abbreviation": "CFRA",
+      "statute_code": "California Government Code § 12945.1 et seq.",
+      "effective_date": "1993-01-01",
+      "description": "Provides up to 12 weeks of unpaid, job-protected leave per year for specified family and medical reasons.",
       "leave_types": [
         {
           "type": "parental",
           "duration": {
-            "value": 5,
-            "unit": "days",
-            "notes": "Per year for family care"
+            "value": 12,
+            "unit": "weeks",
+            "notes": "Per 12-month period"
           },
           "paid": false,
           "eligibility": {
             "min_employment_duration": "12 months",
             "min_employer_size": 5,
             "other_requirements": [
-              "Worked at least 1,250 hours in past 12 months"
+              "Worked at least 1,250 hours in past 12 months",
+              "Employer must have 5+ employees"
+            ]
+          },
+          "notice_requirement": "30 days advance notice when foreseeable",
+          "job_protection": true
+        },
+        {
+          "type": "medical",
+          "duration": {
+            "value": 12,
+            "unit": "weeks",
+            "notes": "Per 12-month period"
+          },
+          "paid": false,
+          "eligibility": {
+            "min_employment_duration": "12 months",
+            "min_employer_size": 5,
+            "other_requirements": [
+              "Worked at least 1,250 hours in past 12 months",
+              "For employee's serious health condition"
             ]
           },
           "notice_requirement": "30 days advance notice when foreseeable",
           "job_protection": true
         }
       ],
-      "official_url": "https://www.dir.ca.gov/dlse/family_care_leave.html",
+      "official_url": "https://www.dfeh.ca.gov/family-and-medical-leave-act/",
       "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Applies to employers with 5 or more employees. Complements FMLA protections."
+      "notes": "Can be combined with FMLA. Covers birth, adoption, foster care, employee's serious health condition, and family member's serious health condition."
     },
     {
-      "id": "ca_pregnancy_disability_leave",
-      "name": "California Pregnancy Disability Leave",
-      "abbreviation": "CPDL",
-      "statute_code": "Cal. Gov. Code § 12945",
-      "effective_date": "1980-01-01",
-      "description": "California requires employers to provide up to 4 months of unpaid, job-protected leave for pregnancy-related disabilities.",
+      "id": "california-domestic-violence-leave",
+      "name": "California Domestic Violence, Sexual Assault, and Stalking Leave",
+      "abbreviation": "DVSL",
+      "statute_code": "California Labor Code § 230",
+      "effective_date": "2005-01-01",
+      "description": "Employees who are victims of domestic violence, sexual assault, or stalking may take time off to seek legal assistance, medical care, or safety planning.",
       "leave_types": [
         {
-          "type": "medical",
+          "type": "domestic_violence",
           "duration": {
-            "value": 4,
-            "unit": "months",
-            "notes": "For pregnancy-related conditions"
+            "value": 0,
+            "unit": "days",
+            "notes": "Reasonable time; specific duration varies by circumstance"
           },
-          "paid": false,
+          "paid": true,
           "eligibility": {
-            "min_employment_duration": "0",
-            "min_employer_size": 5,
             "other_requirements": [
-              "Employee must be pregnant or have pregnancy-related condition"
+              "Victim of domestic violence, sexual assault, or stalking"
             ]
           },
-          "notice_requirement": "As soon as practicable",
+          "notice_requirement": "Whenever practicable, reasonable notice to employer",
           "job_protection": true
         }
       ],
-      "official_url": "https://www.dfeh.ca.gov/",
+      "official_url": "https://www.dir.ca.gov/dol_homepage/domestic-violence.html",
       "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Applies to employers with 5 or more employees. Separate from FMLA."
+      "notes": "Employer cannot retaliate. Time off for obtaining restraining order, seeking medical attention, counseling, or safety planning."
     },
     {
-      "id": "ca_voting_leave",
-      "name": "California Voting Leave",
-      "abbreviation": "CVL",
-      "statute_code": "Cal. Labor Code § 14200",
+      "id": "california-jury-duty",
+      "name": "California Jury Duty Leave",
+      "abbreviation": "JDL",
+      "statute_code": "California Labor Code § 230.1",
       "effective_date": "1992-01-01",
-      "description": "California requires employers to provide 2 hours of paid time off for voting in any statewide election.",
+      "description": "Employers cannot penalize employees for jury service or court-ordered appearance.",
+      "leave_types": [
+        {
+          "type": "jury_duty",
+          "duration": {
+            "value": 0,
+            "unit": "days",
+            "notes": "Duration depends on trial length"
+          },
+          "paid": true,
+          "eligibility": {
+            "other_requirements": [
+              "Summoned for jury service or court appearance"
+            ]
+          },
+          "notice_requirement": "Court provides summons",
+          "job_protection": true
+        }
+      ],
+      "official_url": "https://www.courts.ca.gov/",
+      "last_updated": "2024-01-01T00:00:00Z",
+      "notes": "Employer cannot discriminate, threaten, coerce, or discharge employee for jury service."
+    },
+    {
+      "id": "california-voting-leave",
+      "name": "California Voting Leave",
+      "abbreviation": "VL",
+      "statute_code": "California Elections Code § 14000",
+      "effective_date": "2016-01-01",
+      "description": "Employees may take up to 2 hours off work to vote in any statewide or federal election without loss of pay.",
       "leave_types": [
         {
           "type": "voting",
           "duration": {
             "value": 2,
-            "unit": "hours",
-            "notes": "Per election day"
+            "unit": "hours"
           },
           "paid": true,
           "eligibility": {
-            "min_employment_duration": "0",
             "other_requirements": [
               "Registered voter",
-              "Not enough time outside work hours to vote"
+              "Insufficient time outside work hours to vote"
             ]
           },
-          "notice_requirement": "Notify employer before election day if possible",
+          "notice_requirement": "Notice to employer before election day when practicable",
           "job_protection": true
         }
       ],
-      "official_url": "https://www.sos.ca.gov/elections/voter-registration/",
+      "official_url": "https://www.sos.ca.gov/elections/",
       "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Applies to all employers. Time off should be taken before or after work when possible."
+      "notes": "Time off must be taken at the beginning or end of work day at employer's discretion."
     }
   ]
 }
