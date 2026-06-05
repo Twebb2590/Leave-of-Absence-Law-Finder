@@ -1,0 +1,137 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Leave of Absence Laws Schema",
+  "description": "Schema for storing leave of absence law information",
+  "properties": {
+    "jurisdiction": {
+      "type": "string",
+      "description": "Jurisdiction code (e.g., 'US-FEDERAL', 'US-CA', 'US-NY')"
+    },
+    "jurisdiction_name": {
+      "type": "string",
+      "description": "Full name of jurisdiction (e.g., 'United States Federal', 'California')"
+    },
+    "laws": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the law"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the law (e.g., 'Family and Medical Leave Act')"
+          },
+          "abbreviation": {
+            "type": "string",
+            "description": "Common abbreviation (e.g., 'FMLA')"
+          },
+          "statute_code": {
+            "type": "string",
+            "description": "Legal statute code reference"
+          },
+          "effective_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date law became effective"
+          },
+          "description": {
+            "type": "string",
+            "description": "Brief description of the law"
+          },
+          "leave_types": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "sick",
+                    "parental",
+                    "bereavement",
+                    "military",
+                    "jury_duty",
+                    "voting",
+                    "domestic_violence",
+                    "adoption",
+                    "sabbatical",
+                    "medical",
+                    "disability",
+                    "other"
+                  ]
+                },
+                "duration": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "string",
+                      "enum": ["days", "weeks", "months", "years"]
+                    },
+                    "notes": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "paid": {
+                  "type": "boolean",
+                  "description": "Whether leave is paid"
+                },
+                "eligibility": {
+                  "type": "object",
+                  "properties": {
+                    "min_employment_duration": {
+                      "type": "string",
+                      "description": "Minimum time employed before eligible"
+                    },
+                    "min_employer_size": {
+                      "type": "integer",
+                      "description": "Minimum number of employees employer must have"
+                    },
+                    "other_requirements": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "notice_requirement": {
+                  "type": "string",
+                  "description": "Notice period required before taking leave"
+                },
+                "job_protection": {
+                  "type": "boolean",
+                  "description": "Whether job is protected upon return"
+                }
+              },
+              "required": ["type"]
+            }
+          },
+          "official_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to official government source"
+          },
+          "last_updated": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes or important details"
+          }
+        },
+        "required": ["id", "name", "description"]
+      }
+    }
+  },
+  "required": ["jurisdiction", "jurisdiction_name", "laws"]
+}
