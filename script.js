@@ -25,24 +25,6 @@ let currentFilters = {
 let bookmarks = new Set();
 let showingBookmarks = false;
 
-// Dark mode (manual only)
-function loadDarkModePreference() {
-  const stored = localStorage.getItem('loa_dark_mode');
-  if (stored === 'on') {
-    appBody.classList.add('dark');
-  } else {
-    appBody.classList.remove('dark');
-  }
-}
-
-function toggleDarkMode() {
-  const isDark = appBody.classList.toggle('dark');
-  localStorage.setItem('loa_dark_mode', isDark ? 'on' : 'off');
-}
-
-darkModeToggle.addEventListener('click', toggleDarkMode);
-loadDarkModePreference();
-
 // Bookmarks
 function loadBookmarks() {
   try {
