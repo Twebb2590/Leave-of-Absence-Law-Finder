@@ -1,164 +1,19 @@
-{
-  "jurisdiction": "US-FEDERAL",
-  "jurisdiction_name": "United States Federal",
-  "laws": [
-    {
-      "id": "fmla",
-      "name": "Family and Medical Leave Act",
-      "abbreviation": "FMLA",
-      "statute_code": "29 U.S.C. § 2601 et seq.",
-      "effective_date": "1993-08-05",
-      "description": "Provides eligible employees with up to 12 weeks of unpaid, job-protected leave per year for specified medical and family reasons.",
-      "leave_types": [
-        {
-          "type": "medical",
-          "duration": {
-            "value": 12,
-            "unit": "weeks",
-            "notes": "Per 12-month period"
-          },
-          "paid": false,
-          "eligibility": {
-            "min_employment_duration": "12 months",
-            "min_employer_size": 50,
-            "other_requirements": [
-              "Worked at least 1,250 hours in past 12 months",
-              "Employer within 75 miles must have 50+ employees"
-            ]
-          },
-          "notice_requirement": "30 days advance notice when foreseeable",
-          "job_protection": true
-        },
-        {
-          "type": "parental",
-          "duration": {
-            "value": 12,
-            "unit": "weeks",
-            "notes": "Per 12-month period"
-          },
-          "paid": false,
-          "eligibility": {
-            "min_employment_duration": "12 months",
-            "min_employer_size": 50,
-            "other_requirements": [
-              "Worked at least 1,250 hours in past 12 months",
-              "Employer within 75 miles must have 50+ employees"
-            ]
-          },
-          "notice_requirement": "30 days advance notice when foreseeable",
-          "job_protection": true
-        },
-        {
-          "type": "bereavement",
-          "duration": {
-            "value": 12,
-            "unit": "weeks",
-            "notes": "Per 12-month period for qualifying exigencies"
-          },
-          "paid": false,
-          "eligibility": {
-            "min_employment_duration": "12 months",
-            "min_employer_size": 50
-          },
-          "notice_requirement": "As soon as practicable",
-          "job_protection": true
-        }
-      ],
-      "official_url": "https://www.dol.gov/agencies/whd/fmla/",
-      "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Covers private employers with 50+ employees, public agencies, and schools. Does not require paid leave but may require use of accrued paid leave."
-    },
-    {
-      "id": "military_caregiver_leave",
-      "name": "Military Caregiver Leave",
-      "abbreviation": "MCL",
-      "statute_code": "29 U.S.C. § 2612(a)(3)",
-      "effective_date": "2009-01-01",
-      "description": "Provides eligible employees with up to 26 weeks of unpaid leave in a single 12-month period to care for a covered servicemember.",
-      "leave_types": [
-        {
-          "type": "military",
-          "duration": {
-            "value": 26,
-            "unit": "weeks",
-            "notes": "Per single 12-month period"
-          },
-          "paid": false,
-          "eligibility": {
-            "min_employment_duration": "12 months",
-            "min_employer_size": 50,
-            "other_requirements": [
-              "Worked at least 1,250 hours in past 12 months",
-              "Eligible employee of covered military member with serious injury or illness"
-            ]
-          },
-          "notice_requirement": "As soon as practicable",
-          "job_protection": true
-        }
-      ],
-      "official_url": "https://www.dol.gov/agencies/whd/fmla/military-caregiver-leave",
-      "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Qualifies servicemembers must have serious injury or illness incurred in line of duty."
-    },
-    {
-      "id": "jury_duty_leave",
-      "name": "Federal Jury Duty Leave",
-      "abbreviation": "JDL",
-      "statute_code": "28 U.S.C. § 1875",
-      "effective_date": "1978-07-01",
-      "description": "Employers cannot penalize employees for federal jury duty service.",
-      "leave_types": [
-        {
-          "type": "jury_duty",
-          "duration": {
-            "value": 0,
-            "unit": "days",
-            "notes": "Duration depends on trial length"
-          },
-          "paid": true,
-          "eligibility": {
-            "min_employment_duration": "0",
-            "other_requirements": [
-              "Summoned for federal jury service"
-            ]
-          },
-          "notice_requirement": "Summons notice provided by court",
-          "job_protection": true
-        }
-      ],
-      "official_url": "https://www.eeoc.gov/statutes/federal-jury-duty-leave",
-      "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Federal law prohibits employer retaliation; state laws may provide additional protections."
-    },
-    {
-      "id": "voting_leave",
-      "name": "Federal Voting Leave",
-      "abbreviation": "VL",
-      "statute_code": "Varies by state; no federal mandate",
-      "effective_date": "1978-11-06",
-      "description": "While no federal requirement exists, most states provide time off to vote in federal elections.",
-      "leave_types": [
-        {
-          "type": "voting",
-          "duration": {
-            "value": 2,
-            "unit": "hours",
-            "notes": "Varies by state"
-          },
-          "paid": true,
-          "eligibility": {
-            "other_requirements": [
-              "Registered voter",
-              "Not enough time outside work hours to vote"
-            ]
-          },
-          "notice_requirement": "Notice to employer required by some states",
-          "job_protection": true
-        }
-      ],
-      "official_url": "https://www.eac.gov/voters/registration-and-voting-information",
-      "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Check individual state laws for specific requirements."
-    }
-  ]
-}
+[
+  {
+    "id": "fmla",
+    "name": "Family and Medical Leave Act",
+    ...
+  },
+  {
+    "id": "military_caregiver_leave",
+    ...
+  },
+  {
+    "id": "jury_duty_leave",
+    ...
+  },
+  {
+    "id": "voting_leave",
+    ...
+  }
+]
