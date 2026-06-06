@@ -2,18 +2,14 @@
   {
     "id": "fmla",
     "name": "Family and Medical Leave Act",
-    ...
-  },
-  {
-    "id": "military_caregiver_leave",
-    ...
-  },
-  {
-    "id": "jury_duty_leave",
-    ...
-  },
-  {
-    "id": "voting_leave",
-    ...
+    "description": "Provides eligible employees with up to 12 weeks of unpaid, job-protected leave.",
+    "leave_types": [
+      {
+        "type": "medical",
+        "duration": { "value": 12, "unit": "weeks" },
+        "paid": false
+      }
+    ],
+    "official_url": "https://www.dol.gov/agencies/whd/fmla"
   }
 ]
