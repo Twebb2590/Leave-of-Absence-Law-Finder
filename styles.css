@@ -2,7 +2,7 @@
 /* Global Layout */
 body {
     margin: 0;
-    font-family: system-ui, sans-serif;
+    font-family: system-ui, poppins;
     background: #f5f7fa;
     color: #222;
     display: flex;
