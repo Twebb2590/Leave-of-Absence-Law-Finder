@@ -66,6 +66,36 @@ async function loadAllLaws(initialStateCode = null) {
   applyFiltersAndRender();
 }
 
+function openComparePanel() {
+    const selectedStates = activeFilters.states || [];
+
+    if (selectedStates.length < 2) {
+        alert("Select at least two states to compare.");
+        return;
+    }
+
+    const comparison = selectedStates
+        .map(state => {
+            const laws = allLaws.filter(law => law.state === state);
+            return `
+                <div>
+                    <h3>${state}</h3>
+                    <ul>
+                        ${laws.map(l => `<li>${l.title}</li>`).join("")}
+                    </ul>
+                </div>
+            `;
+        })
+        .join("");
+
+    document.getElementById("resultsContainer").innerHTML = `
+        <h2>State Comparison</h2>
+        <div style="display:flex; gap:20px;">
+            ${comparison}
+        </div>
+    `;
+}
+
 // Filters + search
 function applyFiltersAndRender() {
   const query = (searchInput.value || '').toLowerCase().trim();
@@ -218,6 +248,8 @@ window.addEventListener('wizardResults', (event) => {
 
   applyFiltersAndRender();
 });
+
+document.getElementById("compareStatesBtn").addEventListener("click", openComparePanel);
 
 // Init
 document.addEventListener('DOMContentLoaded', async () => {
