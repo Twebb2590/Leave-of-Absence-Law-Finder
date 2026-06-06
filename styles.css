@@ -1,13 +1,120 @@
 /* styles.css */
-/* Minimal extras; Tailwind does most of the work. */
+/* Global Layout */
+body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: #f5f7fa;
+    color: #222;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 
-#chatContainer::-webkit-scrollbar,
-#resultsContainer::-webkit-scrollbar {
-  width: 6px;
+/* Header */
+.app-header {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: #004aad;
+    color: white;
+    position: relative;
 }
 
-#chatContainer::-webkit-scrollbar-thumb,
-#resultsContainer::-webkit-scrollbar-thumb {
-  background-color: rgba(148, 163, 184, 0.7);
-  border-radius: 999px;
+.icon-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: white;
+}
+
+/* Main Layout */
+.app-main {
+    width: min(900px, 90%);
+    margin: auto;
+    padding-bottom: 3rem;
+}
+
+/* Search Bar */
+.search-bar {
+    margin: 1rem 0;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* Buttons */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.secondary-btn {
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #004aad;
+    background: white;
+    color: #004aad;
+    cursor: pointer;
+}
+
+.secondary-btn:hover {
+    background: #e8f0ff;
+}
+
+/* Filter Panel */
+.filter-panel {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+/* Wizard Chat */
+.wizard {
+    margin: 2rem 0;
+}
+
+.chat {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    min-height: 150px;
+    border: 1px solid #ddd;
+}
+
+.quick-replies {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Results */
+.results-section {
+    margin-top: 2rem;
+}
+
+.results-list div {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 1rem;
+}
+
+/* Footer */
+.app-footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 1rem;
+    background: #eee;
 }
