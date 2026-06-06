@@ -12,12 +12,7 @@ const filterPanelContainer = document.getElementById('filterPanelContainer');
 const clearAllFiltersBtn = document.getElementById('clearAllFiltersBtn');
 const showBookmarksBtn = document.getElementById('showBookmarksBtn');
 const compareStatesBtn = document.getElementById('compareStatesBtn');
-const darkModeToggle = document.getElementById('darkModeToggle');
 const appBody = document.getElementById('app-body');
-const toggleBtn = document.getElementById("darkModeToggle");
-if (toggleBtn) {
-    toggleBtn.classList.add("dark-mode-enabled");
-}
 
 let allLaws = [];
 let filteredLaws = [];
