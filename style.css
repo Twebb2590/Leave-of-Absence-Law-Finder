@@ -1,0 +1,13 @@
+/* styles.css */
+/* Minimal extras; Tailwind does most of the work. */
+
+#chatContainer::-webkit-scrollbar,
+#resultsContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+#chatContainer::-webkit-scrollbar-thumb,
+#resultsContainer::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.7);
+  border-radius: 999px;
+}
