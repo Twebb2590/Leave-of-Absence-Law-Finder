@@ -96,6 +96,13 @@ function openComparePanel() {
     `;
 }
 
+activeFilters = {
+    states: [],
+    categories: [],
+    keywords: ""
+};
+
+
 // Filters + search
 function applyFiltersAndRender() {
   const query = (searchInput.value || '').toLowerCase().trim();
