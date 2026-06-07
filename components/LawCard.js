@@ -1,5 +1,5 @@
 // components/LawCard.js
-export function createLawCard(law, {
+export function createLawCard(law) {
   const card = document.createElement('article');
   card.className =
     'rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs shadow-sm hover:border-indigo-400 hover:shadow-md transition dark:border-slate-700 dark:bg-slate-900';
@@ -23,8 +23,10 @@ export function createLawCard(law, {
   desc.className = 'text-[11px] text-slate-600 dark:text-slate-300 mb-1';
   desc.textContent = law.description || '';
 
-  const meta = document.createElement('div');
-  meta.className = 'flex flex-wrap gap-1 mb-2';
+  // REMOVE TAGS COMPLETELY
+  // const meta = document.createElement('div');
+  // meta.className = 'flex flex-wrap gap-1 mb-2';
+  // (law.tags || []).forEach(...)
 
   const footer = document.createElement('div');
   footer.className = 'flex justify-between items-center mt-1';
@@ -41,7 +43,7 @@ export function createLawCard(law, {
 
   card.appendChild(header);
   card.appendChild(desc);
-  card.appendChild(meta);
+  // card.appendChild(meta); // REMOVE THIS TOO IF YOU WANT NO EMPTY SPACE
   card.appendChild(footer);
 
   return card;
