@@ -29,6 +29,8 @@ export function renderFilterPanel(container, { states, leaveTypes, onChange }) {
   stateGroup.appendChild(stateLabel);
   stateGroup.appendChild(stateSelect);
 
+<select id="stateFilter" multiple>
+  
   // Leave type select
   const typeGroup = document.createElement('div');
   const typeLabel = document.createElement('label');
