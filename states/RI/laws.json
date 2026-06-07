@@ -1,0 +1,17 @@
+{
+  "jurisdiction": "US-RI",
+  "jurisdiction_name": "Rhode Island",
+  "laws": [
+    {
+      "id": "ri_hsf",
+      "name": "Healthy and Safe Families and Workplaces Act",
+      "description": "Provides job-protected sick and safe leave.",
+      "leave_types": [
+        { "type": "sick" },
+        { "type": "safe_leave" }
+      ],
+      "job_protection": true,
+      "official_url": "https://dlt.ri.gov/workers-compensation/healthy-and-safe-families-and-workplaces-act"
+    }
+  ]
+}
