@@ -34,7 +34,7 @@ ${law.description}
 
 Job Protection: ${law.job_protection ? "Yes" : "No"}
 
-More info: ${law.link}
+You can read the official details here: ${law.link}
   `;
 }
 
