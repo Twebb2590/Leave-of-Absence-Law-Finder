@@ -1,0 +1,17 @@
+{
+  "jurisdiction": "US-ME",
+  "jurisdiction_name": "Maine",
+  "laws": [
+    {
+      "id": "me_epl",
+      "name": "Earned Paid Leave",
+      "description": "Provides job-protected leave for any reason, including illness or emergencies.",
+      "leave_types": [
+        { "type": "sick" },
+        { "type": "personal" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.maine.gov/labor/labor_laws/earnedpaidleave/"
+    }
+  ]
+}
