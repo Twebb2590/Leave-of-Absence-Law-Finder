@@ -1,0 +1,17 @@
+{
+  "jurisdiction": "US-MD",
+  "jurisdiction_name": "Maryland",
+  "laws": [
+    {
+      "id": "md_hwfa",
+      "name": "Healthy Working Families Act",
+      "description": "Provides job-protected sick and safe leave.",
+      "leave_types": [
+        { "type": "sick" },
+        { "type": "safe_leave" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.dllr.state.md.us/paidleave/"
+    }
+  ]
+}
