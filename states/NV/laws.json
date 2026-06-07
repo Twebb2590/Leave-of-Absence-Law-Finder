@@ -1,0 +1,16 @@
+{
+  "jurisdiction": "US-NV",
+  "jurisdiction_name": "Nevada",
+  "laws": [
+    {
+      "id": "nv_pl",
+      "name": "Paid Leave Law",
+      "description": "Provides job-protected paid leave for any reason.",
+      "leave_types": [
+        { "type": "personal" }
+      ],
+      "job_protection": true,
+      "official_url": "https://labor.nv.gov/"
+    }
+  ]
+}
