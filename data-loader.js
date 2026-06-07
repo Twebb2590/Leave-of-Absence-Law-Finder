@@ -26,9 +26,13 @@ export async function loadStateLaws(stateCode) {
   try {
     const res = await fetch(`./states/${stateCode}/laws.json`);
     if (!res.ok) throw new Error('Failed to load state laws');
+    
     const data = await res.json();
 
-    return data.map(law => ({
+    // FIX: state laws are inside data.laws
+    const laws = data.laws || [];
+
+    return laws.map(law => ({
       id: law.id,
       title: law.name,
       level: "State",
@@ -42,3 +46,4 @@ export async function loadStateLaws(stateCode) {
     return [];
   }
 }
+
