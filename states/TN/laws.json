@@ -1,0 +1,16 @@
+{
+  "jurisdiction": "US-TN",
+  "jurisdiction_name": "Tennessee",
+  "laws": [
+    {
+      "id": "tn_mla",
+      "name": "Tennessee Maternity Leave Act",
+      "description": "Provides job-protected leave for pregnancy, childbirth, and adoption.",
+      "leave_types": [
+        { "type": "pregnancy" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.tn.gov/workforce"
+    }
+  ]
+}
