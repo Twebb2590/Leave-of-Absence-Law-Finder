@@ -1,0 +1,17 @@
+{
+  "jurisdiction": "US-CT",
+  "jurisdiction_name": "Connecticut",
+  "laws": [
+    {
+      "id": "ct_fmla",
+      "name": "Connecticut Family and Medical Leave Act",
+      "description": "Provides job-protected leave for family and medical reasons.",
+      "leave_types": [
+        { "type": "family_care" },
+        { "type": "medical" }
+      ],
+      "job_protection": true,
+      "official_url": "https://portal.ct.gov/DOLUI/new-fmla"
+    }
+  ]
+}
