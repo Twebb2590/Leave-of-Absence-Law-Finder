@@ -27,14 +27,15 @@ function setQuickReplies(options) {
 }
 
 function lawToChatText(law) {
-  return `📘 ${law.title || law.name || 'Untitled law'}
-Level: ${law.level || 'Unknown'}
-State: ${law.state || 'N/A'}
-Tags: ${(law.tags || []).join(', ')}
+  return `
+${law.title}
 
-${law.description || ''}
+${law.description}
 
-Source: ${law.link || 'N/A'}`;
+Job Protection: ${law.job_protection ? "Yes" : "No"}
+
+More info: ${law.link}
+  `;
 }
 
 function sendLawsToChat(laws) {
