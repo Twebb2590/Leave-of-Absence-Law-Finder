@@ -7,7 +7,7 @@ import { loadFederalLaws, loadStateLaws } from './data-loader.js';
 const searchInput = document.getElementById('searchInput');
 const resultsContainer = document.getElementById('resultsContainer');
 const resultsCount = document.getElementById('resultsCount');
-const activeFiltersSummary = document.getElementById('activeFiltersSummary');
+const currentFiltersSummary = document.getElementById('currentFiltersSummary');
 const filterPanelContainer = document.getElementById('filterPanelContainer');
 const clearAllFiltersBtn = document.getElementById('clearAllFiltersBtn');
 const showBookmarksBtn = document.getElementById('showBookmarksBtn');
