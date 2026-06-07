@@ -1,1 +1,17 @@
+{
+  "jurisdiction": "US-CO",
+  "jurisdiction_name": "Colorado",
+  "laws": [
+    {
+      "id": "co_hfwa",
+      "name": "Healthy Families & Workplaces Act",
+      "description": "Provides job-protected paid sick leave.",
+      "leave_types": [
+        { "type": "sick" }
+      ],
+      "job_protection": true,
+      "official_url": "https://cdle.colorado.gov/hfwa"
+    }
+  ]
+}
 
