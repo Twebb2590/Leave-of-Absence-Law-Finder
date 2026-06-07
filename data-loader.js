@@ -1,4 +1,5 @@
-const BASE = "/Leave-of-Absence-Law-Finder/";
+const BASE = `${window.location.origin}${window.location.pathname.replace(/\/$/, "")}/`;
+;
 
 export async function loadFederalLaws() {
   try {
