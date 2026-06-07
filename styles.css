@@ -246,7 +246,40 @@ body {
     border: 1px solid #ddd;
     margin-bottom: 1rem;
 }
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f4f7ff;
+  border: 1px solid #d8e1ff;
+  padding: 10px 14px;
+  border-radius: 12px;
+  width: fit-content;
+  margin: 10px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+}
 
+.typing-dot {
+  width: 8px;
+  height: 8px;
+  background: #2a4bd7;
+  border-radius: 50%;
+  animation: blink 1.4s infinite both;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0% { opacity: 0.2; transform: translateY(0); }
+  20% { opacity: 1; transform: translateY(-2px); }
+  100% { opacity: 0.2; transform: translateY(0); }
+}
 /* Footer */
 .app-footer {
     margin-top: auto;
