@@ -1,0 +1,16 @@
+{
+  "jurisdiction": "US-LA",
+  "jurisdiction_name": "Louisiana",
+  "laws": [
+    {
+      "id": "la_school",
+      "name": "School and Parental Leave (Public Employees)",
+      "description": "Provides job-protected leave for school-related activities for public employees.",
+      "leave_types": [
+        { "type": "family_care" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.doa.la.gov/"
+    }
+  ]
+}
