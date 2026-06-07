@@ -26,14 +26,6 @@ export function createLawCard(law, {
   const meta = document.createElement('div');
   meta.className = 'flex flex-wrap gap-1 mb-2';
 
-  (law.tags || []).forEach((tag) => {
-    const chip = document.createElement('span');
-    chip.className =
-      'inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-600 dark:bg-slate-800 dark:text-slate-300';
-    chip.textContent = tag;
-    meta.appendChild(chip);
-  });
-
   const footer = document.createElement('div');
   footer.className = 'flex justify-between items-center mt-1';
 
