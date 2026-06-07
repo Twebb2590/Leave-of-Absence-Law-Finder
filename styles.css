@@ -137,6 +137,32 @@ body {
     flex-wrap: wrap;
 }
 
+/* Quick Reply Animation */
+.quick-reply-btn {
+    opacity: 0;
+    transform: translateY(6px);
+    animation: quickReplyFadeIn 0.25s ease forwards;
+}
+
+/* Slight stagger effect for multiple buttons */
+.quick-reply-btn:nth-child(1) { animation-delay: 0.00s; }
+.quick-reply-btn:nth-child(2) { animation-delay: 0.05s; }
+.quick-reply-btn:nth-child(3) { animation-delay: 0.10s; }
+.quick-reply-btn:nth-child(4) { animation-delay: 0.15s; }
+.quick-reply-btn:nth-child(5) { animation-delay: 0.20s; }
+
+@keyframes quickReplyFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
 /* Search Section */
 #searchSection {
     margin: 1rem 0;
