@@ -1,62 +1,102 @@
-/* styles.css */
 /* Global Layout */
 body {
     margin: 0;
-    font-family: system-ui, poppins;
+    font-family: system-ui, poppins, sans-serif;
     background: #f5f7fa;
     color: #222;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+}
 
 /* Header */
-.app-header {
+.header {
     text-align: center;
     padding: 2rem 1rem;
     background: #004aad;
     color: white;
-    position: relative;
 }
 
-.icon-btn {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: transparent;
-    border: none;
-    font-size: 1.4rem;
-    cursor: pointer;
-    color: white;
-}
-
-/* Main Layout */
-.app-main {
+/* Main Container */
+.container {
     width: min(900px, 90%);
     margin: auto;
     padding-bottom: 3rem;
 }
 
-/* Search Bar */
-.search-bar {
+/* Wizard Chat */
+#wizardContainer {
+    margin: 2rem 0;
+}
+
+#chatContainer {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    min-height: 150px;
+    border: 1px solid #ddd;
+}
+
+#quickReplyContainer {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Search Section */
+#searchSection {
     margin: 1rem 0;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
 }
 
 #searchInput {
-    width: 30%;
+    width: 40%;
     padding: 0.5rem;
     font-size: 1rem;
-    border-radius: 8px;
+    border-radius: 6px;
     border: 1px solid #ccc;
 }
 
-/* Buttons */
-.action-buttons {
+#searchBtn {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #004aad;
+    background: white;
+    color: #004aad;
+    cursor: pointer;
+}
+
+#searchBtn:hover {
+    background: #e8f0ff;
+}
+
+/* Filter Panel */
+#filterPanelContainer {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+/* Active Filters Summary */
+#activeFiltersSummary {
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+/* Filter Buttons */
+#filterButtons {
     display: flex;
     gap: 0.5rem;
     margin: 1rem 0;
 }
 
-.secondary-btn {
+#filterButtons button {
     padding: 0.6rem 1rem;
     border-radius: 6px;
     border: 1px solid #004aad;
@@ -65,45 +105,22 @@ body {
     cursor: pointer;
 }
 
-.secondary-btn:hover {
+#filterButtons button:hover {
     background: #e8f0ff;
 }
 
-/* Filter Panel */
-.filter-panel {
-    background: white;
-    border: 1px solid #ddd;
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-}
-
-/* Wizard Chat */
-.wizard {
-    margin: 2rem 0;
-}
-
-.chat {
-    background: white;
-    border-radius: 8px;
-    padding: 1rem;
-    min-height: 150px;
-    border: 1px solid #ddd;
-}
-
-.quick-replies {
-    margin-top: 1rem;
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-}
-
-/* Results */
-.results-section {
+/* Results Section */
+#resultsArea {
     margin-top: 2rem;
 }
 
-.results-list div {
+#resultsCount {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+#resultsContainer > div {
     background: white;
     padding: 1rem;
     border-radius: 8px;
