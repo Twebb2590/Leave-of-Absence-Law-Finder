@@ -1,7 +1,7 @@
 // wizard.js
 import { createChatBubble } from './components/ChatBubble.js';
 import { createQuickReply } from './components/QuickReply.js';
-import { loadFederalLaws, loadStateLaws } from './data-loader.js';
+import { allLaws } from './data-loader.js';
 
 const chatContainer = document.getElementById('chatContainer');
 const quickReplyContainer = document.getElementById('quickReplyContainer');
