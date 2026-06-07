@@ -9,7 +9,7 @@ export function createLawCard(law, { onBookmarkToggle, isBookmarked }) {
 
   const title = document.createElement('h3');
   title.className = 'text-xs font-semibold text-slate-900 dark:text-slate-100';
-  title.textContent = law.title || 'Untitled law';
+  title.textContent = law.title || law.name || 'Untitled law';
 
   const badge = document.createElement('span');
   badge.className =
