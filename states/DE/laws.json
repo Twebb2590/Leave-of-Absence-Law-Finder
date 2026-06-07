@@ -1,1 +1,26 @@
+{
+  "laws": [
+    {
+      "id": "de_fmla",
+      "name": "Delaware Family and Medical Leave (FMLA – Federal)",
+      "description": "Delaware employees are covered by the federal FMLA, which provides up to 12 weeks of job‑protected unpaid leave for qualifying medical and family reasons.",
+      "job_protection": true,
+      "official_url": "https://www.dol.gov/agencies/whd/fmla"
+    },
+    {
+      "id": "de_pregnancy_accommodation",
+      "name": "Delaware Pregnant Workers Fairness Act",
+      "description": "Requires employers to provide reasonable accommodations for pregnancy, childbirth, and related conditions. Includes job protection against discrimination or retaliation.",
+      "job_protection": true,
+      "official_url": "https://labor.delaware.gov/divisions/anti-discrimination/"
+    },
+    {
+      "id": "de_domestic_violence_leave",
+      "name": "Delaware Domestic Violence Leave",
+      "description": "Employees may take leave to address domestic violence issues, including seeking medical care, counseling, legal assistance, or relocation. Employers may not retaliate against employees for taking this leave.",
+      "job_protection": true,
+      "official_url": "https://delcode.delaware.gov/title19/c007/index.html"
+    }
+  ]
+}
 
