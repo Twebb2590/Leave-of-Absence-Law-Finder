@@ -18,6 +18,7 @@ let allLaws = [];
 let filteredLaws = [];
 let currentFilters = {
   state: null,
+  states: [],   // <-- ADD THIS
   leaveType: null,
   includeFederal: true,
   includeState: true,
@@ -67,7 +68,7 @@ async function loadAllLaws(initialStateCode = null) {
 }
 
 function openComparePanel() {
-    const selectedStates = activeFilters.states || [];
+    const selectedStates = currentFilters.states || [];
 
     if (selectedStates.length < 2) {
         alert("Select at least two states to compare.");
