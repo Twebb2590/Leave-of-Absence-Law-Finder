@@ -10,7 +10,6 @@ const resultsCount = document.getElementById('resultsCount');
 const currentFiltersSummary = document.getElementById('currentFiltersSummary');
 const filterPanelContainer = document.getElementById('filterPanelContainer');
 const clearAllFiltersBtn = document.getElementById('clearAllFiltersBtn');
-const showBookmarksBtn = document.getElementById('showBookmarksBtn');
 const compareStatesBtn = document.getElementById('compareStatesBtn');
 const appBody = document.getElementById('app-body');
 
@@ -23,40 +22,7 @@ let currentFilters = {
   includeFederal: true,
   includeState: true,
 };
-let bookmarks = new Set();
-let showingBookmarks = false;
 
-// Bookmarks
-function loadBookmarks() {
-  try {
-    const raw = localStorage.getItem('loa_bookmarks');
-    if (!raw) return;
-    const arr = JSON.parse(raw);
-    bookmarks = new Set(arr);
-  } catch {
-    bookmarks = new Set();
-  }
-}
-
-function saveBookmarks() {
-  localStorage.setItem('loa_bookmarks', JSON.stringify(Array.from(bookmarks)));
-}
-
-function isBookmarked(law) {
-  return bookmarks.has(law.id || law.title);
-}
-
-function toggleBookmark(law) {
-  const key = law.id || law.title;
-  if (!key) return;
-  if (bookmarks.has(key)) {
-    bookmarks.delete(key);
-  } else {
-    bookmarks.add(key);
-  }
-  saveBookmarks();
-  applyFiltersAndRender();
-}
 
 // Data loading
 async function loadAllLaws(initialStateCode = null) {
@@ -127,11 +93,6 @@ function applyFiltersAndRender() {
       }
     }
 
-    // Bookmarks view
-    if (showingBookmarks && !isBookmarked(law)) {
-      return false;
-    }
-
     // Search
     if (query) {
       const haystack = [
@@ -161,7 +122,6 @@ function renderResults() {
   if (currentFilters.leaveType) parts.push(`Type: ${currentFilters.leaveType}`);
   if (!currentFilters.includeFederal) parts.push('Federal excluded');
   if (!currentFilters.includeState) parts.push('State excluded');
-  if (showingBookmarks) parts.push('Showing bookmarks only');
 
   currentFiltersSummary.textContent = parts.length ? parts.join(' • ') : 'No filters applied';
 
@@ -176,8 +136,6 @@ function renderResults() {
 
   filteredLaws.forEach((law) => {
     const card = createLawCard(law, {
-      onBookmarkToggle: toggleBookmark,
-      isBookmarked: isBookmarked(law),
     });
     resultsContainer.appendChild(card);
   });
@@ -223,13 +181,7 @@ clearAllFiltersBtn.addEventListener('click', () => {
     includeFederal: true,
     includeState: true,
   };
-  showingBookmarks = false;
   searchInput.value = '';
-  applyFiltersAndRender();
-});
-
-showBookmarksBtn.addEventListener('click', () => {
-  showingBookmarks = !showingBookmarks;
   applyFiltersAndRender();
 });
 
@@ -261,6 +213,5 @@ document.getElementById("compareStatesBtn").addEventListener("click", openCompar
 
 // Init
 document.addEventListener('DOMContentLoaded', async () => {
-  loadBookmarks();
   await loadAllLaws(null); // or pass a default state code if you want
 });
