@@ -1,3 +1,5 @@
+// components/FilterPanel.js
+
 export function renderFilterPanel(container, { states, leaveTypes, onChange }) {
   container.innerHTML = '';
 
@@ -15,8 +17,8 @@ export function renderFilterPanel(container, { states, leaveTypes, onChange }) {
   stateGroup.appendChild(stateLabel);
 
   const stateSelect = document.createElement('select');
-  stateSelect.multiple = true; // <-- IMPORTANT
-  stateSelect.size = 5;        // optional: shows 5 rows
+  stateSelect.multiple = true;          // <-- MULTI-SELECT ENABLED
+  stateSelect.size = 5;                 // optional: shows 5 rows
   stateSelect.className =
     'w-full rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs';
 
@@ -102,7 +104,7 @@ export function renderFilterPanel(container, { states, leaveTypes, onChange }) {
     );
 
     onChange({
-      states: selectedStates,                 // <-- MULTIPLE STATES
+      states: selectedStates,                 // <-- MULTIPLE STATES SENT OUT
       leaveType: typeSelect.value || null,
       includeFederal: federalCheckbox.checked,
       includeState: stateCheckbox.checked,
@@ -114,5 +116,5 @@ export function renderFilterPanel(container, { states, leaveTypes, onChange }) {
   federalCheckbox.addEventListener('change', emitChange);
   stateCheckbox.addEventListener('change', emitChange);
 
-  emitChange();
+  emitChange(); // initialize filters
 }
