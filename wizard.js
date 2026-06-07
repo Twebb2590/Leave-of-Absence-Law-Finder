@@ -18,6 +18,14 @@ function addMessage(text, from = 'assistant') {
   chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
+function setQuickReplies(options) {
+  quickReplyContainer.innerHTML = '';
+  options.forEach((opt) => {
+    const btn = createQuickReply(opt.label, opt.value, handleQuickReply);
+    quickReplyContainer.appendChild(btn);
+  });
+}
+
 function lawToChatText(law) {
   return `📘 ${law.title || law.name || 'Untitled law'}
 Level: ${law.level || 'Unknown'}
@@ -29,13 +37,16 @@ ${law.description || ''}
 Source: ${law.link || 'N/A'}`;
 }
 
-
-function setQuickReplies(options) {
-  quickReplyContainer.innerHTML = '';
-  options.forEach((opt) => {
-    const btn = createQuickReply(opt.label, opt.value, handleQuickReply);
-    quickReplyContainer.appendChild(btn);
+function sendLawsToChat(laws) {
+  laws.forEach((law) => {
+    const bubble = createChatBubble({
+      text: lawToChatText(law),
+      from: 'assistant',
+    });
+    chatContainer.appendChild(bubble);
   });
+
+  chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
 async function handleQuickReply(value) {
