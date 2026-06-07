@@ -1,5 +1,5 @@
 // components/LawCard.js
-export function createLawCard(law, { onBookmarkToggle, isBookmarked }) {
+export function createLawCard(law, {
   const card = document.createElement('article');
   card.className =
     'rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs shadow-sm hover:border-indigo-400 hover:shadow-md transition dark:border-slate-700 dark:bg-slate-900';
@@ -45,16 +45,7 @@ export function createLawCard(law, { onBookmarkToggle, isBookmarked }) {
     'text-[11px] font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-300';
   link.textContent = 'View source';
 
-  const bookmarkBtn = document.createElement('button');
-  bookmarkBtn.type = 'button';
-  bookmarkBtn.className =
-    'inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] text-amber-800 hover:bg-amber-100 dark:border-amber-700 dark:bg-amber-900/40 dark:text-amber-200';
-  bookmarkBtn.textContent = isBookmarked ? '★ Bookmarked' : '☆ Bookmark';
-
-  bookmarkBtn.addEventListener('click', () => onBookmarkToggle(law));
-
   footer.appendChild(link);
-  footer.appendChild(bookmarkBtn);
 
   card.appendChild(header);
   card.appendChild(desc);
