@@ -1,0 +1,16 @@
+{
+  "jurisdiction": "US-KY",
+  "jurisdiction_name": "Kentucky",
+  "laws": [
+    {
+      "id": "ky_dv",
+      "name": "Kentucky Domestic Violence Leave",
+      "description": "Provides job-protected leave for domestic violence victims.",
+      "leave_types": [
+        { "type": "safe_leave" }
+      ],
+      "job_protection": true,
+      "official_url": "https://labor.ky.gov/"
+    }
+  ]
+}
