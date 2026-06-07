@@ -28,13 +28,14 @@ function setQuickReplies(options) {
 
 function lawToChatText(law) {
   return `
-${law.title}
+<b>${law.title}<b>
 
 ${law.description}
 
-Job Protection: ${law.job_protection ? "Yes" : "No"}
+<b>Job Protection:<b> ${law.job_protection ? "Yes" : "No"}
 
-You can read the official details here: ${law.link}
+<b>You can read the official details here: <b>
+<a href="${law.link}" target="_blank">${law.link}</a>
   `;
 }
 
