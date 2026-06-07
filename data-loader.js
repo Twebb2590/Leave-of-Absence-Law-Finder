@@ -1,5 +1,4 @@
 const BASE = `${window.location.origin}${window.location.pathname.replace(/\/$/, "")}/`;
-;
 
 export async function loadFederalLaws() {
   try {
@@ -13,7 +12,6 @@ export async function loadFederalLaws() {
       level: "Federal",
       state: "US",
       description: law.description,
-      tags: law.leave_types?.map(t => t.type) || [],
       link: law.official_url
     }));
   } catch (e) {
@@ -37,7 +35,6 @@ export async function loadStateLaws(stateCode) {
       level: "State",
       state: stateCode,
       description: law.description,
-      tags: law.leave_types?.map(t => t.type) || [],
       link: law.official_url
     }));
   } catch (e) {
