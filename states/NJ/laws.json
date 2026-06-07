@@ -1,1 +1,17 @@
+{
+  "jurisdiction": "US-NJ",
+  "jurisdiction_name": "New Jersey",
+  "laws": [
+    {
+      "id": "nj_fla",
+      "name": "New Jersey Family Leave Act",
+      "description": "Provides job-protected leave for family caregiving.",
+      "leave_types": [
+        { "type": "family_care" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.nj.gov/labor/worker-protections/myrights/family-leave-act/"
+    }
+  ]
+}
 
