@@ -96,6 +96,24 @@ function startWizard() {
     { label: 'Something else', value: 'other' },
   ]);
 }
+function showTypingIndicator() {
+  const chat = document.getElementById("chat");
+  const indicator = document.createElement("div");
+  indicator.className = "typing-indicator";
+  indicator.id = "typingIndicator";
+  indicator.innerHTML = `
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+  `;
+  chat.appendChild(indicator);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function hideTypingIndicator() {
+  const indicator = document.getElementById("typingIndicator");
+  if (indicator) indicator.remove();
+}
 
 function askState() {
   addMessage(
