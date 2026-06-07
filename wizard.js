@@ -104,6 +104,7 @@ function askState() {
     { code: 'CA', name: 'California' },
     { code: 'NY', name: 'New York' },
     { code: 'PA', name: 'Pennsylvania' },
+    { code: 'AL', name: 'Alabama' },
     // Add more as needed
   ];
 
