@@ -1,0 +1,16 @@
+{
+  "jurisdiction": "US-MA",
+  "jurisdiction_name": "Massachusetts",
+  "laws": [
+    {
+      "id": "ma_est",
+      "name": "Earned Sick Time Law",
+      "description": "Provides job-protected sick leave for health and safety needs.",
+      "leave_types": [
+        { "type": "sick" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.mass.gov/info-details/earned-sick-time"
+    }
+  ]
+}
