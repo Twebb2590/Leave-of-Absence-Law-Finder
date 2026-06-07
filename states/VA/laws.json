@@ -1,0 +1,16 @@
+{
+  "jurisdiction": "US-VA",
+  "jurisdiction_name": "Virginia",
+  "laws": [
+    {
+      "id": "va_dv",
+      "name": "Virginia Domestic Violence Leave",
+      "description": "Provides job-protected leave for domestic violence victims.",
+      "leave_types": [
+        { "type": "safe_leave" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.doli.virginia.gov/"
+    }
+  ]
+}
