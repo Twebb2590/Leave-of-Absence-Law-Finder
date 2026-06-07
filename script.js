@@ -163,7 +163,7 @@ function renderResults() {
   if (!currentFilters.includeState) parts.push('State excluded');
   if (showingBookmarks) parts.push('Showing bookmarks only');
 
-  activeFiltersSummary.textContent = parts.length ? parts.join(' • ') : 'No filters applied';
+  currentFiltersSummary.textContent = parts.length ? parts.join(' • ') : 'No filters applied';
 
   if (!filteredLaws.length) {
     const empty = document.createElement('p');
