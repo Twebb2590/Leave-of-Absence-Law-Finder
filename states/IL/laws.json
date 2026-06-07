@@ -1,0 +1,17 @@
+{
+  "jurisdiction": "US-IL",
+  "jurisdiction_name": "Illinois",
+  "laws": [
+    {
+      "id": "il_plaw",
+      "name": "Paid Leave for All Workers Act",
+      "description": "Provides job-protected paid leave for any reason.",
+      "leave_types": [
+        { "type": "personal" },
+        { "type": "sick" }
+      ],
+      "job_protection": true,
+      "official_url": "https://labor.illinois.gov/"
+    }
+  ]
+}
