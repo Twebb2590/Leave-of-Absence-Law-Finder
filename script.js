@@ -97,7 +97,7 @@ function openComparePanel() {
     `;
 }
 
-activeFilters = {
+currentFilters = {
     states: [],
     categories: [],
     keywords: ""
