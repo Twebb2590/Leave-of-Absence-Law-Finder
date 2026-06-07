@@ -177,23 +177,6 @@ async function showResultsSummary() {
   sendLawsToChat(filtered.slice(0, 3));
 }
 
-function sendLawsToChat(laws) {
-  if (!laws.length) {
-    addMessage("I couldn't find any matching laws to show you.");
-    return;
-  }
-
-  laws.forEach(law => {
-    const bubble = createChatBubble({
-      text: lawToChatText(law),
-      from: 'assistant'
-    });
-    chatContainer.appendChild(bubble);
-  });
-
-  chatContainer.scrollTop = chatContainer.scrollHeight;
-}
-
   const event = new CustomEvent('wizardResults', {
     detail: {
       laws: filtered,
