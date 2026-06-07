@@ -1,0 +1,16 @@
+{
+  "jurisdiction": "US-HI",
+  "jurisdiction_name": "Hawaii",
+  "laws": [
+    {
+      "id": "hi_fla",
+      "name": "Hawaii Family Leave Law",
+      "description": "Provides job-protected leave to care for a family member.",
+      "leave_types": [
+        { "type": "family_care" }
+      ],
+      "job_protection": true,
+      "official_url": "https://labor.hawaii.gov/wsd/family-leave/"
+    }
+  ]
+}
