@@ -1,0 +1,17 @@
+{
+  "jurisdiction": "US-AK",
+  "jurisdiction_name": "Alaska",
+  "laws": [
+    {
+      "id": "ak_fla",
+      "name": "Alaska Family Leave Act (Public Employees)",
+      "description": "Provides job-protected leave for family and medical reasons for public employees.",
+      "leave_types": [
+        { "type": "family_care" },
+        { "type": "medical" }
+      ],
+      "job_protection": true,
+      "official_url": "https://labor.alaska.gov/"
+    }
+  ]
+}
