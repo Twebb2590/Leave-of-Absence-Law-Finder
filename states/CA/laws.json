@@ -64,6 +64,25 @@
       "last_updated": "2024-01-01T00:00:00Z",
       "notes": "Applies to employers with 5 or more employees. Complements FMLA protections."
     },
+    
+    {
+  "jurisdiction": "US-CA",
+  "jurisdiction_name": "California",
+  "laws": [
+    {
+      "id": "ca_cfra",
+      "name": "California Family Rights Act (CFRA)",
+      "description": "Provides job-protected leave for family and medical reasons.",
+      "leave_types": [
+        { "type": "family_care" },
+        { "type": "medical" }
+      ],
+      "job_protection": true,
+      "official_url": "https://calcivilrights.ca.gov/family-medical-leave/"
+    }
+  ]
+}
+
     {
       "id": "ca_pregnancy_disability_leave",
       "name": "California Pregnancy Disability Leave",
