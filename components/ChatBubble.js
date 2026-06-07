@@ -5,7 +5,7 @@ export function createChatBubble({ text, from = 'assistant' }) {
 
   const bubble = document.createElement('div');
   bubble.className = `chat-bubble ${from}`;
-  bubble.textContent = text;
+  bubble.innerHTML = text;
 
   wrapper.appendChild(bubble);
   return wrapper;
