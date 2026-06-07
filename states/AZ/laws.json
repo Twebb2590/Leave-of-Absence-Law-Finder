@@ -1,0 +1,16 @@
+{
+  "jurisdiction": "US-AZ",
+  "jurisdiction_name": "Arizona",
+  "laws": [
+    {
+      "id": "az_epsl",
+      "name": "Earned Paid Sick Leave",
+      "description": "Provides job-protected sick leave for health and safety needs.",
+      "leave_types": [
+        { "type": "sick" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.azica.gov/labor/earned-paid-sick-time"
+    }
+  ]
+}
