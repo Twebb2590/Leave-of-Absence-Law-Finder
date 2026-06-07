@@ -1,0 +1,16 @@
+{
+  "jurisdiction": "US-NC",
+  "jurisdiction_name": "North Carolina",
+  "laws": [
+    {
+      "id": "nc_dv",
+      "name": "Domestic Violence Leave",
+      "description": "Provides job-protected leave for domestic violence victims.",
+      "leave_types": [
+        { "type": "safe_leave" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.labor.nc.gov/"
+    }
+  ]
+}
