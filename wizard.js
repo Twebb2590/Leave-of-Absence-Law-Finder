@@ -18,6 +18,18 @@ function addMessage(text, from = 'assistant') {
   chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
+function lawToChatText(law) {
+  return `📘 ${law.title || law.name || 'Untitled law'}
+Level: ${law.level || 'Unknown'}
+State: ${law.state || 'N/A'}
+Tags: ${(law.tags || []).join(', ')}
+
+${law.description || ''}
+
+Source: ${law.link || 'N/A'}`;
+}
+
+
 function setQuickReplies(options) {
   quickReplyContainer.innerHTML = '';
   options.forEach((opt) => {
@@ -141,15 +153,35 @@ async function showResultsSummary() {
     return true;
   });
 
-  if (!filtered.length) {
-    addMessage(
-      "I wasn’t able to find specific laws that match your situation from the data I have. You can still use the search and filters below to explore more."
-    );
-  } else {
-    addMessage(
-      `I found ${filtered.length} leave laws that may be relevant. You’ll see them highlighted in the results below.`
-    );
+ if (!filtered.length) {
+  addMessage(
+    "I wasn’t able to find specific laws that match your situation from the data I have. You can still use the search and filters below to explore more."
+  );
+} else {
+  addMessage(
+    `I found ${filtered.length} leave laws that may be relevant. Here are the most relevant ones:`
+  );
+
+  // Show top 3 laws in chat
+  sendLawsToChat(filtered.slice(0, 3));
+}
+
+function sendLawsToChat(laws) {
+  if (!laws.length) {
+    addMessage("I couldn't find any matching laws to show you.");
+    return;
   }
+
+  laws.forEach(law => {
+    const bubble = createChatBubble({
+      text: lawToChatText(law),
+      from: 'assistant'
+    });
+    chatContainer.appendChild(bubble);
+  });
+
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
 
   const event = new CustomEvent('wizardResults', {
     detail: {
