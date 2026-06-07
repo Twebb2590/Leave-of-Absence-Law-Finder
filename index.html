@@ -8,60 +8,56 @@
 </head>
 
 <body>
+
   <header class="header">
     <h1>Leave of Absence Law Finder</h1>
     <p class="subtitle">Find federal and state leave laws based on your situation</p>
   </header>
-  
-  </main>
-  
+
   <main class="container">
-    <section id="wizard">
-      <div id="wizard-step" class="wizard-box">
-         <!-- Wizard Chat -->
-      <section id="wizardContainer">
-    <div id="chatContainer"></div> 
-        <div id="quickReplyContainer"></div>
+
+    <!-- Wizard -->
+    <section id="wizardContainer">
+      <div id="chatContainer"></div>
+      <div id="quickReplyContainer"></div>
     </section>
 
-  
-<!-- Search Bar -->
+    <!-- Search -->
     <section id="searchSection">
-        <input id="searchInput" type="text" placeholder="Search leave laws...">
+      <input id="searchInput" type="text" placeholder="Search leave laws...">
       <button id="searchBtn">Search</button>
     </section>
-  
-        
-        <!-- Filter Panel -->
-  <div id="filterPanelContainer"></div>
 
-<!-- Active Filters Summary -->
+    <!-- Filter Panel -->
+    <section id="filterPanelContainer"></section>
+
+    <!-- Active Filters Summary -->
     <section id="activeFiltersSummary"></section>
-  
-  <!-- Filter Buttons -->
-  <section id="filterButtons">
-        <button id="clearAllFiltersBtn">Clear Filters</button>
-        <button id="showBookmarksBtn">Bookmarks</button>
-        <button id="compareStatesBtn">Compare States</button>
-   </section>
 
-  <!-- Results -->
-        <section class="results-section">
-  <section id="resultsArea">
-        <h2>Results</h2>
-<div id="resultsCount"></div>
-    <div id="resultsContainer"></div>
-</section>
+    <!-- Filter Buttons -->
+    <section id="filterButtons">
+      <button id="clearAllFiltersBtn">Clear Filters</button>
+      <button id="showBookmarksBtn">Bookmarks</button>
+      <button id="compareStatesBtn">Compare States</button>
+    </section>
 
-     </main>
-    
- <footer class="app-footer">
+    <!-- Results -->
+    <section id="resultsArea">
+      <h2>Results</h2>
+      <div id="resultsCount"></div>
+      <div id="resultsContainer"></div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
     <p>© 2026 Leave of Absence Law Finder</p>
   </footer>
-    
-  <!-- Load scripts as modules -->
-<script type="module" src="data-loader.js"></script>
-<script type="module" src="wizard.js"></script>
-<script type="module" src="script.js"></script>
+
+  <!-- Scripts -->
+  <script type="module" src="data-loader.js"></script>
+  <script type="module" src="wizard.js"></script>
+  <script type="module" src="script.js"></script>
+
 </body>
 </html>
