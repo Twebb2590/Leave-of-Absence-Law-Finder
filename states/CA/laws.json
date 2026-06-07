@@ -92,7 +92,8 @@
       "description": "California requires employers to provide up to 4 months of unpaid, job-protected leave for pregnancy-related disabilities.",
       "leave_types": [
         {
-          "type": "medical","pregnancy",
+          "type": "medical",
+          "type": "pregnancy",
           "duration": {
             "value": 4,
             "unit": "months",
