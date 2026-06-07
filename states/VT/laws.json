@@ -1,0 +1,16 @@
+{
+  "jurisdiction": "US-VT",
+  "jurisdiction_name": "Vermont",
+  "laws": [
+    {
+      "id": "vt_est",
+      "name": "Earned Sick Time Act",
+      "description": "Provides job-protected sick leave for health and safety needs.",
+      "leave_types": [
+        { "type": "sick" }
+      ],
+      "job_protection": true,
+      "official_url": "https://labor.vermont.gov/wage-and-hour/earned-sick-time"
+    }
+  ]
+}
