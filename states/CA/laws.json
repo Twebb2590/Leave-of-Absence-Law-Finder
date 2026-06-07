@@ -8,7 +8,7 @@
       "abbreviation": "CPSL",
       "statute_code": "Cal. Lab. Code § 246-249",
       "effective_date": "2015-01-01",
-      "description": "California requires most employers to provide paid sick leave to employees. Employees accrue at least 1 day per 30 hours worked or receive 3 days upfront annually.",
+      "description": "California requires most employers to provide paid sick leave to employees.",
       "leave_types": [
         {
           "type": "sick",
@@ -33,16 +33,17 @@
       "last_updated": "2024-01-01T00:00:00Z",
       "notes": "Can be used for employee's own health condition, care for family members, or domestic violence/sexual assault related needs."
     },
+
     {
       "id": "ca_family_care_leave",
       "name": "California Family Care Leave",
       "abbreviation": "CFCL",
       "statute_code": "Cal. Lab. Code § 230.8",
       "effective_date": "2004-01-01",
-      "description": "California employees can use up to 5 unpaid days per year to care for a family member with serious health condition.",
+      "description": "California employees can use up to 5 unpaid days per year to care for a family member with a serious health condition.",
       "leave_types": [
         {
-          "type": "parental",
+          "type": "family_care",
           "duration": {
             "value": 5,
             "unit": "days",
@@ -64,11 +65,7 @@
       "last_updated": "2024-01-01T00:00:00Z",
       "notes": "Applies to employers with 5 or more employees. Complements FMLA protections."
     },
-    
-    {
-  "jurisdiction": "US-CA",
-  "jurisdiction_name": "California",
-  "laws": [
+
     {
       "id": "ca_cfra",
       "name": "California Family Rights Act (CFRA)",
@@ -79,9 +76,7 @@
       ],
       "job_protection": true,
       "official_url": "https://calcivilrights.ca.gov/family-medical-leave/"
-    }
-  ]
-}
+    },
 
     {
       "id": "ca_pregnancy_disability_leave",
@@ -92,7 +87,6 @@
       "description": "California requires employers to provide up to 4 months of unpaid, job-protected leave for pregnancy-related disabilities.",
       "leave_types": [
         {
-          "type": "medical",
           "type": "pregnancy",
           "duration": {
             "value": 4,
@@ -115,6 +109,7 @@
       "last_updated": "2024-01-01T00:00:00Z",
       "notes": "Applies to employers with 5 or more employees. Separate from FMLA."
     },
+
     {
       "id": "ca_voting_leave",
       "name": "California Voting Leave",
