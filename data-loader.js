@@ -1,19 +1,19 @@
-// data-loader.js
+const BASE = "/Leave-of-Absence-Law-Finder/";
 
 export async function loadFederalLaws() {
   try {
-    const res = await fetch('./federal/laws.json');
+    const res = await fetch(`${BASE}federal/laws.json`);
     if (!res.ok) throw new Error('Failed to load federal laws');
     const data = await res.json();
 
     return data.map(law => ({
       id: law.id,
-      title: law.name,                     // FIXED
-      level: "Federal",                    // FIXED
-      state: "US",                         // FIXED
+      title: law.name,
+      level: "Federal",
+      state: "US",
       description: law.description,
-      tags: law.leave_types?.map(t => t.type) || [],   // FIXED
-      link: law.official_url               // FIXED
+      tags: law.leave_types?.map(t => t.type) || [],
+      link: law.official_url
     }));
   } catch (e) {
     console.error(e);
@@ -24,12 +24,10 @@ export async function loadFederalLaws() {
 export async function loadStateLaws(stateCode) {
   if (!stateCode) return [];
   try {
-    const res = await fetch(`./states/${stateCode}/laws.json`);
+    const res = await fetch(`${BASE}states/${stateCode}/laws.json`);
     if (!res.ok) throw new Error('Failed to load state laws');
-    
-    const data = await res.json();
 
-    // FIX: state laws are inside data.laws
+    const data = await res.json();
     const laws = data.laws || [];
 
     return laws.map(law => ({
@@ -46,4 +44,3 @@ export async function loadStateLaws(stateCode) {
     return [];
   }
 }
-
