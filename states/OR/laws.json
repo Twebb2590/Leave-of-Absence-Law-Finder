@@ -1,1 +1,19 @@
+{
+  "jurisdiction": "US-OR",
+  "jurisdiction_name": "Oregon",
+  "laws": [
+    {
+      "id": "or_ofla",
+      "name": "Oregon Family Leave Act (OFLA)",
+      "description": "Provides job-protected leave for family, medical, and safe leave reasons.",
+      "leave_types": [
+        { "type": "family_care" },
+        { "type": "medical" },
+        { "type": "safe_leave" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.oregon.gov/boli/workers/pages/ofla.aspx"
+    }
+  ]
+}
 
