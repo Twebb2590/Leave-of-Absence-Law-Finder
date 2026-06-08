@@ -32,7 +32,7 @@ function lawToChatText(law) {
 
 ${law.description}
 
-<b>Job Protection:</b> ${law.job_protection ? "Yes" : "No"}
+<b>Job Protection:</b> ${law.job_protection ? 'Yes' : 'No'}
 
 <b>You can read the official details here:</b>
 <a href="${law.link}" target="_blank">${law.link}</a>
@@ -50,15 +50,25 @@ function sendLawsToChat(laws) {
 
   chatContainer.scrollTop = chatContainer.scrollHeight;
 }
+
+// basic assistant reply with randomized delay
+async function assistantReply(text, min = 600, max = 1400) {
+  const delay = Math.floor(Math.random() * (max - min + 1)) + min;
+  showTypingIndicator();
+  await new Promise((resolve) => setTimeout(resolve, delay));
+  hideTypingIndicator();
+  addMessage(text, 'assistant');
+}
+
+// mid‑reply pauses: send multiple chunks with typing in between
 async function assistantReplyChunks(chunks, min = 400, max = 1200) {
   for (const chunk of chunks) {
     const delay = Math.floor(Math.random() * (max - min + 1)) + min;
-  
-  showTypingIndicator();
-  await new Promise(resolve => setTimeout(resolve, delay));
-  hideTypingIndicator();
- 
-  addMessage(chunk, 'assistant');
+    showTypingIndicator();
+    await new Promise((resolve) => setTimeout(resolve, delay));
+    hideTypingIndicator();
+    addMessage(chunk, 'assistant');
+  }
 }
 
 async function handleQuickReply(value) {
@@ -66,14 +76,14 @@ async function handleQuickReply(value) {
   if (!wizardState.reason) {
     wizardState.reason = value;
     addMessage(value, 'user');
-    askState();
+    await askState();
     return;
   }
 
   if (!wizardState.state) {
     wizardState.state = value;
     addMessage(value, 'user');
-    askEmploymentStatus();
+    await askEmploymentStatus();
     return;
   }
 
@@ -92,8 +102,8 @@ async function startWizard() {
   wizardState.state = null;
   wizardState.employmentStatus = null;
 
- assistantReply(
-    "Hi. I’m here to help you understand your leave options. What’s the main reason you’re looking into leave right now?"
+  await assistantReply(
+    'Hi. I’m here to help you understand your leave options. What’s the main reason you’re looking into leave right now?'
   );
 
   setQuickReplies([
@@ -106,11 +116,12 @@ async function startWizard() {
     { label: 'Something else', value: 'other' },
   ]);
 }
+
 function showTypingIndicator() {
-  const chat = document.getElementById("chatContainer");
-  const indicator = document.createElement("div");
-  indicator.className = "typing-indicator";
-  indicator.id = "typingIndicator";
+  const chat = document.getElementById('chatContainer');
+  const indicator = document.createElement('div');
+  indicator.className = 'typing-indicator';
+  indicator.id = 'typingIndicator';
   indicator.innerHTML = `
     <div class="typing-dot"></div>
     <div class="typing-dot"></div>
@@ -121,67 +132,66 @@ function showTypingIndicator() {
 }
 
 function hideTypingIndicator() {
-  const indicator = document.getElementById("typingIndicator");
+  const indicator = document.getElementById('typingIndicator');
   if (indicator) indicator.remove();
 }
 
 async function askState() {
   await assistantReply(
-    "Thank you for sharing that. Which state do you work in? This helps me find the right laws."
+    'Thank you for sharing that. Which state do you work in? This helps me find the right laws.'
   );
 
   const states = [
-  { code: "AL", name: "Alabama" },
-  { code: "AK", name: "Alaska" },
-  { code: "AZ", name: "Arizona" },
-  { code: "AR", name: "Arkansas" },
-  { code: "CA", name: "California" },
-  { code: "CO", name: "Colorado" },
-  { code: "CT", name: "Connecticut" },
-  { code: "DE", name: "Delaware" },
-  { code: "FL", name: "Florida" },
-  { code: "GA", name: "Georgia" },
-  { code: "HI", name: "Hawaii" },
-  { code: "ID", name: "Idaho" },
-  { code: "IL", name: "Illinois" },
-  { code: "IN", name: "Indiana" },
-  { code: "IA", name: "Iowa" },
-  { code: "KS", name: "Kansas" },
-  { code: "KY", name: "Kentucky" },
-  { code: "LA", name: "Louisiana" },
-  { code: "ME", name: "Maine" },
-  { code: "MD", name: "Maryland" },
-  { code: "MA", name: "Massachusetts" },
-  { code: "MI", name: "Michigan" },
-  { code: "MN", name: "Minnesota" },
-  { code: "MS", name: "Mississippi" },
-  { code: "MO", name: "Missouri" },
-  { code: "MT", name: "Montana" },
-  { code: "NE", name: "Nebraska" },
-  { code: "NV", name: "Nevada" },
-  { code: "NH", name: "New Hampshire" },
-  { code: "NJ", name: "New Jersey" },
-  { code: "NM", name: "New Mexico" },
-  { code: "NY", name: "New York" },
-  { code: "NC", name: "North Carolina" },
-  { code: "ND", name: "North Dakota" },
-  { code: "OH", name: "Ohio" },
-  { code: "OK", name: "Oklahoma" },
-  { code: "OR", name: "Oregon" },
-  { code: "PA", name: "Pennsylvania" },
-  { code: "RI", name: "Rhode Island" },
-  { code: "SC", name: "South Carolina" },
-  { code: "SD", name: "South Dakota" },
-  { code: "TN", name: "Tennessee" },
-  { code: "TX", name: "Texas" },
-  { code: "UT", name: "Utah" },
-  { code: "VT", name: "Vermont" },
-  { code: "VA", name: "Virginia" },
-  { code: "WA", name: "Washington" },
-  { code: "WV", name: "West Virginia" },
-  { code: "WI", name: "Wisconsin" },
-  { code: "WY", name: "Wyoming" }
-    // Add more as needed
+    { code: 'AL', name: 'Alabama' },
+    { code: 'AK', name: 'Alaska' },
+    { code: 'AZ', name: 'Arizona' },
+    { code: 'AR', name: 'Arkansas' },
+    { code: 'CA', name: 'California' },
+    { code: 'CO', name: 'Colorado' },
+    { code: 'CT', name: 'Connecticut' },
+    { code: 'DE', name: 'Delaware' },
+    { code: 'FL', name: 'Florida' },
+    { code: 'GA', name: 'Georgia' },
+    { code: 'HI', name: 'Hawaii' },
+    { code: 'ID', name: 'Idaho' },
+    { code: 'IL', name: 'Illinois' },
+    { code: 'IN', name: 'Indiana' },
+    { code: 'IA', name: 'Iowa' },
+    { code: 'KS', name: 'Kansas' },
+    { code: 'KY', name: 'Kentucky' },
+    { code: 'LA', name: 'Louisiana' },
+    { code: 'ME', name: 'Maine' },
+    { code: 'MD', name: 'Maryland' },
+    { code: 'MA', name: 'Massachusetts' },
+    { code: 'MI', name: 'Michigan' },
+    { code: 'MN', name: 'Minnesota' },
+    { code: 'MS', name: 'Mississippi' },
+    { code: 'MO', name: 'Missouri' },
+    { code: 'MT', name: 'Montana' },
+    { code: 'NE', name: 'Nebraska' },
+    { code: 'NV', name: 'Nevada' },
+    { code: 'NH', name: 'New Hampshire' },
+    { code: 'NJ', name: 'New Jersey' },
+    { code: 'NM', name: 'New Mexico' },
+    { code: 'NY', name: 'New York' },
+    { code: 'NC', name: 'North Carolina' },
+    { code: 'ND', name: 'North Dakota' },
+    { code: 'OH', name: 'Ohio' },
+    { code: 'OK', name: 'Oklahoma' },
+    { code: 'OR', name: 'Oregon' },
+    { code: 'PA', name: 'Pennsylvania' },
+    { code: 'RI', name: 'Rhode Island' },
+    { code: 'SC', name: 'South Carolina' },
+    { code: 'SD', name: 'South Dakota' },
+    { code: 'TN', name: 'Tennessee' },
+    { code: 'TX', name: 'Texas' },
+    { code: 'UT', name: 'Utah' },
+    { code: 'VT', name: 'Vermont' },
+    { code: 'VA', name: 'Virginia' },
+    { code: 'WA', name: 'Washington' },
+    { code: 'WV', name: 'West Virginia' },
+    { code: 'WI', name: 'Wisconsin' },
+    { code: 'WY', name: 'Wyoming' },
   ];
 
   setQuickReplies(
@@ -193,7 +203,7 @@ async function askState() {
 
 async function askEmploymentStatus() {
   await assistantReply(
-    "Got it. One more thing—are you working full-time or part-time?"
+    'Got it. One more thing—are you working full-time or part-time?'
   );
 
   setQuickReplies([
@@ -205,10 +215,10 @@ async function askEmploymentStatus() {
 
 async function showResultsSummary() {
   await assistantReplyChunks([
-  "Thank you.",
-  "I’m pulling together federal and state leave laws that may apply.",
-  "One moment while I check your state and situation."
-]);
+    'Thank you.',
+    'I’m pulling together federal and state leave laws that may apply.',
+    'One moment while I check your state and situation.',
+  ]);
 
   const stateCode = wizardState.state === 'unknown' ? null : wizardState.state;
 
@@ -218,7 +228,6 @@ async function showResultsSummary() {
   const combined = [...federal, ...state];
 
   const filtered = combined.filter((law) => {
-    // Simple heuristic based on tags and reason
     const tags = (law.tags || []).map((t) => t.toLowerCase());
     const reason = wizardState.reason;
 
@@ -243,18 +252,16 @@ async function showResultsSummary() {
     return true;
   });
 
- if (!filtered.length) {
-  assistantReply(
-    "I wasn’t able to find specific laws that match your situation from the data I have. You can still use the search and filters below to explore more."
-  );
-} else {
-  assistantReply(
-    `I found ${filtered.length} leave laws that may be relevant. Here are the most relevant ones:`
-  );
-
-  // Show top 3 laws in chat
-  sendLawsToChat(filtered.slice(0, 3));
-}
+  if (!filtered.length) {
+    await assistantReply(
+      'I wasn’t able to find specific laws that match your situation from the data I have. You can still use the search and filters below to explore more.'
+    );
+  } else {
+    await assistantReply(
+      `I found ${filtered.length} leave laws that may be relevant. Here are the most relevant ones:`
+    );
+    sendLawsToChat(filtered.slice(0, 3));
+  }
 
   const event = new CustomEvent('wizardResults', {
     detail: {
@@ -271,12 +278,12 @@ async function showResultsSummary() {
     },
   ]);
 
-  // Special handling for restart
   quickReplyContainer.querySelectorAll('button').forEach((btn) => {
     if (btn.dataset.value === 'restart') {
       btn.addEventListener('click', () => startWizard());
     }
   });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   startWizard();
