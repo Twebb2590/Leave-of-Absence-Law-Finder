@@ -50,19 +50,15 @@ function sendLawsToChat(laws) {
 
   chatContainer.scrollTop = chatContainer.scrollHeight;
 }
-async function assistantReply(text) {
-  const base = 300;
-  const perChar = 20;
-  const max = 2000;
-
-  let delay = base + text.length * perChar;
-  delay = Math.min(delay, max);
+async function assistantReplyChunks(chunks, min = 400, max = 1200) {
+  for (const chunk of chunks) {
+    const delay = Math.floor(Math.random() * (max - min + 1)) + min;
   
   showTypingIndicator();
   await new Promise(resolve => setTimeout(resolve, delay));
   hideTypingIndicator();
  
-  addMessage(text, 'assistant');
+  addMessage(chunk, 'assistant');
 }
 
 async function handleQuickReply(value) {
