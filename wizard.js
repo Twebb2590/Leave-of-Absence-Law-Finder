@@ -204,9 +204,11 @@ async function askEmploymentStatus() {
 }
 
 async function showResultsSummary() {
-  await assistantReply(
-    "Thank you. I’ll pull together federal and state leave laws that may apply to your situation."
-  );
+  await assistantReplyChunks([
+  "Thank you.",
+  "I’m pulling together federal and state leave laws that may apply.",
+  "One moment while I check your state and situation."
+]);
 
   const stateCode = wizardState.state === 'unknown' ? null : wizardState.state;
 
