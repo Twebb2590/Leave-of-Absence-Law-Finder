@@ -246,7 +246,11 @@ async function showResultsSummary() {
 
   const combined = [...federal, ...state];
 
-  const filtered = combined.filter((law) => {
+  const eligibility = checkEligibility(law, wizardState);
+law.eligibility_result = eligibility;
+  
+  const filtered = combined
+    .filter((law) => {
     const tags = (law.tags || []).map((t) => t.toLowerCase());
     const reason = wizardState.reason;
 
@@ -258,8 +262,13 @@ async function showResultsSummary() {
     if (reason === 'court') return tags.some((t) => t.includes('jury') || t.includes('court'));
 
     return true;
-  });
+  })
 
+.map(law => {
+    law.eligibility_result = checkEligibility(law, wizardState);
+    return law;
+  });
+  
   if (!filtered.length) {
     await assistantReply(
       "I wasn’t able to find specific laws that match your situation from the data I have. You can still use the search and filters below to explore more."
