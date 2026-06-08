@@ -81,14 +81,14 @@ async function handleQuickReply(value) {
   }
 }
 
-function startWizard() {
+async function startWizard() {
   chatContainer.innerHTML = '';
   quickReplyContainer.innerHTML = '';
   wizardState.reason = null;
   wizardState.state = null;
   wizardState.employmentStatus = null;
 
-  assistantReply  (
+ await assistantReply(
     "Hi. I’m here to help you understand your leave options. What’s the main reason you’re looking into leave right now?"
   );
 
@@ -103,7 +103,7 @@ function startWizard() {
   ]);
 }
 function showTypingIndicator() {
-  const chat = document.getElementById("chat");
+  const chat = document.getElementById("chatContainer");
   const indicator = document.createElement("div");
   indicator.className = "typing-indicator";
   indicator.id = "typingIndicator";
@@ -121,8 +121,8 @@ function hideTypingIndicator() {
   if (indicator) indicator.remove();
 }
 
-function askState() {
-  assistantReply(
+async function askState() {
+  await assistantReply(
     "Thank you for sharing that. Which state do you work in? This helps me find the right laws."
   );
 
@@ -187,8 +187,8 @@ function askState() {
   );
 }
 
-function askEmploymentStatus() {
-  assistantReply(
+async function askEmploymentStatus() {
+  await assistantReply(
     "Got it. One more thing—are you working full-time or part-time?"
   );
 
@@ -200,7 +200,7 @@ function askEmploymentStatus() {
 }
 
 async function showResultsSummary() {
-  assistantReply(
+  await assistantReply(
     "Thank you. I’ll pull together federal and state leave laws that may apply to your situation."
   );
 
