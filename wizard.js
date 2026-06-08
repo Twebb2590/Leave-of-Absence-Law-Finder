@@ -27,6 +27,35 @@ function setQuickReplies(options) {
     quickReplyContainer.appendChild(btn);
   });
 }
+function mapTypedReason(text) {
+    text = text.toLowerCase();
+    if (text.includes("sick") || text.includes("ill")) return "sick";
+    if (text.includes("preg")) return "pregnancy";
+    if (text.includes("family")) return "family_care";
+    if (text.includes("military")) return "military";
+    if (text.includes("court") || text.includes("jury")) return "court";
+    if (text.includes("bereav")) return "bereavement";
+    return "other";
+}
+
+function mapTypedState(text) {
+    const states = Object.keys(STATE_LIST);
+    const match = states.find(s => text.toLowerCase().includes(s.toLowerCase()));
+    return match || "unknown";
+}
+
+function mapTypedEmployment(text) {
+    text = text.toLowerCase();
+    if (text.includes("full")) return "full_time";
+    if (text.includes("part")) return "part_time";
+    if (text.includes("self")) return "self_employed";
+    return "unknown";
+}
+function addUserMessage(text) {
+    const bubble = createChatBubble(text, "user");
+    chatContainer.appendChild(bubble);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
 
 // Format law text for chat
 function lawToChatText(law) {
@@ -87,6 +116,20 @@ async function assistantReply(text, min = 600, max = 1400) {
   await new Promise(resolve => setTimeout(resolve, delay));
   hideTypingIndicator();
   addMessage(text, 'assistant');
+}
+async function answerGeneralQuestion(text) {
+    // Very simple example — you can expand this later
+    if (text.toLowerCase().includes("eligible") || text.toLowerCase().includes("qualify")) {
+        return assistantReply("Eligibility depends on your reason for leave, your state, and your employment status. You can restart the wizard anytime to check again.");
+    }
+
+    if (text.toLowerCase().includes("restart")) {
+        startWizard();
+        return;
+    }
+
+    // Default fallback
+    return assistantReply("I’m here to help with leave laws. You can ask things like:\n• Do I qualify for FMLA?\n• What leave laws apply in California?\n• Is pregnancy leave paid?");
 }
 
 // Assistant reply in chunks (mid‑reply pauses)
