@@ -50,6 +50,12 @@ function sendLawsToChat(laws) {
 
   chatContainer.scrollTop = chatContainer.scrollHeight;
 }
+async function assistantReply(text, delay = 800) {
+  showTypingIndicator();
+  await new Promise(resolve => setTimeout(resolve, delay));
+  hideTypingIndicator();
+  addMessage(text, 'assistant');
+}
 
 async function handleQuickReply(value) {
   // Determine which step we’re in based on missing fields
@@ -82,7 +88,7 @@ function startWizard() {
   wizardState.state = null;
   wizardState.employmentStatus = null;
 
-  addMessage(
+  assistantReply  (
     "Hi. I’m here to help you understand your leave options. What’s the main reason you’re looking into leave right now?"
   );
 
@@ -116,7 +122,7 @@ function hideTypingIndicator() {
 }
 
 function askState() {
-  addMessage(
+  assistantReply(
     "Thank you for sharing that. Which state do you work in? This helps me find the right laws."
   );
 
@@ -182,7 +188,7 @@ function askState() {
 }
 
 function askEmploymentStatus() {
-  addMessage(
+  assistantReply(
     "Got it. One more thing—are you working full-time or part-time?"
   );
 
@@ -194,7 +200,7 @@ function askEmploymentStatus() {
 }
 
 async function showResultsSummary() {
-  addMessage(
+  assistantReply(
     "Thank you. I’ll pull together federal and state leave laws that may apply to your situation."
   );
 
@@ -232,11 +238,11 @@ async function showResultsSummary() {
   });
 
  if (!filtered.length) {
-  addMessage(
+  assistantReply(
     "I wasn’t able to find specific laws that match your situation from the data I have. You can still use the search and filters below to explore more."
   );
 } else {
-  addMessage(
+  assistantReply(
     `I found ${filtered.length} leave laws that may be relevant. Here are the most relevant ones:`
   );
 
