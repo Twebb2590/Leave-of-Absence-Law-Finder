@@ -1,4 +1,4 @@
-const BASE = `${window.location.origin}${window.location.pathname.replace(/\/$/, "")}/`;
+const BASE = `${window.location.origin}${window.location.pathname.split("?")[0].replace(/\/$/, "")}/`;
 
 export async function loadFederalLaws() {
   try {
@@ -12,7 +12,8 @@ export async function loadFederalLaws() {
       level: "Federal",
       state: "US",
       description: law.description,
-      link: law.official_url
+      link: law.official_url,
+      tags: law.tags || []
     }));
   } catch (e) {
     console.error(e);
@@ -35,10 +36,11 @@ export async function loadStateLaws(stateCode) {
       level: "State",
       state: stateCode,
       description: law.description,
-      link: law.official_url
+      link: law.official_url,
+      tags: law.tags || []
     }));
   } catch (e) {
-    console.error(e);
+    console.error(`State law load failed for ${stateCode}:`, e);
     return [];
   }
 }
