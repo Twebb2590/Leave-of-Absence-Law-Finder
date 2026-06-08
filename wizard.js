@@ -30,12 +30,17 @@ function setQuickReplies(options) {
 
 // Format law text for chat
 function lawToChatText(law) {
+  const elig = law.eligibility_result;
+  
   return `
 <b>${law.title}</b>
 
 ${law.description}
 
 <b>Job Protection:</b> ${law.job_protection ? "Yes" : "No"}
+
+<b>Eligibility:</b>
+${elig.eligible ? "You likely qualify." : "You may not qualify."}
 
 <b>You can read the official details here:</b>
 <a href="${law.link}" target="_blank">${law.link}</a>
