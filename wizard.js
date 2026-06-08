@@ -305,6 +305,16 @@ async function showResultsSummary() {
       btn.addEventListener('click', () => startWizard());
     }
   });
+  const userInput = document.getElementById("userInput");
+const sendBtn = document.getElementById("sendBtn");
+
+sendBtn.addEventListener("click", () => {
+    const text = userInput.value.trim();
+    if (!text) return;
+    handleUserTypedMessage(text);
+    userInput.value = "";
+});
+
 }
 
 // Start wizard on page load
