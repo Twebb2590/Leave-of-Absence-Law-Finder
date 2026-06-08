@@ -248,11 +248,7 @@ async function showResultsSummary() {
 
   const federal = await loadFederalLaws();
   const state = stateCode ? await loadStateLaws(stateCode) : [];
-
   const combined = [...federal, ...state];
-
-  const eligibility = checkEligibility(law, wizardState);
-law.eligibility_result = eligibility;
   
   const filtered = combined
     .filter((law) => {
@@ -270,21 +266,27 @@ law.eligibility_result = eligibility;
   })
 
 .map(law => {
+  // Apply eligibility to each law
     law.eligibility_result = checkEligibility(law, wizardState);
     return law;
   });
   
-  if (!filtered.length) {
-    await assistantReply(
-      "I wasn’t able to find specific laws that match your situation from the data I have. You can still use the search and filters below to explore more."
-    );
+   // No matching laws
+    if (!filtered.length) {
+        await assistantReply(
+            "I wasn’t able to find specific laws that match your situation from the data I have. " +
+            "You can still use the search and filters below to explore more."
+        );
   } else {
     await assistantReply(
       `I found ${filtered.length} leave laws that may be relevant. Here are the most relevant ones:`
     );
+
+      // Show top 3
     sendLawsToChat(filtered.slice(0, 3));
   }
 
+  // Dispatch event for UI
   const event = new CustomEvent('wizardResults', {
     detail: {
       laws: filtered,
@@ -293,6 +295,7 @@ law.eligibility_result = eligibility;
   });
   window.dispatchEvent(event);
 
+  // Restart option
   setQuickReplies([
     { label: 'Start over', value: 'restart' },
   ]);
