@@ -124,6 +124,28 @@ async function handleQuickReply(value) {
     await showResultsSummary();
     return;
   }
+}async function handleUserTypedMessage(text) {
+    // Show the user's message in the chat
+    addUserMessage(text);
+
+    // If the wizard is still collecting required info, treat typed text as answers
+    if (!wizardState.reason) {
+        wizardState.reason = mapTypedReason(text);
+        return askForState();
+    }
+
+    if (!wizardState.state) {
+        wizardState.state = mapTypedState(text);
+        return askForEmploymentStatus();
+    }
+
+    if (!wizardState.employmentStatus) {
+        wizardState.employmentStatus = mapTypedEmployment(text);
+        return showResultsSummary();
+    }
+
+    // Otherwise, treat it as a general question
+    return answerGeneralQuestion(text);
 }
 
 // Start wizard
