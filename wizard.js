@@ -50,10 +50,13 @@ function sendLawsToChat(laws) {
 
   chatContainer.scrollTop = chatContainer.scrollHeight;
 }
-async function assistantReply(text, delay = 800) {
+async function assistantReply(text, min = 600, max = 1400) {
+  const delay = Math.floor(Math.random() * (max - min + 1)) + min;
+  
   showTypingIndicator();
   await new Promise(resolve => setTimeout(resolve, delay));
   hideTypingIndicator();
+ 
   addMessage(text, 'assistant');
 }
 
