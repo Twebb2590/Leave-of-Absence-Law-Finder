@@ -24,6 +24,12 @@
       }
     ],
     "job_protection": true,
+    "eligibility": {
+      "employer_size": "50+ employees within 75 miles",
+      "employee_tenure": "12 months of employment",
+      "hours_worked": "1,250 hours in the past 12 months",
+      "notes": "Employee must work at a covered employer and meet all three criteria."
+    },
     "official_url": "https://www.dol.gov/agencies/whd/fmla/",
     "last_updated": "2024-01-01T00:00:00Z"
   },
@@ -42,6 +48,13 @@
       }
     ],
     "job_protection": true,
+    "eligibility": {
+      "employer_size": "50+ employees within 75 miles",
+      "employee_tenure": "12 months of employment",
+      "hours_worked": "1,250 hours in the past 12 months",
+      "relationship_requirement": "Must be the spouse, parent, child, or next of kin of the servicemember",
+      "notes": "Uses the same eligibility rules as FMLA, with additional family relationship requirements."
+    },
     "official_url": "https://www.dol.gov/agencies/whd/fmla/military-caregiver-leave",
     "last_updated": "2024-01-01T00:00:00Z"
   },
@@ -60,6 +73,12 @@
       }
     ],
     "job_protection": true,
+    "eligibility": {
+      "employer_size": "All employers",
+      "employee_tenure": "No minimum requirement",
+      "hours_worked": "No minimum requirement",
+      "notes": "Applies to all employees summoned for federal jury service."
+    },
     "official_url": "https://www.eeoc.gov/statutes/federal-jury-duty-leave",
     "last_updated": "2024-01-01T00:00:00Z"
   },
@@ -78,6 +97,12 @@
       }
     ],
     "job_protection": false,
+    "eligibility": {
+      "employer_size": "Varies by state",
+      "employee_tenure": "Varies by state",
+      "hours_worked": "Varies by state",
+      "notes": "No federal eligibility rules; protections depend entirely on state law."
+    },
     "official_url": "https://www.eac.gov/voters/registration-and-voting-information",
     "last_updated": "2024-01-01T00:00:00Z"
   }
