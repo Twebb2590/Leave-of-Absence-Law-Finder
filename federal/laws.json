@@ -23,6 +23,7 @@
         "paid": false
       }
     ],
+    "job_protection": true,
     "official_url": "https://www.dol.gov/agencies/whd/fmla/",
     "last_updated": "2024-01-01T00:00:00Z"
   },
@@ -40,6 +41,7 @@
         "paid": false
       }
     ],
+    "job_protection": true,
     "official_url": "https://www.dol.gov/agencies/whd/fmla/military-caregiver-leave",
     "last_updated": "2024-01-01T00:00:00Z"
   },
@@ -57,6 +59,7 @@
         "paid": true
       }
     ],
+    "job_protection": true,
     "official_url": "https://www.eeoc.gov/statutes/federal-jury-duty-leave",
     "last_updated": "2024-01-01T00:00:00Z"
   },
@@ -74,6 +77,7 @@
         "paid": true
       }
     ],
+    "job_protection": false,
     "official_url": "https://www.eac.gov/voters/registration-and-voting-information",
     "last_updated": "2024-01-01T00:00:00Z"
   }
