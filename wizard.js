@@ -277,7 +277,6 @@ async function showResultsSummary() {
       btn.addEventListener('click', () => startWizard());
     }
   });
-}
 
 document.addEventListener('DOMContentLoaded', () => {
   startWizard();
