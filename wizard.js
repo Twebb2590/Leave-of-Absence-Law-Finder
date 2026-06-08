@@ -50,8 +50,13 @@ function sendLawsToChat(laws) {
 
   chatContainer.scrollTop = chatContainer.scrollHeight;
 }
-async function assistantReply(text, min = 600, max = 1400) {
-  const delay = Math.floor(Math.random() * (max - min + 1)) + min;
+async function assistantReply(text) {
+  const base = 300;
+  const perChar = 20;
+  const max = 2000;
+
+  let delay = base + text.length * perChar;
+  delay = Math.min(delay, max);
   
   showTypingIndicator();
   await new Promise(resolve => setTimeout(resolve, delay));
