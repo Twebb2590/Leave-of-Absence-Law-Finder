@@ -92,7 +92,7 @@ async function startWizard() {
   wizardState.state = null;
   wizardState.employmentStatus = null;
 
- await assistantReply(
+ assistantReply(
     "Hi. I’m here to help you understand your leave options. What’s the main reason you’re looking into leave right now?"
   );
 
