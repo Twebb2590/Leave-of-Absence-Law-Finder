@@ -198,6 +198,39 @@ async function askEmploymentStatus() {
   ]);
 }
 
+function checkEligibility(law, wizardState) {
+  const result = {
+    eligible: true,
+    reasons: []
+  };
+
+  const e = law.eligibility || {};
+
+  // Employer size
+  if (e.employer_size && e.employer_size.includes("50+") && wizardState.employmentStatus === "part_time") {
+    result.eligible = false;
+    result.reasons.push("Employer must have 50+ employees within 75 miles.");
+  }
+
+  // Tenure requirement
+  if (e.employee_tenure && e.employee_tenure.includes("12 months")) {
+    // You can expand this later when you ask for tenure
+    result.reasons.push("Requires 12 months of employment.");
+  }
+
+  // Hours worked
+  if (e.hours_worked && e.hours_worked.includes("1,250")) {
+    result.reasons.push("Requires 1,250 hours worked in the past 12 months.");
+  }
+
+  // Relationship requirement (military caregiver)
+  if (e.relationship_requirement) {
+    result.reasons.push(e.relationship_requirement);
+  }
+
+  return result;
+}
+
 // Show results summary
 async function showResultsSummary() {
   await assistantReplyChunks([
