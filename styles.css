@@ -127,6 +127,16 @@ body {
     gap: 0.5rem;
     flex-wrap: wrap;
 }
+.user-message {
+    background: #d1e7ff;
+    color: #003366;
+    align-self: flex-end;
+}
+
+.bot-message {
+    background: #f1f1f1;
+    color: #333;
+}
 
 /* Quick Reply Animation */
 .quick-reply-btn {
