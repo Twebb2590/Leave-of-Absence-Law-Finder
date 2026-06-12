@@ -399,6 +399,9 @@ document.getElementById("sendBtn").addEventListener("click", () => {
     // Show user message in chat
     addUserMessage(text);
 
+ // Advance wizard just like a button click
+    nextStep();
+  
     // Optional: bot responds naturally
     botSay("Thanks — I’ll keep that in mind.");
 
