@@ -386,3 +386,22 @@ sendBtn.addEventListener("click", () => {
 document.addEventListener('DOMContentLoaded', () => {
   startWizard();
 });
+// -----------------------------
+// Manual Send Button (User Input)
+// -----------------------------
+
+document.getElementById("sendBtn").addEventListener("click", () => {
+    const input = document.getElementById("userInput");
+    const text = input.value.trim();
+
+    if (text === "") return;
+
+    // Show user message in chat
+    addUserMessage(text);
+
+    // Optional: bot responds naturally
+    botSay("Thanks — I’ll keep that in mind.");
+
+    // Clear input
+    input.value = "";
+});
