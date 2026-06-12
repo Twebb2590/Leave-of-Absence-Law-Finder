@@ -405,3 +405,8 @@ document.getElementById("sendBtn").addEventListener("click", () => {
     // Clear input
     input.value = "";
 });
+document.getElementById("userInput").addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        document.getElementById("sendBtn").click();
+    }
+});
