@@ -54,50 +54,66 @@
   <script type="module">
     import { leaveData } from './data-loader.js';
 
-    const stateASelect = document.getElementById("stateA");
-    const stateBSelect = document.getElementById("stateB");
-    const output = document.getElementById("comparisonOutput");
+const stateASelect = document.getElementById("stateA");
+const stateBSelect = document.getElementById("stateB");
+const output = document.getElementById("comparisonOutput");
 
-    // Populate dropdowns
-    Object.keys(leaveData.states).forEach(state => {
-      const optA = document.createElement("option");
-      optA.value = state;
-      optA.textContent = state;
+// Populate dropdowns
+Object.keys(leaveData.states).forEach(state => {
+  stateASelect.innerHTML += `<option value="${state}">${state}</option>`;
+  stateBSelect.innerHTML += `<option value="${state}">${state}</option>`;
+});
 
-      const optB = document.createElement("option");
-      optB.value = state;
-      optB.textContent = state;
+function formatValue(value) {
+  if (value === true) return `<span class="yes">✔ Yes</span>`;
+  if (value === false) return `<span class="no">✘ No</span>`;
+  return value;
+}
 
-      stateASelect.appendChild(optA);
-      stateBSelect.appendChild(optB);
-    });
+document.getElementById("compareBtn").addEventListener("click", () => {
+  const a = stateASelect.value;
+  const b = stateBSelect.value;
 
-    document.getElementById("compareBtn").addEventListener("click", () => {
-      const a = stateASelect.value;
-      const b = stateBSelect.value;
+  if (!a || !b) {
+    output.innerHTML = "<p>Please select two states.</p>";
+    return;
+  }
 
-      if (!a || !b) {
-        output.innerHTML = "<p>Please select two states.</p>";
-        return;
-      }
+  const lawsA = leaveData.states[a];
+  const lawsB = leaveData.states[b];
 
-      const lawsA = leaveData.states[a];
-      const lawsB = leaveData.states[b];
+  // Build comparison rows dynamically
+  const categories = Object.keys(lawsA);
 
-      output.innerHTML = `
-        <h3>${a} vs ${b}</h3>
-        <div class="comparison-grid">
-          <div>
-            <h4>${a}</h4>
-            <pre>${JSON.stringify(lawsA, null, 2)}</pre>
-          </div>
-          <div>
-            <h4>${b}</h4>
-            <pre>${JSON.stringify(lawsB, null, 2)}</pre>
-          </div>
-        </div>
-      `;
-    });
+  const cardA = categories.map(cat => `
+    <div class="compare-row">
+      <div class="compare-label">${cat}</div>
+      <div class="compare-value">${formatValue(lawsA[cat])}</div>
+    </div>
+  `).join("");
+
+  const cardB = categories.map(cat => `
+    <div class="compare-row">
+      <div class="compare-label">${cat}</div>
+      <div class="compare-value">${formatValue(lawsB[cat])}</div>
+    </div>
+  `).join("");
+
+  output.innerHTML = `
+    <div class="comparison-grid">
+      <div class="compare-card">
+        <h3>${a}</h3>
+        ${cardA}
+      </div>
+
+      <div class="compare-card">
+        <h3>${b}</h3>
+        ${cardB}
+      </div>
+    </div>
+  `;
+});
+
   </script>
 
   <!-- Sidebar JS -->
