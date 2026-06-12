@@ -54,14 +54,14 @@
   <!-- Load your existing data + logic -->
   <script type="module" src="data-loader.js"></script>
   <script type="module">
-    import { leaveData } from './data-loader.js';
+    import { states } from './data-loader.js';
 
 const stateASelect = document.getElementById("stateA");
 const stateBSelect = document.getElementById("stateB");
 const output = document.getElementById("comparisonOutput");
 
 // Populate dropdowns
-Object.keys(leaveData.states).forEach(state => {
+Object.keys(states).forEach(state => {
   stateASelect.innerHTML += `<option value="${state}">${state}</option>`;
   stateBSelect.innerHTML += `<option value="${state}">${state}</option>`;
 });
