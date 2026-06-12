@@ -288,3 +288,58 @@ body {
     padding: 1rem;
     background: #eee;
 }
+/* -----------------------------
+   Chat Wizard Styles
+------------------------------*/
+
+#chat {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    background: #fafafa;
+    border-radius: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.message {
+    padding: 10px 14px;
+    border-radius: 8px;
+    max-width: 80%;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.bot-message {
+    background: #f1f1f1;
+    color: #333;
+    align-self: flex-start;
+}
+
+.user-message {
+    background: #d1e7ff;
+    color: #003366;
+    align-self: flex-end;
+}
+
+#wizard {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.wizard-btn {
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: none;
+    background: #005bbb;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.wizard-btn:hover {
+    background: #004999;
+}
