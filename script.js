@@ -21,6 +21,10 @@ let currentFilters = {
   includeFederal: true,
   includeState: true,
 };
+if (document.body.classList.contains("wizard-page")) {
+  // Skip all search logic
+  return;
+}
 
 // -----------------------------
 // Only run FILTER PANEL if it exists
