@@ -57,7 +57,7 @@ const steps = [
     },
     {
         id: "employment",
-        question: "Got it. What’s your employment situation?",
+        question: "I'm here to help. What’s your employment status?",
         options: [
             "Full-time",
             "Part-time",
@@ -67,7 +67,7 @@ const steps = [
     },
     {
         id: "location",
-        question: "Which state do you work in?",
+        question: "Which state do you live in?",
         options: [
             "California",
             "New York",
@@ -111,7 +111,7 @@ function nextStep() {
 }
 
 function finishWizard() {
-    botSay("Thanks — based on what you shared, here are the leave laws that may apply to you.");
+    botSay("Thank you — based on what you shared, here are the leave laws that may apply to you.");
     // Your existing results logic stays here
 }
 
