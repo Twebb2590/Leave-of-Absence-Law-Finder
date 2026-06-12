@@ -349,3 +349,60 @@ body {
         display: flex; /* show when toggled */
     }
 }
+/* -----------------------------
+   Pretty State Comparison
+------------------------------*/
+
+.comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.compare-card {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.compare-card h3 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.compare-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.compare-row:last-child {
+    border-bottom: none;
+}
+
+.compare-label {
+    font-weight: bold;
+}
+
+.compare-value {
+    text-align: right;
+}
+
+.yes {
+    color: #2e8b57;
+    font-weight: bold;
+}
+
+.no {
+    color: #c0392b;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .comparison-grid {
+        grid-template-columns: 1fr;
+    }
+}
