@@ -413,3 +413,22 @@ document.getElementById("userInput").addEventListener("keypress", (e) => {
         document.getElementById("sendBtn").click();
     }
 });
+function showWizardResults(laws) {
+  const container = document.getElementById("wizardResultsContainer");
+  container.innerHTML = "";
+
+  laws.forEach(law => {
+    const card = document.createElement("div");
+    card.className = "law-card";
+    card.innerHTML = `
+      <h3>${law.title}</h3>
+      <p>${law.description}</p>
+      <p><strong>State:</strong> ${law.state}</p>
+      <p><strong>Type:</strong> ${law.type}</p>
+    `;
+    container.appendChild(card);
+  });
+
+  container.scrollIntoView({ behavior: "smooth" });
+}
+showWizardResults(matchedLaws);
