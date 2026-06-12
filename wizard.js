@@ -104,7 +104,6 @@ function nextStep() {
     currentStep++;
 
     if (currentStep < steps.length) {
-        botSay(steps[currentStep].question);
         renderStep(currentStep);
     } else {
         finishWizard();
