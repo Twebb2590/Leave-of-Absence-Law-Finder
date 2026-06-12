@@ -4,7 +4,6 @@
 
 // Shared data
 import { allLaws } from "./data-loader.js";
-import { renderFilterPanel } from "./FilterPanel.js";
 
 // Detect elements safely
 const filterPanelContainer = document.getElementById("filterPanelContainer");
@@ -21,8 +20,9 @@ let currentFilters = {
   includeFederal: true,
   includeState: true,
 };
+
+// If this is the wizard page, skip search logic
 if (document.body.classList.contains("wizard-page")) {
-  // Skip all search logic
   return;
 }
 
