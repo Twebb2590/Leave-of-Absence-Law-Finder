@@ -29,8 +29,8 @@ function setQuickReplies(options) {
 }
 function mapTypedReason(text) {
     text = text.toLowerCase();
-    if (text.includes("sick") || text.includes("ill")) return "sick";
-    if (text.includes("preg")) return "pregnancy";
+    if (text.includes("sick") || text.includes("ill")) return "I'm sick.";
+    if (text.includes("preg")) return "I'm pregnant.";
     if (text.includes("family")) return "family_care";
     if (text.includes("military")) return "military";
     if (text.includes("court") || text.includes("jury")) return "court.";
