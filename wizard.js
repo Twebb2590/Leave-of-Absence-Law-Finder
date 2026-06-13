@@ -204,7 +204,7 @@ async function startWizard() {
   );
 
   setQuickReplies([
-    { label: 'I’m sick or injured', value: 'sick' },
+    { label: 'I’m sick or injured', value: 'I'm sick or injured.' },
     { label: 'Pregnancy or birth', value: 'pregnancy' },
     { label: 'Caring for a family member', value: 'family_care' },
     { label: 'Bereavement or loss', value: 'bereavement' },
