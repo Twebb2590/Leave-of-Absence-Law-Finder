@@ -29,11 +29,11 @@ function setQuickReplies(options) {
 }
 function mapTypedReason(text) {
     text = text.toLowerCase();
-    if (text.includes("sick") || text.includes("ill")) return "sick";
-    if (text.includes("preg")) return "pregnancy";
-    if (text.includes("family")) return "family_care";
+    if (text.includes("sick") || text.includes("ill")) return "I'm sick or injured.";
+    if (text.includes("preg")) return "I'm pregnant.";
+    if (text.includes("family")) return "I need to care for a family member.";
     if (text.includes("military")) return "military";
-    if (text.includes("court") || text.includes("jury")) return "court";
+    if (text.includes("court") || text.includes("jury")) return "I have to go to court or jury duty.";
     if (text.includes("bereav")) return "bereavement";
     return "other";
 }
