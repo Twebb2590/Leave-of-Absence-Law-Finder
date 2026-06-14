@@ -2,6 +2,7 @@
 import { createChatBubble } from './components/ChatBubble.js';
 import { createQuickReply } from './components/QuickReply.js';
 import { loadFederalLaws, loadStateLaws } from './data-loader.js';
+import { states } from "./states/state-list.js";
 
 const chatContainer = document.getElementById('chatContainer');
 const quickReplyContainer = document.getElementById('quickReplyContainer');
@@ -219,8 +220,6 @@ async function askState() {
   await assistantReply(
     "Thank you for sharing that. Which state do you work in? This helps me find the right laws."
   );
-
-import { states } from "./states/state-list.js";
 
   setQuickReplies(
     states.map((s) => ({ label: s.name, value: s.code })).concat([
