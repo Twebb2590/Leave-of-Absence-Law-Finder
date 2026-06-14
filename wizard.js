@@ -314,6 +314,7 @@ async function showResultsSummary() {
             "I wasn’t able to find specific laws that match your situation from the data I have. " +
             "You can still use the search and filters below to explore more."
         );
+      return;
   } 
   
       await assistantReply(
@@ -332,7 +333,7 @@ async function showResultsSummary() {
     },
   });
   window.dispatchEvent(event);
-
+}
   // Restart option
   setQuickReplies([
     { label:"Start over", value: "Let's try again." },
