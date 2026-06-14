@@ -329,24 +329,20 @@ animation: 250ms ease 460.847ms 1 normal forwards running quickReplyFadeIn;
 
 /* Mobile Styles */
 @media (max-width: 768px) {
-    .nav-toggle {
-        display: block; /* show hamburger */
-    }
-
     .nav-menu {
+        display: none;        /* HIDE MENU */
+        flex-direction: column;
+        gap: 15px;
+        background: #005bbb;
+        padding: 20px;
         position: absolute;
         top: 60px;
         left: 0;
         right: 0;
-        background: #005bbb;
-        flex-direction: column;
-        display: none; /* hidden by default */
-        padding: 20px;
-        gap: 15px;
     }
 
     .nav-menu.active {
-        display: flex; /* show when toggled */
+        display: flex;        /* SHOW MENU WHEN ACTIVE */
     }
 }
 /* -----------------------------
