@@ -43,4 +43,11 @@ export async function loadStateLaws(stateCode) {
     console.error(`State law load failed for ${stateCode}:`, e);
     return [];
   }
+export async function allLaws() {
+  const federal = await loadFederalLaws();
+  const states = await Promise.all(
+    STATE_CODES.map(code => loadStateLaws(code))
+  );
+
+  return [...federal, ...states.flat()];
 }
