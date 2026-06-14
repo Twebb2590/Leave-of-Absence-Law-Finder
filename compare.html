@@ -133,7 +133,17 @@ document.getElementById("compareBtn").addEventListener("click", () => {
       sidebar.classList.remove("open");
       overlay.classList.remove("show");
     });
-  </script>
+ <script>
+  const navToggle = document.getElementById("navToggle");
+  const navMenu = document.getElementById("navMenu");
+
+  if (navToggle && navMenu) {
+    navToggle.addEventListener("click", () => {
+      navMenu.classList.toggle("active");
+    });
+  }
+</script>
+
 
 </body>
 </html>
