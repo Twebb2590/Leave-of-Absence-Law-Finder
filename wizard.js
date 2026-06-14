@@ -40,7 +40,7 @@ function mapTypedReason(text) {
 }
 
 function mapTypedState(text) {
-    const states = Object.keys(STATE_LIST);
+    const states = Object.keys(states);
     const match = states.find(s => text.toLowerCase().includes(s.toLowerCase()));
     return match || "unknown";
 }
