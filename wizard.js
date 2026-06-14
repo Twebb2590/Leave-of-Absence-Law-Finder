@@ -352,7 +352,7 @@ sendBtn.addEventListener("click", () => {
     handleUserTypedMessage(text);
     userInput.value = "";
 });
-}
+
 // Start wizard on page load
 document.addEventListener('DOMContentLoaded', () => {
   startWizard();
