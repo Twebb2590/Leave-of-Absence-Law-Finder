@@ -2,9 +2,6 @@
 // Multi‑Page Safe Script.js
 // -----------------------------
 
-// Shared data
-import { allLaws } from "./data-loader.js";
-
 // Detect elements safely
 const filterPanelContainer = document.getElementById("filterPanelContainer");
 const currentFiltersSummary = document.getElementById("currentFiltersSummary");
