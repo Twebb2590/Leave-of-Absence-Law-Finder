@@ -277,7 +277,7 @@ function checkEligibility(law, wizardState) {
   const e = law.eligibility || {};
 
   // Employer size
-  if (e.employer_size && e.employer_size.includes("50+") && wizardState.employmentStatus === "part_time") {
+  if (e.employer_size && e.employer_size.includes("50+") && wizardState.employmentStatus === "Part-time") {
     result.eligible = false;
     result.reasons.push("Employer must have 50+ employees within 75 miles.");
   }
