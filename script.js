@@ -21,10 +21,10 @@ let currentFilters = {
   includeState: true,
 };
 
-// If this is the wizard page, skip search logic
-if (document.body.classList.contains("wizard-page")) {
-  return;
+if (!document.body.classList.contains("wizard-page")) {
+    // put ALL your search logic inside here
 }
+
 
 // -----------------------------
 // Only run FILTER PANEL if it exists
