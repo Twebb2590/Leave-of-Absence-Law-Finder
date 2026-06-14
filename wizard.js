@@ -343,9 +343,15 @@ async function showResultsSummary() {
       btn.addEventListener('click', () => startWizard());
     }
   });
-  const userInput = document.getElementById("userInput");
+
+// Start wizard on page load
+document.addEventListener('DOMContentLoaded', () => {
+  startWizard();
+
+const userInput = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
 
+if (sendBtn && userInput) {  
 sendBtn.addEventListener("click", () => {
     const text = userInput.value.trim();
     if (!text) return;
@@ -353,16 +359,14 @@ sendBtn.addEventListener("click", () => {
     userInput.value = "";
 });
 
-// Start wizard on page load
-document.addEventListener('DOMContentLoaded', () => {
-  startWizard();
-});
-
-document.getElementById("userInput").addEventListener("keypress", (e) => {
+userInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
-        document.getElementById("sendBtn").click();
+        sendBtn.click();
     }
 });
+}
+});
+
 function showWizardResults(laws) {
   const container = document.getElementById("wizardResultsContainer");
   container.innerHTML = "";
