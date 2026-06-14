@@ -250,7 +250,7 @@ async function askState() {
 
   setQuickReplies(
     states.map((s) => ({ label: s.name, value: s.code })).concat([
-      { label: 'I’m not sure', value: 'I'm not sure right now.' },
+      { label: 'I’m not sure', value: "I'm not sure right now." },
     ])
   );
 }
