@@ -30,10 +30,10 @@ function setQuickReplies(options) {
 function mapTypedReason(text) {
     text = text.toLowerCase();
     if (text.includes("sick") || text.includes("ill")) return "I'm sick or injured..";
-    if (text.includes("preg")) return "I'm pregnant.";
+    if (text.includes("preg")) return "I'm pregnant or having a child.";
     if (text.includes("family")) return "I'm caring for a family member.";
     if (text.includes("military")) return "Military";
-    if (text.includes("court") || text.includes("jury")) return "court.";
+    if (text.includes("court") || text.includes("jury")) return "I have to go to court or jury duty.";
     if (text.includes("bereav")) return "Bereavement";
     return "Something else.";
 }
@@ -46,10 +46,10 @@ function mapTypedState(text) {
 
 function mapTypedEmployment(text) {
     text = text.toLowerCase();
-    if (text.includes("full")) return "full_time";
-    if (text.includes("part")) return "part_time";
-    if (text.includes("self")) return "self_employed";
-    return "unknown";
+    if (text.includes("full")) return "Full-time";
+    if (text.includes("part")) return "Part-time";
+    if (text.includes("self")) return "Self-employed";
+    return "I'm in between jobs right now.";
 }
 function addUserMessage(text) {
     const bubble = createChatBubble(text, "user");
