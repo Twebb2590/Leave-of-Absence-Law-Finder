@@ -139,8 +139,7 @@ body {
 }
 
 /* Quick Reply Animation */
-.quick-reply-btn {
-    animation: 250ms ease 314.431ms 1 normal forwards running quickReplyFadeIn;
+animation: 250ms ease 460.847ms 1 normal forwards running quickReplyFadeIn;
 }
 
 /* Slight stagger effect for multiple buttons */
