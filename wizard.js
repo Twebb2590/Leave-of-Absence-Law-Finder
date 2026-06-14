@@ -220,7 +220,7 @@ async function askState() {
     "Thank you for sharing that. Which state do you work in? This helps me find the right laws."
   );
 
-import { states } from "./wizard.js";
+import { states } from "./states/state-list.js";
 
   setQuickReplies(
     states.map((s) => ({ label: s.name, value: s.code })).concat([
