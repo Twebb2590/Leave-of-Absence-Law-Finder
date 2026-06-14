@@ -140,9 +140,7 @@ body {
 
 /* Quick Reply Animation */
 .quick-reply-btn {
-    opacity: 0;
-    transform: translateY(6px);
-    animation: quickReplyFadeIn 0.25s ease forwards;
+    animation: 250ms ease 314.431ms 1 normal forwards running quickReplyFadeIn;
 }
 
 /* Slight stagger effect for multiple buttons */
