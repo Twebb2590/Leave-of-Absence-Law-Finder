@@ -118,32 +118,6 @@ document.getElementById("compareBtn").addEventListener("click", () => {
 
   </script>
 
-  <!-- Sidebar JS -->
-  <script>
-    const sidebar = document.getElementById("sidebar");
-    const menuBtn = document.getElementById("menuBtn");
-    const overlay = document.getElementById("overlay");
-
-    menuBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("open");
-      overlay.classList.toggle("show");
-    });
-
-    overlay.addEventListener("click", () => {
-      sidebar.classList.remove("open");
-      overlay.classList.remove("show");
-    });
-
-  const navToggle = document.getElementById("navToggle");
-  const navMenu = document.getElementById("navMenu");
-
-  if (navToggle && navMenu) {
-    navToggle.addEventListener("click", () => {
-      navMenu.classList.toggle("active");
-    });
-  }
-</script>
-
 
 </body>
 </html>
