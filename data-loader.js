@@ -43,3 +43,4 @@ export async function loadStateLaws(stateCode) {
     console.error(`State law load failed for ${stateCode}:`, e);
     return [];
   }
+}
