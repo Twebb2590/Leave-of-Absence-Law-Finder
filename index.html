@@ -7,15 +7,6 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 
-  <script>
-  const navToggle = document.getElementById("navToggle");
-  const navMenu = document.getElementById("navMenu");
-
-  navToggle.addEventListener("click", () => {
-    navMenu.classList.toggle("active");
-  });
-</script>
-
 <body>
 
   <header class="header">
@@ -61,6 +52,14 @@
   </footer>
 
   <!-- Scripts -->
+    <script>
+  const navToggle = document.getElementById("navToggle");
+  const navMenu = document.getElementById("navMenu");
+
+  navToggle.addEventListener("click", () => {
+    navMenu.classList.toggle("active");
+  });
+</script>
   <script type="module" src="data-loader.js"></script>
   <script type="module" src="wizard.js"></script>
   <script type="module" src="script.js"></script>
