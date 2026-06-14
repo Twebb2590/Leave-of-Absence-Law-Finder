@@ -281,7 +281,7 @@ async function showResultsSummary() {
     "I’m pulling together federal and state leave laws that may apply.",
     "One moment while I check your state and situation."
   ]);
-
+}
   const stateCode = wizardState.state === 'unknown' ? null : wizardState.state;
 
   const federal = await loadFederalLaws();
