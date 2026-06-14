@@ -362,7 +362,7 @@ async function showResultsSummary() {
 
   // Restart option
   setQuickReplies([
-    { label: 'Start over', value: 'Let's try again.' },
+    { label:"Start over", value: "Let's try again." },
   ]);
 
   quickReplyContainer.querySelectorAll('button').forEach((btn) => {
