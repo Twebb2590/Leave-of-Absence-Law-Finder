@@ -212,7 +212,7 @@ setQuickReplies([
   { label: "Court or jury duty", value: "I have to go to court or jury duty." },
   { label: "Something else", value: "It's something else." }
 ]);
-
+}
 
 // Ask for state
 async function askState() {
@@ -431,4 +431,3 @@ function showWizardResults(laws) {
 
   container.scrollIntoView({ behavior: "smooth" });
 }
-//
