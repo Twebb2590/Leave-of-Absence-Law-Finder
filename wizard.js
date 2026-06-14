@@ -29,13 +29,13 @@ function setQuickReplies(options) {
 }
 function mapTypedReason(text) {
     text = text.toLowerCase();
-    if (text.includes("sick") || text.includes("ill")) return "I'm sick.";
+    if (text.includes("sick") || text.includes("ill")) return "I'm sick or injured..";
     if (text.includes("preg")) return "I'm pregnant.";
-    if (text.includes("family")) return "family_care";
-    if (text.includes("military")) return "military";
+    if (text.includes("family")) return "I'm caring for a family member.";
+    if (text.includes("military")) return "Military";
     if (text.includes("court") || text.includes("jury")) return "court.";
-    if (text.includes("bereav")) return "bereavement";
-    return "other";
+    if (text.includes("bereav")) return "Bereavement";
+    return "Something else.";
 }
 
 function mapTypedState(text) {
