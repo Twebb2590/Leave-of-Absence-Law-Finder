@@ -264,7 +264,7 @@ async function askEmploymentStatus() {
   setQuickReplies([
     { label: 'Full-time', value: 'Full-time' },
     { label: 'Part-time', value: 'Part-time' },
-    { label: 'I’m not sure', value: 'I'm between jobs.' },
+    { label: "I’m not sure", value: "I'm between jobs." },
   ]);
 }
 
