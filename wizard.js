@@ -203,16 +203,16 @@ async function startWizard() {
     "Hi. I’m here to help you understand your leave options. What’s the main reason you’re looking into leave right now?"
   );
 
-  setQuickReplies([
-    { label: 'I’m sick or injured', value: 'I'm sick or injured.' },
-    { label: 'Pregnancy or birth', value: 'I'm pregnant or having a child.' },
-    { label: 'Caring for a family member', value: 'I'm caring for a family member.' },
-    { label: 'Bereavement or loss', value: 'Bereavement or loss.' },
-    { label: 'Military service', value: 'Military' },
-    { label: 'Court or jury duty', value: 'I have to go to court or jury duty.' },
-    { label: 'Something else', value: 'It's something else.' },
-  ]);
-}
+setQuickReplies([
+  { label: "I'm sick or injured", value: "I'm sick or injured." },
+  { label: "Pregnancy or birth", value: "I'm pregnant or having a child." },
+  { label: "Caring for a family member", value: "I'm caring for a family member." },
+  { label: "Bereavement or loss", value: "Bereavement or loss." },
+  { label: "Military service", value: "Military" },
+  { label: "Court or jury duty", value: "I have to go to court or jury duty." },
+  { label: "Something else", value: "It's something else." }
+]);
+
 
 // Ask for state
 async function askState() {
