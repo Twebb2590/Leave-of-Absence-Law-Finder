@@ -314,8 +314,8 @@ async function showResultsSummary() {
             "I wasn’t able to find specific laws that match your situation from the data I have. " +
             "You can still use the search and filters below to explore more."
         );
-  } return: 
-    
+  } 
+  
       await assistantReply(
       `I found ${filtered.length} leave laws that may be relevant. Here are the most relevant ones:`
     );
