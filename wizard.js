@@ -431,4 +431,3 @@ function showWizardResults(laws) {
 
   container.scrollIntoView({ behavior: "smooth" });
 }
-showWizardResults(matchedLaws);
