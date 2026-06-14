@@ -323,7 +323,6 @@ async function showResultsSummary() {
 
       // Show top 3
     sendLawsToChat(filtered.slice(0, 3));
-  }
 
   // Dispatch event for UI
   const event = new CustomEvent('wizardResults', {
