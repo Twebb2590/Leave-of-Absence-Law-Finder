@@ -22,6 +22,9 @@ if (!document.body.classList.contains("wizard-page")) {
     // put ALL your search logic inside here
 }
 
+// Master list of all laws loaded into the system
+let allLaws = [];
+
 
 // -----------------------------
 // Only run FILTER PANEL if it exists
