@@ -175,12 +175,12 @@ async function handleQuickReply(value) {
     // If the wizard is still collecting required info, treat typed text as answers
     if (!wizardState.reason) {
         wizardState.reason = mapTypedReason(text);
-        return askForState();
+        return askState();
     }
 
     if (!wizardState.state) {
         wizardState.state = mapTypedState(text);
-        return askForEmploymentStatus();
+        return askEmploymentStatus();
     }
 
     if (!wizardState.employmentStatus) {
