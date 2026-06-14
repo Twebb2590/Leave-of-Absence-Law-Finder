@@ -308,7 +308,7 @@ async function showResultsSummary() {
     law.eligibility_result = checkEligibility(law, wizardState);
     return law;
   });
-}
+
    // No matching laws
     if (!filtered.length) {
         await assistantReply(
@@ -352,7 +352,7 @@ sendBtn.addEventListener("click", () => {
     handleUserTypedMessage(text);
     userInput.value = "";
 });
-
+}
 // Start wizard on page load
 document.addEventListener('DOMContentLoaded', () => {
   startWizard();
