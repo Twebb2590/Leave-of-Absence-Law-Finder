@@ -262,7 +262,7 @@ async function askEmploymentStatus() {
   );
 
   setQuickReplies([
-    { label: 'Full-time', value: 'full_time' },
+    { label: 'Full-time', value: 'Full-time' },
     { label: 'Part-time', value: 'part_time' },
     { label: 'I’m not sure', value: 'unknown' },
   ]);
