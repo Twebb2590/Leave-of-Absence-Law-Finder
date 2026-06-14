@@ -110,10 +110,10 @@ body {
     border: 1px solid #cdd8ff;
     padding: 6px 12px;
     border-radius: 20px;
-    font-size: 11px;
+    font-size: 13px;
     color: #334155;
     cursor: pointer;
-    transition: 0.2s ease;
+    transition: 0.5s ease;
 }
 
 .quick-reply-btn:hover {
