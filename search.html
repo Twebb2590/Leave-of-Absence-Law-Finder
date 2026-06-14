@@ -61,6 +61,19 @@
     <p>© 2026 Leave of Absence Law Finder</p>
   </footer>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const navToggle = document.getElementById("navToggle");
+  const navMenu = document.getElementById("navMenu");
+
+  if (navToggle && navMenu) {
+    navToggle.addEventListener("click", () => {
+      navMenu.classList.toggle("active");
+    });
+  }
+});
+</script>
+  
   <script type="module" src="data-loader.js"></script>
   <script type="module" src="script.js"></script>
 
