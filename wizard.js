@@ -166,8 +166,8 @@ async function handleQuickReply(value) {
     wizardState.employmentStatus = value;
     addMessage(value, 'user');
     await showResultsSummary();
-    return;
   }
+
 }async function handleUserTypedMessage(text) {
     // Show the user's message in the chat
     addUserMessage(text);
