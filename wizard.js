@@ -204,13 +204,13 @@ async function startWizard() {
   );
 
   setQuickReplies([
-    { label: 'I’m sick or injured', value: 'sick' },
-    { label: 'Pregnancy or birth', value: 'pregnancy' },
-    { label: 'Caring for a family member', value: 'family_care' },
-    { label: 'Bereavement or loss', value: 'bereavement' },
-    { label: 'Military service', value: 'military' },
-    { label: 'Court or jury duty', value: 'court' },
-    { label: 'Something else', value: 'other' },
+    { label: 'I’m sick or injured', value: 'I'm sick or injured.' },
+    { label: 'Pregnancy or birth', value: 'I'm pregnant or having a child.' },
+    { label: 'Caring for a family member', value: 'I'm caring for a family member.' },
+    { label: 'Bereavement or loss', value: 'Bereavement or loss.' },
+    { label: 'Military service', value: 'Military' },
+    { label: 'Court or jury duty', value: 'I have to go to court or jury duty.' },
+    { label: 'Something else', value: 'It's something else.' },
   ]);
 }
 
@@ -250,7 +250,7 @@ async function askState() {
 
   setQuickReplies(
     states.map((s) => ({ label: s.name, value: s.code })).concat([
-      { label: 'I’m not sure', value: 'unknown' },
+      { label: 'I’m not sure', value: 'I'm not sure right now.' },
     ])
   );
 }
@@ -263,8 +263,8 @@ async function askEmploymentStatus() {
 
   setQuickReplies([
     { label: 'Full-time', value: 'Full-time' },
-    { label: 'Part-time', value: 'part_time' },
-    { label: 'I’m not sure', value: 'unknown' },
+    { label: 'Part-time', value: 'Part-time' },
+    { label: 'I’m not sure', value: 'I'm between jobs.' },
   ]);
 }
 
@@ -362,7 +362,7 @@ async function showResultsSummary() {
 
   // Restart option
   setQuickReplies([
-    { label: 'Start over', value: 'restart' },
+    { label: 'Start over', value: 'Let's try again.' },
   ]);
 
   quickReplyContainer.querySelectorAll('button').forEach((btn) => {
