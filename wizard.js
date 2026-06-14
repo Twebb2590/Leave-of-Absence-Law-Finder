@@ -401,8 +401,11 @@ document.getElementById("sendBtn").addEventListener("click", () => {
 
  // Advance wizard just like a button click
     nextStep();
-  
-    // Optional: bot responds naturally
+ 
+  // Process typed message through the wizard logic
+    handleUserTypedMessage(text);
+   
+  // Optional: bot responds naturally
     botSay("Thanks — I’ll keep that in mind.");
 
     // Clear input
