@@ -137,6 +137,9 @@ body {
     background: #f1f1f1;
     color: #333;
 }
+#wizardResultsContainer {
+    margin-bottom: 1.5rem;
+}
 
 /* Quick Reply Animation */
 animation: 250ms ease 460.847ms 1 normal forwards running quickReplyFadeIn;
