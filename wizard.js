@@ -354,12 +354,11 @@ sendBtn.addEventListener("click", () => {
     userInput.value = "";
 });
 
-}
-
 // Start wizard on page load
 document.addEventListener('DOMContentLoaded', () => {
   startWizard();
 });
+
 // -----------------------------
 // Manual Send Button (User Input)
 // -----------------------------
