@@ -42,6 +42,30 @@ if (filterPanelContainer) {
     { id: "jury", label: "Court / Jury Duty" },
   ];
 
+function renderFilterPanel(container, { states, leaveTypes, onChange }) {
+  container.innerHTML = `
+    <label>State:</label>
+    <select id="stateFilter">
+      <option value="">All</option>
+      ${states.map(s => `<option value="${s.code}">${s.name}</option>`).join("")}
+    </select>
+
+    <label>Leave Type:</label>
+    <select id="leaveTypeFilter">
+      <option value="">All</option>
+      ${leaveTypes.map(t => `<option value="${t.id}">${t.label}</option>`).join("")}
+    </select>
+  `;
+
+  document.getElementById("stateFilter").addEventListener("change", (e) => {
+    onChange({ state: e.target.value || null });
+  });
+
+  document.getElementById("leaveTypeFilter").addEventListener("change", (e) => {
+    onChange({ leaveType: e.target.value || null });
+  });
+}
+  
   renderFilterPanel(filterPanelContainer, {
     states: STATES,
     leaveTypes: LEAVE_TYPES,
