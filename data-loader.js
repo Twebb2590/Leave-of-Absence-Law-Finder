@@ -1,4 +1,4 @@
-const BASE = `${window.location.origin}${window.location.pathname.split("?")[0].replace(/\/$/, "")}/`;
+const BASE = `${window.location.origin}/Leave-of-Absence-Law-Finder/`;
 
 export async function loadFederalLaws() {
   try {
