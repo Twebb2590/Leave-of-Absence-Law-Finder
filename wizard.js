@@ -7,7 +7,7 @@ import { states } from "./states/state-list.js";
 const chatContainer = document.getElementById('chatContainer');
 const quickReplyContainer = document.getElementById('quickReplyContainer');
 
-const wizardState = {
+let wizardState = {
   reason: null,
   state: null,
   employmentStatus: null,
