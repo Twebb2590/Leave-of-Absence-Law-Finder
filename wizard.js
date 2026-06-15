@@ -198,6 +198,24 @@ async function answerGeneralQuestion(text) {
     "I’m here to help with leave laws. You can ask things like:\n• Do I qualify for FMLA?\n• What leave laws apply in California?\n• Is pregnancy leave paid?"
   );
 }
+function resetWizard() {
+  // Reset state
+  wizardState = {
+    step: "state",
+    state: null,
+    reason: null,
+    employmentStatus: null,
+    employerSize: null,
+    tenure: null
+  };
+
+  // Clear UI
+  clearChat();
+  clearQuickReplies();
+
+  // Restart wizard
+  startWizard();
+}
 
 // Start wizard
 async function startWizard() {
