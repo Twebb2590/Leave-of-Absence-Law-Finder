@@ -115,6 +115,10 @@ function hideTypingIndicator() {
   const indicator = document.getElementById("typingIndicator");
   if (indicator) indicator.remove();
 }
+function clearChat() {
+  const chat = document.getElementById("chat-container");
+  if (chat) chat.innerHTML = "";
+}
 
 // Assistant reply with randomized delay
 async function assistantReply(text, min = 600, max = 1400) {
