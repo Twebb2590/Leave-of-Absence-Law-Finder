@@ -282,9 +282,14 @@ async function showResultsSummary() {
   ]);
 
   const stateCode = wizardState.state === 'unknown' ? null : wizardState.state;
-
+ 
+  // ⭐ Load federal laws
   const federal = await loadFederalLaws();
+  
+   // ⭐ Load state laws
   const state = stateCode ? await loadStateLaws(stateCode) : [];
+  
+  // Combine
   const combined = [...federal, ...state];
 
   const filtered = combined
