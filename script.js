@@ -30,7 +30,7 @@ let allLaws = [];
 // Only run FILTER PANEL if it exists
 // -----------------------------
 if (filterPanelContainer) {
-  const STATES = [
+  const states = [
     { code: "AL", name: "Alabama" },
     { code: "AK", name: "Alaska" },
     { code: "AZ", name: "Arizona" },
@@ -118,7 +118,7 @@ function renderFilterPanel(container, { states, leaveTypes, onChange }) {
 }
   
   renderFilterPanel(filterPanelContainer, {
-    states: STATES,
+    states: states,
     leaveTypes: LEAVE_TYPES,
     onChange: (filters) => {
       currentFilters = { ...currentFilters, ...filters };
