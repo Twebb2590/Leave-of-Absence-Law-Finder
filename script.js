@@ -25,11 +25,6 @@ if (!document.body.classList.contains("wizard-page")) {
 // Master list of all laws loaded into the system
 let allLaws = [];
 
-
-// -----------------------------
-// Only run FILTER PANEL if it exists
-// -----------------------------
-if (filterPanelContainer) {
   const states = [
     { code: "AL", name: "Alabama" },
     { code: "AK", name: "Alaska" },
@@ -84,6 +79,11 @@ if (filterPanelContainer) {
     { code: "DC", name: "District of Columbia" }
   ];
 
+  // -----------------------------
+// Only run FILTER PANEL if it exists
+// -----------------------------
+if (filterPanelContainer) {
+  
   const LEAVE_TYPES = [
     { id: "medical", label: "Medical / Sick" },
     { id: "pregnancy", label: "Pregnancy / Birth" },
