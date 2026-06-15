@@ -5,7 +5,7 @@ import { loadFederalLaws, loadStateLaws } from './data-loader.js';
 import { states } from "./states/state-list.js";
 
 const chatContainer = document.getElementById('chatContainer');
-const quickReplyContainer = document.getElementById('quickReplyContainer');
+const quickRepliesContainer = document.getElementById('quickRepliesContainer');
 
 let wizardState = {
   reason: null,
@@ -22,10 +22,10 @@ function addMessage(text, from = 'assistant') {
 
 // Quick reply buttons
 function setQuickReplies(options) {
-  quickReplyContainer.innerHTML = '';
+  quickRepliesContainer.innerHTML = '';
   options.forEach((opt) => {
     const btn = createQuickReply(opt.label, opt.value, handleQuickReply);
-    quickReplyContainer.appendChild(btn);
+    quickRepliesContainer.appendChild(btn);
   });
 }
 
