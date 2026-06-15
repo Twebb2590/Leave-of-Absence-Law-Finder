@@ -358,3 +358,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+// ------------------------------------------------------
+// Start Over Button
+// ------------------------------------------------------
+document.getElementById("startOverBtn")?.addEventListener("click", () => {
+  resetWizard();
+});
