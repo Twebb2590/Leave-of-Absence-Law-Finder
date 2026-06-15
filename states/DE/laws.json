@@ -27,7 +27,8 @@
       "description": "Employees may take leave to address domestic violence issues, including seeking medical care, counseling, legal assistance, or relocation. Employers may not retaliate against employees for taking this leave.",
       "job_protection": true,
       "leave_types": [
-        { "type": "family" }
+        { "type": "family" },
+        { "type": "court" }
       ],
       "official_url": "https://delcode.delaware.gov/title19/c007/index.html"
     }
