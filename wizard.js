@@ -217,6 +217,11 @@ function resetWizard() {
   clearChat();
   clearQuickReplies();
 
+  function clearQuickReplies() {
+  const container = document.getElementById("quickRepliesContainer");
+  if (container) container.innerHTML = "";
+}
+
   // Restart wizard
   startWizard();
 }
