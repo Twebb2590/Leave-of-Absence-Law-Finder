@@ -1,0 +1,66 @@
+{
+  "laws": [
+    {
+      "id": "fl_pregnancy_accommodation",
+      "name": "Florida Pregnancy Discrimination & Accommodation Protections",
+      "description": "Florida law prohibits discrimination based on pregnancy and requires employers to provide reasonable accommodations related to pregnancy, childbirth, and related medical conditions.",
+      "job_protection": true,
+      "leave_types": [
+        { "type": "pregnancy" },
+        { "type": "medical" }
+      ],
+      "official_url": "https://www.flsenate.gov/Laws/Statutes/760.10"
+    },
+    {
+      "id": "fl_domestic_violence_leave",
+      "name": "Florida Domestic Violence Leave",
+      "description": "Employers with 50 or more employees must provide up to 3 days of leave in a 12‑month period for employees dealing with domestic or sexual violence issues affecting themselves or a family member.",
+      "job_protection": true,
+      "leave_types": [
+        { "type": "family" },
+        { "type": "medical" }
+      ],
+      "official_url": "https://www.flsenate.gov/Laws/Statutes/741.313"
+    },
+    {
+      "id": "fl_jury_duty_leave",
+      "name": "Florida Jury Duty Leave",
+      "description": "Employers must allow employees to take leave for jury service. Employers may not discharge or threaten employees for serving.",
+      "job_protection": true,
+      "leave_types": [
+        { "type": "jury" }
+      ],
+      "official_url": "https://www.flsenate.gov/Laws/Statutes/40.271"
+    },
+    {
+      "id": "fl_military_leave",
+      "name": "Florida Military Leave",
+      "description": "Florida provides job‑protected leave for military service, including National Guard and Reserve duty, in addition to federal USERRA protections.",
+      "job_protection": true,
+      "leave_types": [
+        { "type": "military" }
+      ],
+      "official_url": "https://www.flsenate.gov/Laws/Statutes/250.482"
+    },
+    {
+      "id": "fl_voting_leave",
+      "name": "Florida Voting Leave (Employer Discretion)",
+      "description": "Florida does not require paid voting leave, but employers may not interfere with an employee’s right to vote.",
+      "job_protection": false,
+      "leave_types": [
+        { "type": "other" }
+      ],
+      "official_url": "https://dos.myflorida.com/elections/"
+    },
+    {
+      "id": "fl_school_activities_leave",
+      "name": "Florida School Activities Leave (Local Policies)",
+      "description": "Florida does not mandate statewide school activities leave, but many public employers provide it by policy.",
+      "job_protection": false,
+      "leave_types": [
+        { "type": "family" }
+      ],
+      "official_url": "https://www.fldoe.org/"
+    }
+  ]
+}
