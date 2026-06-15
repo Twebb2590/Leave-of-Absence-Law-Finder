@@ -344,7 +344,7 @@ document.addEventListener("DOMContentLoaded", () => {
       handleUserTypedMessage(text);
       userInput.value = "";
     });
-
+// ⭐ Send message when pressing Enter
     userInput.addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
         sendBtn.click();
