@@ -229,7 +229,7 @@ function resetWizard() {
 // Start wizard
 async function startWizard() {
   chatContainer.innerHTML = '';
-  quickReplyContainer.innerHTML = '';
+  quickRepliesContainer.innerHTML = '';
   wizardState.reason = null;
   wizardState.state = null;
   wizardState.employmentStatus = null;
