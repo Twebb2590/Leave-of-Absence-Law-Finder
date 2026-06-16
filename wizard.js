@@ -96,12 +96,6 @@ function addUserMessage(text) {
   chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-    chatContainer.appendChild(bubble);
-  });
-
-  chatContainer.scrollTop = chatContainer.scrollHeight;
-}
-
 // Typing indicator
 function showTypingIndicator() {
   const indicator = document.createElement("div");
