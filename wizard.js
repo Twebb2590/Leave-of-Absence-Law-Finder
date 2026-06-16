@@ -28,6 +28,18 @@ function setQuickReplies(options) {
     quickRepliesContainer.appendChild(btn);
   });
 }
+function lawToChatText(law) {
+  return `
+📘 ${law.title || "Untitled Law"}
+Level: ${law.level || "N/A"}
+State: ${law.state || "N/A"}
+Tags: ${(law.tags || []).join(", ")}
+
+${law.description || ""}
+
+Source: ${law.link || "N/A"}
+  `;
+}
 
 // Typed‑input mapping
 function mapTypedReason(text) {
