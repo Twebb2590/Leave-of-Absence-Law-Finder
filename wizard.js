@@ -115,7 +115,7 @@ function hideTypingIndicator() {
   if (indicator) indicator.remove();
 }
 function clearChat() {
-  const chat = document.getElementById("chat-container");
+  const chat = document.getElementById("chatContainer");
   if (chat) chat.innerHTML = "";
 }
 
