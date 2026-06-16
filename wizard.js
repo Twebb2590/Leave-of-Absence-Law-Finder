@@ -4,9 +4,17 @@ import { createQuickReply } from './components/QuickReply.js';
 import { loadFederalLaws, loadStateLaws } from './data-loader.js';
 import { states } from "./states/state-list.js";
 
+// ------------------------------------------------------
+// DOM ELEMENTS
+// ------------------------------------------------------
 const chatContainer = document.getElementById('chatContainer');
 const quickRepliesContainer = document.getElementById('quickRepliesContainer');
+const userInput = document.getElementById("userInput");
+const sendBtn = document.getElementById("sendBtn");
 
+// ------------------------------------------------------
+// WIZARD STATE
+// ------------------------------------------------------
 let wizardState = {
   reason: null,
   state: null,
@@ -377,9 +385,6 @@ async function showResultsSummary() {
 // DOM listeners
 document.addEventListener("DOMContentLoaded", () => {
   startWizard();
-
-  const userInput = document.getElementById("userInput");
-  const sendBtn = document.getElementById("sendBtn");
 
   if (sendBtn && userInput) {
     sendBtn.addEventListener("click", () => {
