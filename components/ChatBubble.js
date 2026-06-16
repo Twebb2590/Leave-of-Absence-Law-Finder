@@ -1,4 +1,10 @@
 // components/ChatBubble.js
+
+function linkify(text) {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.replace(urlRegex, url => `<a href="${url}" target="_blank">${url}</a>`);
+}
+
 export function createChatBubble({ text, from = 'assistant' }) {
   const wrapper = document.createElement('div');
   wrapper.className = `chat-row ${from}`;
