@@ -300,6 +300,57 @@ function checkEligibility(law, wizardState) {
 
   return result;
 }
+function autoTagLaw(law) {
+  const text = (
+    law.name + " " +
+    law.description + " " +
+    JSON.stringify(law.leave_types || [])
+  ).toLowerCase();
+
+  const tags = new Set();
+
+  // Pregnancy / birth
+  if (text.includes("pregnan") || text.includes("childbirth") || text.includes("maternity"))
+    tags.add("pregnancy");
+
+  // Medical / health
+  if (text.includes("medical") || text.includes("health") || text.includes("illness") || text.includes("injury"))
+    tags.add("medical");
+
+  // Family / caregiving
+  if (text.includes("family") || text.includes("care") || text.includes("parent") || text.includes("spouse"))
+    tags.add("family").add("caregiving");
+
+  // Military
+  if (text.includes("military") || text.includes("active duty") || text.includes("deployment"))
+    tags.add("military");
+
+  // Domestic violence / safe leave
+  if (text.includes("domestic") || text.includes("violence") || text.includes("assault") || text.includes("stalking"))
+    tags.add("domestic_violence").add("safe_leave");
+
+  // Bereavement
+  if (text.includes("bereav") || text.includes("death"))
+    tags.add("bereavement");
+
+  // Jury duty
+  if (text.includes("jury") || text.includes("court"))
+    tags.add("jury");
+
+  // Voting
+  if (text.includes("vot") || text.includes("election"))
+    tags.add("voting");
+
+  // Organ donation
+  if (text.includes("organ") || text.includes("bone marrow"))
+    tags.add("organ_donation");
+
+  // Public employees
+  if (text.includes("public employee") || text.includes("state employee"))
+    tags.add("public_employees");
+
+  return Array.from(tags);
+}
 
 // Show results summary
 async function showResultsSummary() {
@@ -317,39 +368,34 @@ async function showResultsSummary() {
    // ⭐ Load state laws
   const stateLaws = await loadStateLaws(stateCode);
   
-  // Combine
-const combined = [...federal, ...stateLaws];
+  // Combine federal + state laws
+  const combined = [...federalLaws, ...stateLaws];
+
+  // Auto-tag every law
+  combined.forEach(law => {
+    law.tags = autoTagLaw(law);
+  });
 
 const reasonTag = wizardState.reason.toLowerCase();
 
-const filtered = combined
-  .filter(law => {
-    const tags = (law.tags || []).map(t => t.toLowerCase());
-    return tags.some(tag => tag.includes(reasonTag));
-  })
-  .map(law => {
-    law.eligibility_result = checkEligibility(law, wizardState);
-    return law;
-  });
-
-if (!filtered.length) {
-  await assistantReply("I didn’t find a perfect match, but here are the closest laws.");
-}
-
-  await assistantReply(
-    `I found ${filtered.length} leave laws that may be relevant. Here are the most relevant ones:`
+  // Filter using auto-generated tags
+  let filtered = combined.filter(law =>
+    law.tags.some(tag => tag.includes(reasonTag))
   );
 
-  sendLawsToChat(filtered.slice(0, 3));
+// If nothing matches, fallback to all laws
+  if (!filtered.length) {
+    await assistantReply("I didn’t find a perfect match, but here are the closest laws.");
+    filtered = combined;
+  }
+
+  await assistantReply(`I found ${filtered.length} leave laws that may apply to your situation. Here are the most relevant ones:`);
+
+   // Show top 3
+  await sendLawsToChat(filtered.slice(0, 3));
 
   // Dispatch event for UI
-  const event = new CustomEvent('wizardResults', {
-    detail: {
-      laws: filtered,
-      wizardState: { ...wizardState },
-    },
-  });
-
+  const event = new CustomEvent("wizardComplete", { detail: { laws: filtered } });
   window.dispatchEvent(event);
 }
 
