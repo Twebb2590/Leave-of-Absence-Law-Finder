@@ -1,12 +1,21 @@
 const BASE = `${window.location.origin}/Leave-of-Absence-Law-Finder/`;
 
+// ------------------------------
+// FEDERAL LAWS
+// ------------------------------
 export async function loadFederalLaws() {
   try {
     const res = await fetch(`${BASE}federal/laws.json`);
     if (!res.ok) throw new Error('Failed to load federal laws');
+
     const data = await res.json();
 
-    return data.map(law => ({
+    // Accept BOTH formats:
+    // 1. { "laws": [ ... ] }
+    // 2. [ ... ]
+    const laws = Array.isArray(data) ? data : data.laws || [];
+
+    return laws.map(law => ({
       id: law.id,
       title: law.name,
       level: "Federal",
@@ -16,19 +25,27 @@ export async function loadFederalLaws() {
       tags: law.tags || []
     }));
   } catch (e) {
-    console.error(e);
+    console.error("Federal law load failed:", e);
     return [];
   }
 }
 
+// ------------------------------
+// STATE LAWS
+// ------------------------------
 export async function loadStateLaws(stateCode) {
   if (!stateCode) return [];
+
   try {
     const res = await fetch(`${BASE}states/${stateCode}/laws.json`);
-    if (!res.ok) throw new Error('Failed to load state laws');
+    if (!res.ok) throw new Error(`Failed to load state laws for ${stateCode}`);
 
     const data = await res.json();
-    const laws = data.laws || [];
+
+    // Accept BOTH formats:
+    // 1. { "laws": [ ... ] }
+    // 2. [ ... ]
+    const laws = Array.isArray(data) ? data : data.laws || [];
 
     return laws.map(law => ({
       id: law.id,
