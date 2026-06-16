@@ -1,109 +1,111 @@
-[
-  {
-    "id": "fmla",
-    "name": "Family and Medical Leave Act",
-    "abbreviation": "FMLA",
-    "statute_code": "29 U.S.C. § 2601 et seq.",
-    "effective_date": "1993-08-05",
-    "description": "Provides eligible employees with up to 12 weeks of unpaid, job-protected leave per year for specified medical and family reasons.",
-    "leave_types": [
-      {
-        "type": "medical",
-        "duration": { "value": 12, "unit": "weeks", "notes": "Per 12-month period" },
-        "paid": false
+{
+  "laws": [
+    {
+      "id": "fmla",
+      "name": "Family and Medical Leave Act",
+      "abbreviation": "FMLA",
+      "statute_code": "29 U.S.C. § 2601 et seq.",
+      "effective_date": "1993-08-05",
+      "description": "Provides eligible employees with up to 12 weeks of unpaid, job-protected leave per year for specified medical and family reasons.",
+      "leave_types": [
+        {
+          "type": "medical",
+          "duration": { "value": 12, "unit": "weeks", "notes": "Per 12-month period" },
+          "paid": false
+        },
+        {
+          "type": "parental",
+          "duration": { "value": 12, "unit": "weeks", "notes": "Per 12-month period" },
+          "paid": false
+        },
+        {
+          "type": "bereavement",
+          "duration": { "value": 12, "unit": "weeks", "notes": "Per 12-month period for qualifying exigencies" },
+          "paid": false
+        }
+      ],
+      "job_protection": true,
+      "eligibility": {
+        "employer_size": "50+ employees within 75 miles",
+        "employee_tenure": "12 months of employment",
+        "hours_worked": "1,250 hours in the past 12 months",
+        "notes": "Employee must work at a covered employer and meet all three criteria."
       },
-      {
-        "type": "parental",
-        "duration": { "value": 12, "unit": "weeks", "notes": "Per 12-month period" },
-        "paid": false
+      "official_url": "https://www.dol.gov/agencies/whd/fmla/",
+      "last_updated": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "military_caregiver_leave",
+      "name": "Military Caregiver Leave",
+      "abbreviation": "MCL",
+      "statute_code": "29 U.S.C. § 2612(a)(3)",
+      "effective_date": "2009-01-01",
+      "description": "Provides eligible employees with up to 26 weeks of unpaid leave in a single 12-month period to care for a covered servicemember.",
+      "leave_types": [
+        {
+          "type": "military",
+          "duration": { "value": 26, "unit": "weeks", "notes": "Per single 12-month period" },
+          "paid": false
+        }
+      ],
+      "job_protection": true,
+      "eligibility": {
+        "employer_size": "50+ employees within 75 miles",
+        "employee_tenure": "12 months of employment",
+        "hours_worked": "1,250 hours in the past 12 months",
+        "relationship_requirement": "Must be the spouse, parent, child, or next of kin of the servicemember",
+        "notes": "Uses the same eligibility rules as FMLA, with additional family relationship requirements."
       },
-      {
-        "type": "bereavement",
-        "duration": { "value": 12, "unit": "weeks", "notes": "Per 12-month period for qualifying exigencies" },
-        "paid": false
-      }
-    ],
-    "job_protection": true,
-    "eligibility": {
-      "employer_size": "50+ employees within 75 miles",
-      "employee_tenure": "12 months of employment",
-      "hours_worked": "1,250 hours in the past 12 months",
-      "notes": "Employee must work at a covered employer and meet all three criteria."
+      "official_url": "https://www.dol.gov/agencies/whd/fmla/military-caregiver-leave",
+      "last_updated": "2024-01-01T00:00:00Z"
     },
-    "official_url": "https://www.dol.gov/agencies/whd/fmla/",
-    "last_updated": "2024-01-01T00:00:00Z"
-  },
-  {
-    "id": "military_caregiver_leave",
-    "name": "Military Caregiver Leave",
-    "abbreviation": "MCL",
-    "statute_code": "29 U.S.C. § 2612(a)(3)",
-    "effective_date": "2009-01-01",
-    "description": "Provides eligible employees with up to 26 weeks of unpaid leave in a single 12-month period to care for a covered servicemember.",
-    "leave_types": [
-      {
-        "type": "military",
-        "duration": { "value": 26, "unit": "weeks", "notes": "Per single 12-month period" },
-        "paid": false
-      }
-    ],
-    "job_protection": true,
-    "eligibility": {
-      "employer_size": "50+ employees within 75 miles",
-      "employee_tenure": "12 months of employment",
-      "hours_worked": "1,250 hours in the past 12 months",
-      "relationship_requirement": "Must be the spouse, parent, child, or next of kin of the servicemember",
-      "notes": "Uses the same eligibility rules as FMLA, with additional family relationship requirements."
+    {
+      "id": "jury_duty_leave",
+      "name": "Federal Jury Duty Leave",
+      "abbreviation": "JDL",
+      "statute_code": "28 U.S.C. § 1875",
+      "effective_date": "1978-07-01",
+      "description": "Employers cannot penalize employees for federal jury duty service.",
+      "leave_types": [
+        {
+          "type": "jury_duty",
+          "duration": { "value": 0, "unit": "days", "notes": "Duration depends on trial length" },
+          "paid": true
+        }
+      ],
+      "job_protection": true,
+      "eligibility": {
+        "employer_size": "All employers",
+        "employee_tenure": "No minimum requirement",
+        "hours_worked": "No minimum requirement",
+        "notes": "Applies to all employees summoned for federal jury service."
+      },
+      "official_url": "https://www.eeoc.gov/statutes/federal-jury-duty-leave",
+      "last_updated": "2024-01-01T00:00:00Z"
     },
-    "official_url": "https://www.dol.gov/agencies/whd/fmla/military-caregiver-leave",
-    "last_updated": "2024-01-01T00:00:00Z"
-  },
-  {
-    "id": "jury_duty_leave",
-    "name": "Federal Jury Duty Leave",
-    "abbreviation": "JDL",
-    "statute_code": "28 U.S.C. § 1875",
-    "effective_date": "1978-07-01",
-    "description": "Employers cannot penalize employees for federal jury duty service.",
-    "leave_types": [
-      {
-        "type": "jury_duty",
-        "duration": { "value": 0, "unit": "days", "notes": "Duration depends on trial length" },
-        "paid": true
-      }
-    ],
-    "job_protection": true,
-    "eligibility": {
-      "employer_size": "All employers",
-      "employee_tenure": "No minimum requirement",
-      "hours_worked": "No minimum requirement",
-      "notes": "Applies to all employees summoned for federal jury service."
-    },
-    "official_url": "https://www.eeoc.gov/statutes/federal-jury-duty-leave",
-    "last_updated": "2024-01-01T00:00:00Z"
-  },
-  {
-    "id": "voting_leave",
-    "name": "Federal Voting Leave",
-    "abbreviation": "VL",
-    "statute_code": "Varies by state; no federal mandate",
-    "effective_date": "1978-11-06",
-    "description": "While no federal requirement exists, most states provide time off to vote in federal elections.",
-    "leave_types": [
-      {
-        "type": "voting",
-        "duration": { "value": 2, "unit": "hours", "notes": "Varies by state" },
-        "paid": true
-      }
-    ],
-    "job_protection": false,
-    "eligibility": {
-      "employer_size": "Varies by state",
-      "employee_tenure": "Varies by state",
-      "hours_worked": "Varies by state",
-      "notes": "No federal eligibility rules; protections depend entirely on state law."
-    },
-    "official_url": "https://www.eac.gov/voters/registration-and-voting-information",
-    "last_updated": "2024-01-01T00:00:00Z"
-  }
-]
+    {
+      "id": "voting_leave",
+      "name": "Federal Voting Leave",
+      "abbreviation": "VL",
+      "statute_code": "Varies by state; no federal mandate",
+      "effective_date": "1978-11-06",
+      "description": "While no federal requirement exists, most states provide time off to vote in federal elections.",
+      "leave_types": [
+        {
+          "type": "voting",
+          "duration": { "value": 2, "unit": "hours", "notes": "Varies by state" },
+          "paid": true
+        }
+      ],
+      "job_protection": false,
+      "eligibility": {
+        "employer_size": "Varies by state",
+        "employee_tenure": "Varies by state",
+        "hours_worked": "Varies by state",
+        "notes": "No federal eligibility rules; protections depend entirely on state law."
+      },
+      "official_url": "https://www.eac.gov/voters/registration-and-voting-information",
+      "last_updated": "2024-01-01T00:00:00Z"
+    }
+  ]
+}
