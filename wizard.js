@@ -273,7 +273,7 @@ async function startWizard() {
   ]);
 }
 
-// Ask for state
+// STEP 1 — REASON
 async function askState() {
   await assistantReply(
     "Thank you for sharing that. Which state do you work in? This helps me find the right laws."
@@ -286,7 +286,7 @@ async function askState() {
   );
 }
 
-// Ask employment status
+// STEP 3 — EMPLOYMENT STATUS
 async function askEmploymentStatus() {
   await assistantReply(
     "Got it. One more thing—are you working full-time or part-time?"
@@ -299,7 +299,9 @@ async function askEmploymentStatus() {
   ]);
 }
 
-// Eligibility logic
+// ------------------------------------------------------
+// ELIGIBILITY CHECK
+// ------------------------------------------------------
 function checkEligibility(law, wizardState) {
   const result = { eligible: true, reasons: [] };
   const e = law.eligibility || {};
