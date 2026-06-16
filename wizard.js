@@ -308,7 +308,7 @@ async function showResultsSummary() {
     "I’m pulling together federal and state leave laws that may apply.",
     "One moment while I check your state and situation."
   ]);
-
+}
   const stateCode = wizardState.state === 'unknown' ? null : wizardState.state;
  
   // ⭐ Load federal laws
@@ -339,28 +339,21 @@ async function showResultsSummary() {
 }
   
   // Combine
-  const combined = [...federal, ...state];
+const stateLaws = await loadStateLaws(stateCode);
+const combined = [...federal, ...stateLaws];
 
- const reasonTag = wizardState.reason.toLowerCase();
+const reasonTag = wizardState.reason.toLowerCase();
 
-const filtered = all.filter(law => {
-  const tags = (law.tags || []).map(t => t.toLowerCase());
-  return tags.some(tag => tag.includes(reasonTag));
-});
+const filtered = combined
+  .filter(law => {
+    const tags = (law.tags || []).map(t => t.toLowerCase());
+    return tags.some(tag => tag.includes(reasonTag));
+  })
+  .map(law => {
+    law.eligibility_result = checkEligibility(law, wizardState);
+    return law;
+  });
 
-      if (reason === 'sick') return tags.some((t) => t.includes('sick') || t.includes('medical'));
-      if (reason === 'pregnancy') return tags.some((t) => t.includes('pregnancy') || t.includes('birth'));
-      if (reason === 'family_care') return tags.some((t) => t.includes('family') || t.includes('care'));
-      if (reason === 'bereavement') return tags.some((t) => t.includes('bereavement') || t.includes('funeral'));
-      if (reason === 'military') return tags.some((t) => t.includes('military') || t.includes('service'));
-      if (reason === 'court') return tags.some((t) => t.includes('jury') || t.includes('court'));
-
-      return true;
-    })
-    .map(law => {
-      law.eligibility_result = checkEligibility(law, wizardState);
-      return law;
-    });
 
   if (!filtered.length) {
     await assistantReply(
