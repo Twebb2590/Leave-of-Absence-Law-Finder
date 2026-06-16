@@ -315,15 +315,38 @@ async function showResultsSummary() {
   const federal = await loadFederalLaws();
   
    // ⭐ Load state laws
-  const state = stateCode ? await loadStateLaws(stateCode) : [];
+  async function loadStateLaws(stateCode) {
+  if (!stateCode) return [];
+
+  try {
+    const res = await fetch(`./states/${stateCode}/laws.json`);
+    if (!res.ok) throw new Error("Failed to load state laws");
+    const data = await res.json();
+
+    return data.map((law) => ({
+      id: law.id,
+      title: law.title || law.name || "Untitled Law",
+      level: "State",
+      state: stateCode,
+      description: law.description || law.summary || "",
+      link: law.link || law.url || "",
+      tags: law.tags || law.keywords || [],
+    }));
+  } catch (e) {
+    console.error(`State law load failed for ${stateCode}:`, e);
+    return [];
+  }
+}
   
   // Combine
   const combined = [...federal, ...state];
 
-  const filtered = combined
-    .filter((law) => {
-      const tags = (law.tags || []).map((t) => t.toLowerCase());
-      const reason = wizardState.reason;
+ const reasonTag = wizardState.reason.toLowerCase();
+
+const filtered = all.filter(law => {
+  const tags = (law.tags || []).map(t => t.toLowerCase());
+  return tags.some(tag => tag.includes(reasonTag));
+});
 
       if (reason === 'sick') return tags.some((t) => t.includes('sick') || t.includes('medical'));
       if (reason === 'pregnancy') return tags.some((t) => t.includes('pregnancy') || t.includes('birth'));
