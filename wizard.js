@@ -56,7 +56,7 @@ Source: ${law.link || "N/A"}
 // Send multiple laws to chat
 function sendLawsToChat(laws) {
   laws.forEach(law => {
-    assistantReply(lawToChatText(law));
+   await assistantReply(lawToChatText(law));
   });
 }
 
