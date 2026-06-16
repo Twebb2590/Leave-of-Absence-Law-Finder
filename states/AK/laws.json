@@ -11,7 +11,8 @@
         { "type": "medical" }
       ],
       "job_protection": true,
-      "official_url": "https://labor.alaska.gov/"
+      "official_url": "https://labor.alaska.gov/",
+      "tags": ["medical", "family", "caregiving", "public_employees"]
     }
   ]
 }
