@@ -54,10 +54,10 @@ Source: ${law.link || "N/A"}
 }
 
 // Send multiple laws to chat
-function sendLawsToChat(laws) {
-  laws.forEach(law => {
-   await assistantReply(lawToChatText(law));
-  });
+async function sendLawsToChat(laws) {
+  for (const law of laws) {
+    await assistantReply(lawToChatText(law));
+  }
 }
 
 // Typed‑input mapping
