@@ -98,11 +98,11 @@ ${elig.eligible ? "You likely qualify." : "You may not qualify."}
 
 // Send multiple laws to chat
 function sendLawsToChat(laws) {
-  laws.forEach((law) => {
-    const bubble = createChatBubble({
-      text: lawToChatText(law),
-      from: 'assistant',
-    });
+  laws.forEach(law => {
+    assistantReply(lawToChatText(law));
+  });
+}
+
     chatContainer.appendChild(bubble);
   });
 
