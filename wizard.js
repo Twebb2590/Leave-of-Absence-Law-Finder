@@ -133,7 +133,7 @@ function clearChat() {
 }
 
 // Assistant reply with randomized delay
-async function assistantReply(text, min = 600, max = 1400) {
+async function assistantReply(text, min = 400, max = 1600) {
   const delay = Math.floor(Math.random() * (max - min + 1)) + min;
   showTypingIndicator();
   await new Promise(resolve => setTimeout(resolve, delay));
