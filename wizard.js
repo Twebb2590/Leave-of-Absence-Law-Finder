@@ -36,6 +36,10 @@ function setQuickReplies(options) {
     quickRepliesContainer.appendChild(btn);
   });
 }
+
+// ------------------------------------------------------
+// LAW RENDERING
+// ------------------------------------------------------
 function lawToChatText(law) {
   return `
 📘 ${law.title || "Untitled Law"}
@@ -47,6 +51,13 @@ ${law.description || ""}
 
 Source: ${law.link || "N/A"}
   `;
+}
+
+// Send multiple laws to chat
+function sendLawsToChat(laws) {
+  laws.forEach(law => {
+    assistantReply(lawToChatText(law));
+  });
 }
 
 // Typed‑input mapping
@@ -102,13 +113,6 @@ ${elig.eligible ? "You likely qualify." : "You may not qualify."}
 <b>You can read the official details here:</b>
 <a href="${law.link}" target="_blank">${law.link}</a>
   `;
-}
-
-// Send multiple laws to chat
-function sendLawsToChat(laws) {
-  laws.forEach(law => {
-    assistantReply(lawToChatText(law));
-  });
 }
 
     chatContainer.appendChild(bubble);
