@@ -308,38 +308,16 @@ async function showResultsSummary() {
     "I’m pulling together federal and state leave laws that may apply.",
     "One moment while I check your state and situation."
   ]);
-}
+  
   const stateCode = wizardState.state === 'unknown' ? null : wizardState.state;
  
   // ⭐ Load federal laws
   const federal = await loadFederalLaws();
   
    // ⭐ Load state laws
-  async function loadStateLaws(stateCode) {
-  if (!stateCode) return [];
-
-  try {
-    const res = await fetch(`./states/${stateCode}/laws.json`);
-    if (!res.ok) throw new Error("Failed to load state laws");
-    const data = await res.json();
-
-    return data.map((law) => ({
-      id: law.id,
-      title: law.title || law.name || "Untitled Law",
-      level: "State",
-      state: stateCode,
-      description: law.description || law.summary || "",
-      link: law.link || law.url || "",
-      tags: law.tags || law.keywords || [],
-    }));
-  } catch (e) {
-    console.error(`State law load failed for ${stateCode}:`, e);
-    return [];
-  }
-}
+  const stateLaws = await loadStateLaws(stateCode);
   
   // Combine
-const stateLaws = await loadStateLaws(stateCode);
 const combined = [...federal, ...stateLaws];
 
 const reasonTag = wizardState.reason.toLowerCase();
@@ -353,7 +331,6 @@ const filtered = combined
     law.eligibility_result = checkEligibility(law, wizardState);
     return law;
   });
-
 
   if (!filtered.length) {
     await assistantReply(
