@@ -392,7 +392,7 @@ const reasonTag = wizardState.reason.toLowerCase();
   await assistantReply(`I found ${filtered.length} leave laws that may apply to your situation. Here are the most relevant ones:`);
 
    // Show top 3
-  await sendLawsToChat(filtered.slice(0, 3));
+  await sendLawsToChat(filtered.slice(0, 6));
 
   // Dispatch event for UI
   const event = new CustomEvent("wizardComplete", { detail: { laws: filtered } });
