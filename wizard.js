@@ -367,9 +367,6 @@ async function showResultsSummary() {
   
    // ⭐ Load state laws
   const stateLaws = await loadStateLaws(stateCode);
-  
-  // Combine federal + state laws
-  const combined = [...federalLaws, ...stateLaws];
 
   // Auto-tag every law
   combined.forEach(law => {
