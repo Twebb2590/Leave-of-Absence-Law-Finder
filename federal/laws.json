@@ -32,7 +32,7 @@
         "notes": "Employee must work at a covered employer and meet all three criteria."
       },
       "official_url": "https://www.dol.gov/agencies/whd/fmla/",
-      "tags": ["medical", "family", "pregnancy", "caregiving"]
+      "tags": ["medical", "family", "pregnancy", "caregiving"],
       "last_updated": "2024-01-01T00:00:00Z"
     },
     {
@@ -58,7 +58,7 @@
         "notes": "Uses the same eligibility rules as FMLA, with additional family relationship requirements."
       },
       "official_url": "https://www.dol.gov/agencies/whd/fmla/military-caregiver-leave",
-      "tags": ["military", "caregiving", "medical"]
+      "tags": ["military", "caregiving", "medical"],
       "last_updated": "2024-01-01T00:00:00Z
     },
     {
@@ -83,7 +83,7 @@
         "notes": "Applies to all employees summoned for federal jury service."
       },
       "official_url": "https://www.eeoc.gov/statutes/federal-jury-duty-leave",
-      "tags": ["jury", "court", "civic"]
+      "tags": ["jury", "court", "civic"],
       "last_updated": "2024-01-01T00:00:00Z"
     },
     {
@@ -108,7 +108,7 @@
         "notes": "No federal eligibility rules; protections depend entirely on state law."
       },
       "official_url": "https://www.eac.gov/voters/registration-and-voting-information",
-      "tags": ["voting", "election", "civic"]
+      "tags": ["voting", "election", "civic"],
       "last_updated": "2024-01-01T00:00:00Z"
     }
   ]
