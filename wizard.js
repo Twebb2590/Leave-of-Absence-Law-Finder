@@ -363,7 +363,7 @@ async function showResultsSummary() {
   const stateCode = wizardState.state === 'unknown' ? null : wizardState.state;
  
   // ⭐ Load federal laws
-  const federal = await loadFederalLaws();
+  const federalLaws = await loadFederalLaws();
   
    // ⭐ Load state laws
   const stateLaws = await loadStateLaws(stateCode);
