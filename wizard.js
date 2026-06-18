@@ -61,8 +61,8 @@ function hideTypingIndicator() {
   const indicator = document.getElementById("typingIndicator");
   if (indicator) indicator.remove();
 }
-
-async function assistantReply(text, min = 400, max = 1600) {
+// Timers for Chat Assistant
+async function assistantReply(text, min = 600, max = 2600) {
   const delay = Math.floor(Math.random() * (max - min + 1)) + min;
   showTypingIndicator();
   await new Promise(resolve => setTimeout(resolve, delay));
@@ -70,7 +70,7 @@ async function assistantReply(text, min = 400, max = 1600) {
   addMessage(text, 'assistant');
 }
 
-async function assistantReplyChunks(chunks, min = 400, max = 1200) {
+async function assistantReplyChunks(chunks, min = 1000, max = 2200) {
   for (const chunk of chunks) {
     const delay = Math.floor(Math.random() * (max - min + 1)) + min;
     showTypingIndicator();
