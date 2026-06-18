@@ -149,7 +149,6 @@ if (value.toLowerCase().includes("no"))  {
   // ⭐ Removes leftover quick reply bubbles
 quickRepliesContainer.innerHTML = "";
   
-}
   // AFTER WIZARD — general Q&A
   return answerGeneralQuestion(value);
 }
