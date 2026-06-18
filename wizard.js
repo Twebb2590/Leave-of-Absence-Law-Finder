@@ -157,9 +157,7 @@ function handleQuickReply(value) {
 
 function handleUserTypedMessage(text) {
   advanceWizard(text, true);
-}
-
-if (wizardState.awaitingEmail) {
+  if (wizardState.awaitingEmail) {
   const email = text.trim();
   wizardState.awaitingEmail = false;
 
