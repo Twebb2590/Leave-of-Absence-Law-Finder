@@ -389,6 +389,9 @@ async function showResultsSummary() {
 
   await sendLawsToChat(filtered.slice(0, 6));
 
+// ⭐ FIX: remove leftover quick reply buttons
+quickRepliesContainer.innerHTML = "";
+  
   const event = new CustomEvent("wizardComplete", { detail: { laws: filtered } });
   window.dispatchEvent(event);
 }
