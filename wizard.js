@@ -333,6 +333,29 @@ function getMatchingTagsForReason(reason) {
   }
 }
 
+async function sendLawsToChat(laws) {
+  for (const law of laws) {
+    const eligibility = checkEligibility(law, wizardState);
+
+    const text = `
+📘 ${law.title || "Untitled Law"}
+Level: ${law.level || "N/A"}
+State: ${law.state || "N/A"}
+
+Eligibility: ${eligibility.eligible ? "You may qualify" : "You may not qualify"}
+
+Why:
+${eligibility.reasons.length ? eligibility.reasons.map(r => "• " + r).join("\n") : "• No specific restrictions based on what you shared."}
+
+${law.description || ""}
+
+Source: ${law.link || "N/A"}
+    `;
+
+    await assistantReply(text);
+  }
+}
+
 // ------------------------------------------------------
 // RESULTS SUMMARY
 // ------------------------------------------------------
