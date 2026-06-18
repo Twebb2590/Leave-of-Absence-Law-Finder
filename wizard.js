@@ -136,13 +136,13 @@ async function advanceWizard(value, fromUser = true) {
     return showResultsSummary();
   }
 
-  if (value === "yes") {
+  if (value.toLowerCase().includes("yes"))  {
   await assistantReply("Great! What email address should I send it to?");
   wizardState.awaitingEmail = true;
   return;
 }
 
-if (value === "no") {
+if (value.toLowerCase().includes("no"))  {
   await assistantReply("Okay! Let me know if you need anything else.");
   return;
 }
