@@ -21,14 +21,21 @@ let wizardState = {
   employmentStatus: null,
 };
 
-// Add a message to the chat
+// ------------------------------------------------------
+// UI HELPERS
+// ------------------------------------------------------
 function addMessage(text, from = 'assistant') {
   const bubble = createChatBubble({ text, from });
   chatContainer.appendChild(bubble);
   chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-// Quick reply buttons
+function addUserMessage(text) {
+  const bubble = createChatBubble({ text, from: "user" });
+  chatContainer.appendChild(bubble);
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
 function setQuickReplies(options) {
   quickRepliesContainer.innerHTML = '';
   options.forEach((opt) => {
@@ -37,48 +44,45 @@ function setQuickReplies(options) {
   });
 }
 
-// ------------------------------------------------------
-// LAW RENDERING
-// ------------------------------------------------------
-function lawToChatText(law) {
-  return `
-📘 ${law.title || "Untitled Law"}
-Level: ${law.level || "N/A"}
-State: ${law.state || "N/A"}
-Tags: ${(law.tags || []).join(", ")}
-
-${law.description || ""}
-
-Source: ${law.link || "N/A"}
+function showTypingIndicator() {
+  const indicator = document.createElement("div");
+  indicator.className = "typing-indicator";
+  indicator.id = "typingIndicator";
+  indicator.innerHTML = `
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
   `;
+  chatContainer.appendChild(indicator);
+  chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-// Send multiple laws to chat
-async function sendLawsToChat(laws) {
-  for (const law of laws) {
-    const eligibility = checkEligibility(law, wizardState);
+function hideTypingIndicator() {
+  const indicator = document.getElementById("typingIndicator");
+  if (indicator) indicator.remove();
+}
 
-    const text = `
-📘 ${law.title || "Untitled Law"}
-Level: ${law.level || "N/A"}
-State: ${law.state || "N/A"}
+async function assistantReply(text, min = 400, max = 1600) {
+  const delay = Math.floor(Math.random() * (max - min + 1)) + min;
+  showTypingIndicator();
+  await new Promise(resolve => setTimeout(resolve, delay));
+  hideTypingIndicator();
+  addMessage(text, 'assistant');
+}
 
-Eligibility: ${eligibility.eligible ? "You may qualify" : "You may not qualify"}
-
-Why:
-${eligibility.reasons.length ? eligibility.reasons.map(r => "• " + r).join("\n") : "• No specific restrictions based on what you shared."}
-
-${law.description || ""}
-
-Source: ${law.link || "N/A"}
-    `;
-
-    await assistantReply(text);
+async function assistantReplyChunks(chunks, min = 400, max = 1200) {
+  for (const chunk of chunks) {
+    const delay = Math.floor(Math.random() * (max - min + 1)) + min;
+    showTypingIndicator();
+    await new Promise(resolve => setTimeout(resolve, delay));
+    hideTypingIndicator();
+    addMessage(chunk, 'assistant');
   }
 }
 
-
-// Typed‑input mapping
+// ------------------------------------------------------
+// MAPPING FUNCTIONS
+// ------------------------------------------------------
 function mapTypedReason(text) {
   text = text.toLowerCase();
   if (text.includes("sick") || text.includes("ill")) return "sick";
@@ -108,99 +112,45 @@ function mapTypedEmployment(text) {
   return "I'm in between jobs right now.";
 }
 
-function addUserMessage(text) {
-  const bubble = createChatBubble({ text, from: "user" });
-  chatContainer.appendChild(bubble);
-  chatContainer.scrollTop = chatContainer.scrollHeight;
-}
+// ------------------------------------------------------
+// UNIFIED WIZARD FLOW
+// ------------------------------------------------------
+async function advanceWizard(value, fromUser = true) {
+  if (fromUser) addUserMessage(value);
 
-// Typing indicator
-function showTypingIndicator() {
-  const indicator = document.createElement("div");
-  indicator.className = "typing-indicator";
-  indicator.id = "typingIndicator";
-  indicator.innerHTML = `
-    <div class="typing-dot"></div>
-    <div class="typing-dot"></div>
-    <div class="typing-dot"></div>
-  `;
-  chatContainer.appendChild(indicator);
-  chatContainer.scrollTop = chatContainer.scrollHeight;
-}
-
-function hideTypingIndicator() {
-  const indicator = document.getElementById("typingIndicator");
-  if (indicator) indicator.remove();
-}
-function clearChat() {
-  const chat = document.getElementById("chatContainer");
-  if (chat) chat.innerHTML = "";
-}
-
-// Assistant reply with randomized delay
-async function assistantReply(text, min = 400, max = 1600) {
-  const delay = Math.floor(Math.random() * (max - min + 1)) + min;
-  showTypingIndicator();
-  await new Promise(resolve => setTimeout(resolve, delay));
-  hideTypingIndicator();
-  addMessage(text, 'assistant');
-}
-
-// Assistant reply in chunks
-async function assistantReplyChunks(chunks, min = 400, max = 1200) {
-  for (const chunk of chunks) {
-    const delay = Math.floor(Math.random() * (max - min + 1)) + min;
-    showTypingIndicator();
-    await new Promise(resolve => setTimeout(resolve, delay));
-    hideTypingIndicator();
-    addMessage(chunk, 'assistant');
-  }
-}
-
-// Handle quick replies
-async function handleQuickReply(value) {
+  // STEP 1 — REASON
   if (!wizardState.reason) {
-    wizardState.reason = value;
-    addMessage(value, 'user');
+    wizardState.reason = mapTypedReason(value);
     return askState();
   }
 
+  // STEP 2 — STATE
   if (!wizardState.state) {
-    wizardState.state = value;
-    addMessage(value, 'user');
+    wizardState.state = mapTypedState(value);
     return askEmploymentStatus();
   }
 
+  // STEP 3 — EMPLOYMENT STATUS
   if (!wizardState.employmentStatus) {
-    wizardState.employmentStatus = value;
-    addMessage(value, 'user');
-    return showResultsSummary();
-  }
-}
-
-// Handle typed messages
-async function handleUserTypedMessage(text) {
-  addUserMessage(text);
-
-  if (!wizardState.reason) {
-    wizardState.reason = mapTypedReason(text);
-    return askState();
-  }
-
-  if (!wizardState.state) {
-    wizardState.state = mapTypedState(text);
-    return askEmploymentStatus();
-  }
-
-  if (!wizardState.employmentStatus) {
-    wizardState.employmentStatus = mapTypedEmployment(text);
+    wizardState.employmentStatus = mapTypedEmployment(value);
     return showResultsSummary();
   }
 
-  return answerGeneralQuestion(text);
+  // AFTER WIZARD — general Q&A
+  return answerGeneralQuestion(value);
 }
 
-// General fallback answers
+function handleQuickReply(value) {
+  advanceWizard(value, true);
+}
+
+function handleUserTypedMessage(text) {
+  advanceWizard(text, true);
+}
+
+// ------------------------------------------------------
+// GENERAL ANSWERS AFTER WIZARD
+// ------------------------------------------------------
 async function answerGeneralQuestion(text) {
   const lower = text.toLowerCase();
 
@@ -218,78 +168,6 @@ async function answerGeneralQuestion(text) {
   return assistantReply(
     "I’m here to help with leave laws. You can ask things like:\n• Do I qualify for FMLA?\n• What leave laws apply in California?\n• Is pregnancy leave paid?"
   );
-}
-function resetWizard() {
-  // Reset state
-  wizardState = {
-    step: "state",
-    state: null,
-    reason: null,
-    employmentStatus: null,
-    employerSize: null,
-    tenure: null
-  };
-
-  // Clear UI
-  clearChat();
-  clearQuickReplies();
-
-  function clearQuickReplies() {
-  const container = document.getElementById("quickRepliesContainer");
-  if (container) container.innerHTML = "";
-}
-
-  // Restart wizard
-  startWizard();
-}
-
-// Start wizard
-async function startWizard() {
-  chatContainer.innerHTML = '';
-  quickRepliesContainer.innerHTML = '';
-  wizardState.reason = null;
-  wizardState.state = null;
-  wizardState.employmentStatus = null;
-
-  await assistantReply(
-    "Hi. I’m here to help you understand your leave options. What’s the main reason you’re looking into leave right now?"
-  );
-
-  setQuickReplies([
-    { label: "I'm sick or injured", value: "sick" },
-    { label: "Pregnancy or birth", value: "pregnancy" },
-    { label: "Caring for a family member", value: "family_care" },
-    { label: "Bereavement or loss", value: "bereavement" },
-    { label: "Military service", value: "military" },
-    { label: "Court or jury duty", value: "court" },
-    { label: "Something else", value: "other" }
-  ]);
-}
-
-// STEP 1 — REASON
-async function askState() {
-  await assistantReply(
-    "Thank you for sharing that. Which state do you work in? This helps me find the right laws."
-  );
-
-  setQuickReplies(
-    states.map((s) => ({ label: s.name, value: s.code })).concat([
-      { label: "I’m not sure", value: "unknown" },
-    ])
-  );
-}
-
-// STEP 3 — EMPLOYMENT STATUS
-async function askEmploymentStatus() {
-  await assistantReply(
-    "Got it. One more thing—are you working full-time or part-time?"
-  );
-
-  setQuickReplies([
-    { label: 'Full-time', value: 'Full-time' },
-    { label: 'Part-time', value: 'Part-time' },
-    { label: "I'm not sure", value: "I'm between jobs." },
-  ]);
 }
 
 // ------------------------------------------------------
@@ -318,90 +196,170 @@ function checkEligibility(law, wizardState) {
 
   return result;
 }
+
+// ------------------------------------------------------
+// BULLETPROOF AUTO-TAGGER (NO FALSE POSITIVES)
+// ------------------------------------------------------
 function autoTagLaw(law) {
   const text = (
-    law.name + " " +
-    law.description + " " +
+    (law.title || "") + " " +
+    (law.description || "") + " " +
     JSON.stringify(law.leave_types || [])
   ).toLowerCase();
 
   const tags = new Set();
 
-  // Pregnancy / birth
-  if (text.includes("pregnan") || text.includes("childbirth") || text.includes("maternity"))
+  // Pregnancy
+  if (
+    text.includes("pregnan") ||
+    text.includes("childbirth") ||
+    text.includes("maternity") ||
+    text.includes("birth")
+  ) {
     tags.add("pregnancy");
+  }
 
-  // Medical / health
-  if (text.includes("medical") || text.includes("health") || text.includes("illness") || text.includes("injury"))
+  // Medical (safe version)
+  if (
+    text.includes("sick leave") ||
+    text.includes("sick time") ||
+    text.includes("medical leave") ||
+    text.includes("illness") ||
+    text.includes("health condition") ||
+    text.includes("serious health condition")
+  ) {
     tags.add("medical");
+  }
 
-  // Family / caregiving
-  if (text.includes("family") || text.includes("care") || text.includes("parent") || text.includes("spouse"))
-    tags.add("family").add("caregiving");
+  // Family care
+  if (
+    text.includes("family leave") ||
+    text.includes("care for") ||
+    text.includes("caregiving") ||
+    text.includes("family member") ||
+    text.includes("parent") ||
+    text.includes("spouse") ||
+    text.includes("child")
+  ) {
+    tags.add("family_care");
+  }
 
   // Military
-  if (text.includes("military") || text.includes("active duty") || text.includes("deployment"))
+  if (
+    text.includes("military") ||
+    text.includes("active duty") ||
+    text.includes("deployment") ||
+    text.includes("servicemember")
+  ) {
     tags.add("military");
+  }
 
-  // Domestic violence / safe leave
-  if (text.includes("domestic") || text.includes("violence") || text.includes("assault") || text.includes("stalking"))
-    tags.add("domestic_violence").add("safe_leave");
+  // Domestic violence
+  if (
+    text.includes("domestic violence") ||
+    text.includes("sexual assault") ||
+    text.includes("stalking") ||
+    text.includes("safe leave")
+  ) {
+    tags.add("domestic_violence");
+  }
 
   // Bereavement
-  if (text.includes("bereav") || text.includes("death"))
+  if (
+    text.includes("bereav") ||
+    text.includes("funeral") ||
+    text.includes("death of")
+  ) {
     tags.add("bereavement");
+  }
 
   // Jury duty
-  if (text.includes("jury") || text.includes("court"))
+  if (
+    text.includes("jury duty") ||
+    text.includes("jury service") ||
+    text.includes("court leave") ||
+    text.includes("court appearance")
+  ) {
     tags.add("jury");
+  }
 
   // Voting
-  if (text.includes("vot") || text.includes("election"))
+  if (
+    text.includes("voting leave") ||
+    text.includes("election leave") ||
+    text.includes("time to vote")
+  ) {
     tags.add("voting");
+  }
 
   // Organ donation
-  if (text.includes("organ") || text.includes("bone marrow"))
+  if (
+    text.includes("organ donation") ||
+    text.includes("bone marrow")
+  ) {
     tags.add("organ_donation");
+  }
 
   // Public employees
-  if (text.includes("public employee") || text.includes("state employee"))
+  if (
+    text.includes("public employee") ||
+    text.includes("state employee")
+  ) {
     tags.add("public_employees");
+  }
 
   return Array.from(tags);
 }
 
-// Show results summary
+// ------------------------------------------------------
+// SMART TAG MATCHING (OPTION B)
+// ------------------------------------------------------
+function getMatchingTagsForReason(reason) {
+  switch (reason) {
+    case "sick":
+      return ["medical"];
+    case "pregnancy":
+      return ["pregnancy", "medical"];
+    case "family_care":
+      return ["family_care"];
+    case "military":
+      return ["military"];
+    case "court":
+      return ["jury"];
+    case "bereavement":
+      return ["bereavement"];
+    default:
+      return [];
+  }
+}
+
+// ------------------------------------------------------
+// RESULTS SUMMARY
+// ------------------------------------------------------
 async function showResultsSummary() {
   await assistantReplyChunks([
     "Thank you.",
     "I’m pulling together federal and state leave laws that may apply.",
     "One moment while I check your state and situation."
   ]);
-  
+
   const stateCode = wizardState.state === 'unknown' ? null : wizardState.state;
- 
-  // ⭐ Load federal laws
+
   const federalLaws = await loadFederalLaws();
-  
-   // ⭐ Load state laws
   const stateLaws = await loadStateLaws(stateCode);
-  
-  // Combine federal + state laws
+
   const combined = [...federalLaws, ...stateLaws];
-  
-  // Auto-tag every law
+
   combined.forEach(law => {
     law.tags = autoTagLaw(law);
   });
 
-const reasonTag = wizardState.reason.toLowerCase();
+  const matchingTags = getMatchingTagsForReason(wizardState.reason);
 
-  // Filter using auto-generated tags
   let filtered = combined.filter(law =>
-    law.tags.some(tag => tag.includes(reasonTag))
+    law.tags.some(tag => matchingTags.includes(tag))
   );
 
-// If nothing matches, fallback to all laws
   if (!filtered.length) {
     await assistantReply("I didn’t find a perfect match, but here are the closest laws.");
     filtered = combined;
@@ -409,15 +367,62 @@ const reasonTag = wizardState.reason.toLowerCase();
 
   await assistantReply(`I found ${filtered.length} leave laws that may apply to your situation. Here are the most relevant ones:`);
 
-   // Show top 3
   await sendLawsToChat(filtered.slice(0, 6));
 
-  // Dispatch event for UI
   const event = new CustomEvent("wizardComplete", { detail: { laws: filtered } });
   window.dispatchEvent(event);
 }
 
-// DOM listeners
+// ------------------------------------------------------
+// START WIZARD
+// ------------------------------------------------------
+async function startWizard() {
+  chatContainer.innerHTML = '';
+  quickRepliesContainer.innerHTML = '';
+  wizardState = { reason: null, state: null, employmentStatus: null };
+
+  await assistantReply(
+    "Hi. I’m here to help you understand your leave options. What’s the main reason you’re looking into leave right now?"
+  );
+
+  setQuickReplies([
+    { label: "I'm sick or injured", value: "sick" },
+    { label: "Pregnancy or birth", value: "pregnancy" },
+    { label: "Caring for a family member", value: "family_care" },
+    { label: "Bereavement or loss", value: "bereavement" },
+    { label: "Military service", value: "military" },
+    { label: "Court or jury duty", value: "court" },
+    { label: "Something else", value: "other" }
+  ]);
+}
+
+async function askState() {
+  await assistantReply(
+    "Thank you for sharing that. Which state do you work in? This helps me find the right laws."
+  );
+
+  setQuickReplies(
+    states.map((s) => ({ label: s.name, value: s.code })).concat([
+      { label: "I’m not sure", value: "unknown" },
+    ])
+  );
+}
+
+async function askEmploymentStatus() {
+  await assistantReply(
+    "Got it. One more thing—are you working full-time or part-time?"
+  );
+
+  setQuickReplies([
+    { label: 'Full-time', value: 'Full-time' },
+    { label: 'Part-time', value: 'Part-time' },
+    { label: "I'm not sure", value: "I'm between jobs." },
+  ]);
+}
+
+// ------------------------------------------------------
+// DOM LISTENERS
+// ------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
   startWizard();
 
@@ -428,7 +433,7 @@ document.addEventListener("DOMContentLoaded", () => {
       handleUserTypedMessage(text);
       userInput.value = "";
     });
-// ⭐ Send message when pressing Enter
+
     userInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
@@ -437,9 +442,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
 // ------------------------------------------------------
-// Start Over Button
+// START OVER BUTTON
 // ------------------------------------------------------
 document.getElementById("startOverBtn")?.addEventListener("click", () => {
-  resetWizard();
+  startWizard();
 });
