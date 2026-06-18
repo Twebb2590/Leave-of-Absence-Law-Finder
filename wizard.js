@@ -160,7 +160,7 @@ function handleUserTypedMessage(text) {
   const email = text.trim();
   wizardState.awaitingEmail = false;
 
-  await assistantReply(`Perfect — sending your PDF to ${email}.`);
+  assistantReply(`Perfect — sending your PDF to ${email}.`);
 
   sendChatToEmail(email); // we’ll create this next
   return;
