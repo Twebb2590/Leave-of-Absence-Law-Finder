@@ -189,12 +189,12 @@ async function answerGeneralQuestion(text) {
     return;
   }
 
-  return assistantReplyChunks({
+  return assistantReplyChunks([
     "I’m here to help with leave laws. You can ask things like:",
     "\n• Do I qualify for FMLA?",
     "\n• What leave laws apply in California?",
     "\n• Is pregnancy leave paid?"
-    });
+    ]);
 }
 async function sendChatToEmail(email) {
   const chatHtml = document.getElementById("chatContainer").innerHTML;
