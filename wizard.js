@@ -502,6 +502,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+fetch("https://YOUR_BACKEND_URL/send-pdf", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ email, chatHtml })
+});
 
 // ------------------------------------------------------
 // START OVER BUTTON
