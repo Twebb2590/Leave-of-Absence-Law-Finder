@@ -166,7 +166,9 @@ function handleUserTypedMessage(text) {
   sendChatToEmail(email); // we’ll create this next
   return;
 }
-
+// Otherwise continue the wizard normally
+  advanceWizard(text, true);
+}
 // ------------------------------------------------------
 // GENERAL ANSWERS AFTER WIZARD
 // ------------------------------------------------------
