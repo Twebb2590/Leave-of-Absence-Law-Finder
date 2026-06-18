@@ -189,7 +189,7 @@ async function answerGeneralQuestion(text) {
     return;
   }
 
-  return assistantReply(
+  return assistantReplyChunks(
     "I’m here to help with leave laws. You can ask things like:",
     "\n• Do I qualify for FMLA?",
     "\n• What leave laws apply in California?",
@@ -444,7 +444,7 @@ async function startWizard() {
   quickRepliesContainer.innerHTML = '';
   wizardState = { reason: null, state: null, employmentStatus: null };
 
-  await assistantReply(
+  await assistantReplyChunks(
     "Hi. I’m here to help you understand your leave options.", 
     "What’s the main reason you’re looking into leave right now?"
   );
@@ -461,14 +461,14 @@ async function startWizard() {
 }
 
 async function askState() {
-  await assistantReply(
+  await assistantReplyChunks(
     "Thank you for sharing that.", 
     "Which state do you work in? This helps me find the right laws."
   );
 }
 
 async function askEmploymentStatus() {
-  await assistantReply(
+  await assistantReplyChunks(
     "Got it. One more thing:",
     "Are you working full-time or part-time?"
   );
