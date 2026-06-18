@@ -81,7 +81,7 @@ async function assistantReplyChunks(chunks, min = 400, max = 1200) {
 }
 
 // ------------------------------------------------------
-// MAPPING FUNCTIONS
+// MAPPING FUNCTIONS - Possibly Delete
 // ------------------------------------------------------
 function mapTypedReason(text) {
   text = text.toLowerCase();
@@ -146,7 +146,10 @@ if (value === "no") {
   await assistantReply("Okay! Let me know if you need anything else.");
   return;
 }
-
+  // ⭐ Removes leftover quick reply bubbles
+quickRepliesContainer.innerHTML = "";
+  
+}
   // AFTER WIZARD — general Q&A
   return answerGeneralQuestion(value);
 }
@@ -430,10 +433,7 @@ setQuickReplies([
   { label: "No, thanks", value: "email_no" }
 ]);
 
-// ⭐ FIX: remove leftover quick reply buttons
-quickRepliesContainer.innerHTML = "";
-  
-  const event = new CustomEvent("wizardComplete", { detail: { laws: filtered } });
+    const event = new CustomEvent("wizardComplete", { detail: { laws: filtered } });
   window.dispatchEvent(event);
 }
 
@@ -446,7 +446,8 @@ async function startWizard() {
   wizardState = { reason: null, state: null, employmentStatus: null };
 
   await assistantReply(
-    "Hi. I’m here to help you understand your leave options. What’s the main reason you’re looking into leave right now?"
+    "Hi. I’m here to help you understand your leave options.", 
+    "What’s the main reason you’re looking into leave right now?"
   );
 
   setQuickReplies([
@@ -462,19 +463,15 @@ async function startWizard() {
 
 async function askState() {
   await assistantReply(
-    "Thank you for sharing that. Which state do you work in? This helps me find the right laws."
-  );
-
-  setQuickReplies(
-    states.map((s) => ({ label: s.name, value: s.code })).concat([
-      { label: "I’m not sure", value: "unknown" },
-    ])
+    "Thank you for sharing that.", 
+    "Which state do you work in? This helps me find the right laws."
   );
 }
 
 async function askEmploymentStatus() {
   await assistantReply(
-    "Got it. One more thing—are you working full-time or part-time?"
+    "Got it. One more thing:",
+    "Are you working full-time or part-time?"
   );
 
   setQuickReplies([
