@@ -37,6 +37,13 @@ body {
     border: 1px solid #ddd;
 }
 
+#chatContainer {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  z-index: 1;
+}
+
 /* Chat Row Layout */
 .chat-row {
     width: 100%;
