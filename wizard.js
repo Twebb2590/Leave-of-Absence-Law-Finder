@@ -419,7 +419,7 @@ async function showResultsSummary() {
 
   await sendLawsToChat(filtered.slice(0, 6));
 
-  addassistantReply("Would you like a PDF copy of this conversation emailed to you?");
+  await assistantReply("Would you like a PDF copy of this conversation emailed to you?");
 
 showQuickReplies([
   { label: "Yes, email it to me", value: "email_yes" },
