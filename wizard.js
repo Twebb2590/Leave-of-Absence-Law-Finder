@@ -137,13 +137,13 @@ async function advanceWizard(value, fromUser = true) {
   }
 
   if (value === "email_yes") {
-  addAssistantMessage("Great! What email address should I send it to?");
+  await assistantReply("Great! What email address should I send it to?");
   wizardState.awaitingEmail = true;
   return;
 }
 
 if (value === "email_no") {
-  addAssistantMessage("Okay! Let me know if you need anything else.");
+  await assistantReply("Okay! Let me know if you need anything else.");
   return;
 }
 
@@ -161,7 +161,7 @@ function handleUserTypedMessage(text) {
   const email = text.trim();
   wizardState.awaitingEmail = false;
 
-  addAssistantMessage(`Perfect — sending your PDF to ${email}.`);
+  await assistantReply(`Perfect — sending your PDF to ${email}.`);
 
   sendChatToEmail(email); // we’ll create this next
   return;
@@ -421,7 +421,7 @@ async function showResultsSummary() {
 
   await assistantReply("Would you like a PDF copy of this conversation emailed to you?");
 
-showQuickReplies([
+setQuickReplies([
   { label: "Yes, email it to me", value: "email_yes" },
   { label: "No, thanks", value: "email_no" }
 ]);
