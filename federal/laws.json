@@ -19,7 +19,7 @@
           "paid": false
         },
         {
-          "type": "bereavement",
+          "type": "caregiving",
           "duration": { "value": 12, "unit": "weeks", "notes": "Per 12-month period for qualifying exigencies" },
           "paid": false
         }
@@ -58,7 +58,7 @@
         "notes": "Uses the same eligibility rules as FMLA, with additional family relationship requirements."
       },
       "official_url": "https://www.dol.gov/agencies/whd/fmla/military-caregiver-leave",
-      "tags": ["military", "caregiving", "medical"],
+      "tags": ["military", "caregiving"],
       "last_updated": "2024-01-01T00:00:00Z"
     },
     {
