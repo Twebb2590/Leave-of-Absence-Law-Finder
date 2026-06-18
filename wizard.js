@@ -136,6 +136,17 @@ async function advanceWizard(value, fromUser = true) {
     return showResultsSummary();
   }
 
+  if (value === "email_yes") {
+  addAssistantMessage("Great! What email address should I send it to?");
+  wizardState.awaitingEmail = true;
+  return;
+}
+
+if (value === "email_no") {
+  addAssistantMessage("Okay! Let me know if you need anything else.");
+  return;
+}
+
   // AFTER WIZARD — general Q&A
   return answerGeneralQuestion(value);
 }
@@ -146,6 +157,16 @@ function handleQuickReply(value) {
 
 function handleUserTypedMessage(text) {
   advanceWizard(text, true);
+}
+
+if (wizardState.awaitingEmail) {
+  const email = text.trim();
+  wizardState.awaitingEmail = false;
+
+  addAssistantMessage(`Perfect — sending your PDF to ${email}.`);
+
+  sendChatToEmail(email); // we’ll create this next
+  return;
 }
 
 // ------------------------------------------------------
@@ -168,6 +189,15 @@ async function answerGeneralQuestion(text) {
   return assistantReply(
     "I’m here to help with leave laws. You can ask things like:\n• Do I qualify for FMLA?\n• What leave laws apply in California?\n• Is pregnancy leave paid?"
   );
+}
+async function sendChatToEmail(email) {
+  const chatHtml = document.getElementById("chatContainer").innerHTML;
+
+  await fetch("https://YOUR_BACKEND_URL/send-pdf", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, chatHtml })
+  });
 }
 
 // ------------------------------------------------------
@@ -388,6 +418,13 @@ async function showResultsSummary() {
   await assistantReply(`I found ${filtered.length} leave laws that may apply to your situation. Here are the most relevant ones:`);
 
   await sendLawsToChat(filtered.slice(0, 6));
+
+  addAssistantMessage("Would you like a PDF copy of this conversation emailed to you?");
+
+showQuickReplies([
+  { label: "Yes, email it to me", value: "email_yes" },
+  { label: "No, thanks", value: "email_no" }
+]);
 
 // ⭐ FIX: remove leftover quick reply buttons
 quickRepliesContainer.innerHTML = "";
