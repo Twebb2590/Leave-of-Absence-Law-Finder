@@ -189,12 +189,12 @@ async function answerGeneralQuestion(text) {
     return;
   }
 
-  return assistantReplyChunks(
+  return assistantReplyChunks({
     "I’m here to help with leave laws. You can ask things like:",
     "\n• Do I qualify for FMLA?",
     "\n• What leave laws apply in California?",
     "\n• Is pregnancy leave paid?"
-  );
+    });
 }
 async function sendChatToEmail(email) {
   const chatHtml = document.getElementById("chatContainer").innerHTML;
@@ -444,10 +444,10 @@ async function startWizard() {
   quickRepliesContainer.innerHTML = '';
   wizardState = { reason: null, state: null, employmentStatus: null };
 
-  await assistantReplyChunks(
+  await assistantReplyChunks([
     "Hi. I’m here to help you understand your leave options.", 
     "What’s the main reason you’re looking into leave right now?"
-  );
+  ]);
 
   setQuickReplies([
     { label: "I'm sick or injured", value: "sick" },
@@ -461,17 +461,17 @@ async function startWizard() {
 }
 
 async function askState() {
-  await assistantReplyChunks(
+  await assistantReplyChunks([
     "Thank you for sharing that.", 
     "Which state do you work in? This helps me find the right laws."
-  );
+  ]);
 }
 
 async function askEmploymentStatus() {
-  await assistantReplyChunks(
+  await assistantReplyChunks([
     "Got it. One more thing:",
     "Are you working full-time or part-time?"
-  );
+  ]);
 
   setQuickReplies([
     { label: 'Full-time', value: 'Full-time' },
