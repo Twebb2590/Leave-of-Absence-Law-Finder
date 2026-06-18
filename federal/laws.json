@@ -32,7 +32,7 @@
         "notes": "Employee must work at a covered employer and meet all three criteria."
       },
       "official_url": "https://www.dol.gov/agencies/whd/fmla/",
-      "tags": ["medical", "family", "pregnancy", "caregiving"],
+      "tags": ["medical","injury", "family", "pregnancy", "caregiving"],
       "last_updated": "2024-01-01T00:00:00Z"
     },
     {
