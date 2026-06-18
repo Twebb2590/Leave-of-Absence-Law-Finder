@@ -16,11 +16,57 @@ app.post("/send-pdf", async (req, res) => {
     const text = dom.window.document.body.textContent;
 
     // Create PDF
-    const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage();
-    page.drawText(text.substring(0, 3000));
+import { PDFDocument, StandardFonts } from "pdf-lib";
 
-    const pdfBytes = await pdfDoc.save();
+const pdfDoc = await PDFDocument.create();
+const pageWidth = 612;   // Letter size width
+const pageHeight = 792;  // Letter size height
+const margin = 50;
+const fontSize = 12;
+
+const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+let page = pdfDoc.addPage([pageWidth, pageHeight]);
+let y = pageHeight - margin;
+
+const words = text.split(" ");
+let line = "";
+
+for (let word of words) {
+  const testLine = line + word + " ";
+  const testWidth = font.widthOfTextAtSize(testLine, fontSize);
+
+  if (testWidth > pageWidth - margin * 2) {
+    page.drawText(line, {
+      x: margin,
+      y,
+      size: fontSize,
+      font
+    });
+
+    line = word + " ";
+    y -= fontSize + 4;
+
+    if (y < margin) {
+      page = pdfDoc.addPage([pageWidth, pageHeight]);
+      y = pageHeight - margin;
+    }
+  } else {
+    line = testLine;
+  }
+}
+
+if (line.trim().length > 0) {
+  page.drawText(line, {
+    x: margin,
+    y,
+    size: fontSize,
+    font
+  });
+}
+
+const pdfBytes = await pdfDoc.save();
+
 
    // Email transport
     const transporter = nodemailer.createTransport({
