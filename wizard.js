@@ -199,7 +199,7 @@ async function answerGeneralQuestion(text) {
 async function sendChatToEmail(email) {
   const chatHtml = document.getElementById("chatContainer").innerHTML;
 
-  await fetch("//https://leave-of-absence-law-finder.onrender.com/send-pdf", {
+  await fetch("https://leave-of-absence-law-finder.onrender.com/send-pdf", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, chatHtml })
