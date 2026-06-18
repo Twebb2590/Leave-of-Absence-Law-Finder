@@ -216,6 +216,58 @@ animation: 250ms ease 460.847ms 1 normal forwards running quickReplyFadeIn;
 #searchBtn:hover {
     background: #e8f0ff;
 }
+.chat-law-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #e5e5e5;
+  font-family: system-ui, sans-serif;
+  max-width: 100%;
+}
+
+.chat-law-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.chat-law-card-icon {
+  font-size: 22px;
+  margin-right: 8px;
+}
+
+.chat-law-card-title {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.chat-law-card-meta {
+  font-size: 13px;
+  color: #555;
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.chat-law-card-section {
+  margin-bottom: 14px;
+}
+
+.chat-law-card-section-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.chat-law-card-section-body {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.chat-law-card-bullet {
+  margin-left: 4px;
+  margin-bottom: 4px;
+}
 
 /* Filter Panel */
 #filterPanelContainer {
