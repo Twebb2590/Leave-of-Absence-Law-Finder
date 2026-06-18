@@ -156,7 +156,7 @@ async function answerGeneralQuestion(text) {
 
   if (lower.includes("eligible") || lower.includes("qualify")) {
     return assistantReply(
-      "Eligibility depends on your reason for leave, your state, and your employment status. You can restart the wizard anytime to check again."
+      "Eligibility depends on your reason for leave, your state, and your employment status. You can restart the chat anytime to check again."
     );
   }
 
