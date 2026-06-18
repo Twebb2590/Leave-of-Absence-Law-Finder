@@ -5,26 +5,43 @@ function linkify(text) {
   return text.replace(urlRegex, url => `<a href="${url}" target="_blank">${url}</a>`);
 }
 
-export function createChatBubble({ text, from = 'assistant' }) {
+export function createChatBubble({ text, html, htmlElement, from = 'assistant' }) {
   const wrapper = document.createElement('div');
   wrapper.className = `chat-row ${from}`;
 
   const bubble = document.createElement('div');
   bubble.className = `chat-bubble ${from}`;
 
-  // 1. Convert URLs to safe <a> tags
-  const htmlWithLinks = linkify(text);
+  // If a DOM element is provided, append it directly
+  if (htmlElement) {
+    bubble.appendChild(htmlElement);
+    wrapper.appendChild(bubble);
+    return wrapper;
+  }
 
-  // 2. Escape everything else to prevent HTML injection
-  const safeHtml = htmlWithLinks
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    // restore <a> tags only
-    .replace(/&lt;a /g, "<a ")
-    .replace(/&lt;\/a&gt;/g, "</a>");
+  // If raw HTML is provided, insert it safely
+  if (html) {
+    bubble.innerHTML = html;
+    wrapper.appendChild(bubble);
+    return wrapper;
+  }
 
-  bubble.innerHTML = safeHtml;
+  // Otherwise treat it as text and run linkify
+  if (typeof text === "string") {
+    const htmlWithLinks = linkify(text);
+
+    const safeHtml = htmlWithLinks
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/&lt;a /g, "<a ")
+      .replace(/&lt;\/a&gt;/g, "</a>");
+
+    bubble.innerHTML = safeHtml;
+  } else {
+    bubble.textContent = "";
+  }
 
   wrapper.appendChild(bubble);
   return wrapper;
 }
+
