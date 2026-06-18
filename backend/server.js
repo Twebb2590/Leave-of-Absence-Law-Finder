@@ -7,6 +7,8 @@ const app = express();
 app.use(express.json({ limit: "10mb" }));
 
 app.post("/send-pdf", async (req, res) => {
+  //https://leave-of-absence-law-finder.onrender.com/send-pdf
+});
   const { email, chatHtml } = req.body;
 
   try {
