@@ -342,12 +342,12 @@ async function sendLawsToChat(laws) {
 Level: ${law.level || "N/A"}
 State: ${law.state || "N/A"}
 
+${law.description || ""}
+
 Eligibility: ${eligibility.eligible ? "You may qualify" : "You may not qualify"}
 
 Why:
-${eligibility.reasons.length ? eligibility.reasons.map(r => "• " + r).join("\n") : "• No specific restrictions based on what you shared."}
-
-${law.description || ""}
+${eligibility.reasons.length ? eligibility.reasons.map(r => "• " + r).join("\n") : "No specific restrictions based on what you shared."}
 
 Source: ${law.link || "N/A"}
     `;
