@@ -28,6 +28,19 @@ body {
 #wizardContainer {
     margin: 2rem 0;
 }
+#wizardContainer {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 160px); /* adjust if header/footer changes */
+  overflow: hidden;
+}
+#wizardInputArea {
+  background: white;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  position: relative;
+  z-index: 10;
+}
 
 #chatContainer {
     background: white;
