@@ -333,41 +333,23 @@ function getMatchingTagsForReason(reason) {
   }
 }
 
+import { createChatLawCard } from './components/ChatLawCard.js';
+
 async function sendLawsToChat(laws) {
   for (const law of laws) {
     const eligibility = checkEligibility(law, wizardState);
 
-    const text = `
-📘 **${law.title || "Untitled Law"}**
+    const card = createChatLawCard(law, eligibility);
 
-**Level:** ${law.level || "N/A"}  
-**State:** ${law.state || "N/A"}
+    const bubble = createChatBubble({
+      htmlElement: card,
+      from: "assistant"
+    });
 
----
+    chatContainer.appendChild(bubble);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
 
-**Description**  
-${law.description || "No description available."}
-
----
-
-**Eligibility:**  
-${eligibility.eligible ? "You may qualify" : "You may not qualify"}
-
----
-
-**Why:**  
-${eligibility.reasons.length 
-  ? eligibility.reasons.map(r => "• " + r).join("\n") 
-  : "• No specific restrictions based on what you shared."
-}
-
----
-
-**Source:**  
-${law.link || "N/A"}
-    `;
-
-    await assistantReply(text);
+    await new Promise(resolve => setTimeout(resolve, 300));
   }
 }
 
