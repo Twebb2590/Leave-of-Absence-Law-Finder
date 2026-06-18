@@ -199,11 +199,22 @@ async function answerGeneralQuestion(text) {
 async function sendChatToEmail(email) {
   const chatHtml = document.getElementById("chatContainer").innerHTML;
 
-  await fetch("https://leave-of-absence-law-finder.onrender.com/send-pdf", {
+ try {
+   const response = await fetch("https://leave-of-absence-law-finder.onrender.com/send-pdf", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, chatHtml })
   });
+
+  if (!response.ok) {
+      throw new Error("Server error");
+    }
+
+    await assistantReply("Your PDF is on the way!");
+  } catch (err) {
+    console.error(err);
+    await assistantReply("Hmm… I couldn’t send the email. Try again in a moment.");
+  }
 }
 
 // ------------------------------------------------------
