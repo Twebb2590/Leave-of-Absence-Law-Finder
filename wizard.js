@@ -162,7 +162,7 @@ function handleUserTypedMessage(text) {
 
   assistantReply(`Perfect — sending your PDF to ${email}.`);
 
-  sendChatToEmail(email); // we’ll create this next
+  sendChatToEmail(email); 
   return;
 }
 
@@ -188,7 +188,10 @@ async function answerGeneralQuestion(text) {
   }
 
   return assistantReply(
-    "I’m here to help with leave laws. You can ask things like:\n• Do I qualify for FMLA?\n• What leave laws apply in California?\n• Is pregnancy leave paid?"
+    "I’m here to help with leave laws. You can ask things like:",
+    "\n• Do I qualify for FMLA?",
+    "\n• What leave laws apply in California?",
+    "\n• Is pregnancy leave paid?"
   );
 }
 async function sendChatToEmail(email) {
@@ -331,7 +334,7 @@ function autoTagLaw(law) {
     tags.add("organ_donation");
   }
 
-  // Public employees
+  // Public employees - May Remove
   if (
     text.includes("public employee") ||
     text.includes("state employee")
