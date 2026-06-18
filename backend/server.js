@@ -1,9 +1,11 @@
 import express from "express";
+import cors from "cors";
 import nodemailer from "nodemailer";
 import { PDFDocument } from "pdf-lib";
 import { JSDOM } from "jsdom";
 
 const app = express();
+app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 
 app.post("/send-pdf", async (req, res) => {
