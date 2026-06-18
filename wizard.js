@@ -156,7 +156,6 @@ function handleQuickReply(value) {
 }
 
 function handleUserTypedMessage(text) {
-  advanceWizard(text, true);
   if (wizardState.awaitingEmail) {
   const email = text.trim();
   wizardState.awaitingEmail = false;
@@ -166,9 +165,11 @@ function handleUserTypedMessage(text) {
   sendChatToEmail(email); // we’ll create this next
   return;
 }
-// Otherwise continue the wizard normally
+
+  // Otherwise continue the wizard normally
   advanceWizard(text, true);
 }
+
 // ------------------------------------------------------
 // GENERAL ANSWERS AFTER WIZARD
 // ------------------------------------------------------
