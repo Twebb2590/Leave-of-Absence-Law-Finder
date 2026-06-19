@@ -14,7 +14,8 @@ app.post("/send-pdf", async (req, res) => {
   try {
     const dom = new JSDOM(chatHtml);
     const body = dom.window.document.body;
-    const text = body ? body.textContent : "No chat content";
+    const rawText = body ? body.textContent : "";
+    const text = typeof rawText === "string" ? rawText.trim() : "";
 
     const pdfDoc = await PDFDocument.create();
 
@@ -106,6 +107,9 @@ app.post("/send-pdf", async (req, res) => {
     }
 
     function drawWrappedText(page, text, x, y, font, fontSize, maxWidth, lineHeight) {
+        if (!text || typeof text !== "string") {
+    return y;
+
       const words = text.split(" ");
       let line = "";
 
