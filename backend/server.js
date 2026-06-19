@@ -192,7 +192,7 @@ const fontBold = await pdfDoc.embedFont(robotoBold);
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
-      secure: true,
+      secure: false,
       auth: {
         user: "twebb2590@gmail.com",
         pass: "iztepzbkxqphkmth"
