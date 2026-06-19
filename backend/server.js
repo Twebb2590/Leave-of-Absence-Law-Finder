@@ -3,7 +3,7 @@ import cors from "cors";
 import nodemailer from "nodemailer";
 import { PDFDocument, rgb } from "pdf-lib";
 import { JSDOM } from "jsdom";
-import fontkit from "fontkit";
+import * as fontkit from "fontkit";
 import fs from "fs";
 
 const app = express();
