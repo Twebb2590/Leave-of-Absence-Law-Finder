@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import nodemailer from "nodemailer";
-import { PDFDocument } from "pdf-lib";
+import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { JSDOM } from "jsdom";
 
 const app = express();
