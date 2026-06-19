@@ -184,7 +184,7 @@ app.post("/send-pdf", async (req, res) => {
     });
 
     await transporter.sendMail({
-      from: "YOUR_EMAIL@gmail.com",
+      from: "twebb2590@gmail.com",
       to: email,
       subject: "Your Leave Summary PDF",
       text: "Attached is your personalized leave summary.",
