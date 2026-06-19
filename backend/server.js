@@ -13,7 +13,8 @@ app.post("/send-pdf", async (req, res) => {
 
   try {
     const dom = new JSDOM(chatHtml);
-    const text = dom.window.document.body.textContent || "No chat content";
+    const body = dom.window.document.body;
+    const text = body ? body.textContent : "No chat content";
 
     const pdfDoc = await PDFDocument.create();
 
@@ -177,8 +178,8 @@ app.post("/send-pdf", async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "YOUR_EMAIL@gmail.com",
-        pass: "YOUR_APP_PASSWORD"
+        user: "twebb2590@gmail.com",
+        pass: "izte pzbk xqph kmth"
       }
     });
 
