@@ -158,12 +158,12 @@ function handleQuickReply(value) {
 }
 
 function handleUserTypedMessage(text) {
-  if (wizardState.awaitingEmail) {
   const email = text.trim();
+  if (wizardState.awaitingEmail) {
+  
   wizardState.awaitingEmail = false;
 
   assistantReply(`Perfect — sending your PDF to ${email}.`);
-
   sendChatToEmail(email); 
   return;
 }
