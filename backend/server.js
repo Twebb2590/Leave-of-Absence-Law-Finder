@@ -11,9 +11,9 @@ app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 
 app.post("/send-pdf", async (req, res) => {
+  try {
   const { email, chatHtml } = req.body;
 
-  try {
     const dom = new JSDOM(chatHtml);
     const body = dom.window.document.body;
     const rawText = body ? body.textContent : "";
