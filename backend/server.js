@@ -1,3 +1,4 @@
+import fs from "fs";
 import express from "express";
 import cors from "cors";
 import nodemailer from "nodemailer";
@@ -23,8 +24,11 @@ text = text.replace(/# User's Edge browser tabs metadata[\s\S]*/gi, "");
     
     const pdfDoc = await PDFDocument.create();
 
-    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-    const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+    const roboto = fs.readFileSync("./fonts/Roboto-Regular.ttf");
+const robotoBold = fs.readFileSync("./fonts/Roboto-Bold.ttf");
+
+const font = await pdfDoc.embedFont(roboto);
+const fontBold = await pdfDoc.embedFont(robotoBold);
 
     const colors = {
       blue: rgb(0, 120/255, 255/255),
