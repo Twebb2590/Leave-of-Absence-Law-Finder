@@ -195,7 +195,7 @@ const fontBold = await pdfDoc.embedFont(robotoBold);
       secure: true,
       auth: {
         user: "twebb2590@gmail.com",
-        pass: "izte pzbk xqph kmth"
+        pass: "iztepzbkxqphkmth"
       }
     });
 
