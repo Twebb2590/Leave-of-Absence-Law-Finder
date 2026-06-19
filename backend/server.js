@@ -109,7 +109,7 @@ app.post("/send-pdf", async (req, res) => {
     function drawWrappedText(page, text, x, y, font, fontSize, maxWidth, lineHeight) {
         if (!text || typeof text !== "string") {
     return y;
-
+        }
       const words = text.split(" ");
       let line = "";
 
