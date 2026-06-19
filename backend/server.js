@@ -24,6 +24,7 @@ text = text.replace(/edge_all_open_tabs[\s\S]*/gi, "");
 text = text.replace(/# User's Edge browser tabs metadata[\s\S]*/gi, "");
     
     const pdfDoc = await PDFDocument.create();
+    pdfDoc.registerFontkit(fontkit);
 
     const roboto = fs.readFileSync("./fonts/Roboto-Regular.ttf");
 const robotoBold = fs.readFileSync("./fonts/Roboto-Bold.ttf");
