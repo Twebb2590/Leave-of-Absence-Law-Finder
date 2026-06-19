@@ -15,7 +15,7 @@ app.post("/send-pdf", async (req, res) => {
     const dom = new JSDOM(chatHtml);
     const body = dom.window.document.body;
     const rawText = body ? body.textContent : "";
-    const text = typeof rawText === "string" ? rawText.trim() : "";
+    let text = typeof rawText === "string" ? rawText.trim() : "";
 
     // Remove Edge metadata noise
 text = text.replace(/edge_all_open_tabs[\s\S]*/gi, "");
