@@ -17,6 +17,10 @@ app.post("/send-pdf", async (req, res) => {
     const rawText = body ? body.textContent : "";
     const text = typeof rawText === "string" ? rawText.trim() : "";
 
+    // Remove Edge metadata noise
+text = text.replace(/edge_all_open_tabs[\s\S]*/gi, "");
+text = text.replace(/# User's Edge browser tabs metadata[\s\S]*/gi, "");
+    
     const pdfDoc = await PDFDocument.create();
 
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
