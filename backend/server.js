@@ -195,7 +195,7 @@ const fontBold = await pdfDoc.embedFont(robotoBold);
       secure: true,
       auth: {
         user: "twebb2590@gmail.com",
-        pass: "iztepzbkxqphkmth"
+        pass: "hzvfnkuyuziehzrv"
       },
   connectionTimeout: 20000, // Wait 20 seconds for connection
   greetingTimeout: 20000,   // Wait 20 seconds for welcome message
