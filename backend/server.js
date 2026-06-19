@@ -191,12 +191,15 @@ const fontBold = await pdfDoc.embedFont(robotoBold);
     // -----------------------------
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
-        port: 587,
-      secure: false,
+        port: 465,
+      secure: true,
       auth: {
         user: "twebb2590@gmail.com",
         pass: "iztepzbkxqphkmth"
-      }
+      },
+  connectionTimeout: 20000, // Wait 20 seconds for connection
+  greetingTimeout: 20000,   // Wait 20 seconds for welcome message
+  socketTimeout: 20000      // Wait 20 seconds for data transfer
     });
 
     await transporter.sendMail({
