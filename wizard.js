@@ -1,6 +1,6 @@
 // wizard.js
-import { createChatBubble } from './components/ChatBubble.js';
 import { createQuickReply } from './components/QuickReply.js';
+import { createChatLawCard } from './components/ChatLawCard.js';
 import { loadFederalLaws, loadStateLaws } from './data-loader.js';
 import { states } from "./states/state-list.js";
 
@@ -10,33 +10,47 @@ import { states } from "./states/state-list.js";
 const chatContainer = document.getElementById('chatContainer');
 const userInput = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
-
-//Quick Replies Will be deleted soon with new UI
 const quickRepliesContainer = document.getElementById('quickRepliesContainer');
 
 // ------------------------------------------------------
-// UI HELPERS
+// NEW COPILOT‑STYLE UI HELPERS
 // ------------------------------------------------------
-function addMessage(text, from = 'assistant') {
-  const bubble = createChatBubble({ text, from });
-  chatContainer.appendChild(bubble);
-  chatContainer.scrollTop = chatContainer.scrollHeight;
-}
-
-function addUserMessage(text) {
-  const bubble = createChatBubble({ text, from: "user" });
-  chatContainer.appendChild(bubble);
-  chatContainer.scrollTop = chatContainer.scrollHeight;
-}
-
-function setQuickReplies(options) {
-  quickRepliesContainer.innerHTML = '';
-  options.forEach((opt) => {
-    const btn = createQuickReply(opt.label, opt.value, handleQuickReply);
-    quickRepliesContainer.appendChild(btn);
+function scrollToBottom() {
+  chatContainer.scrollTo({
+    top: chatContainer.scrollHeight,
+    behavior: "smooth"
   });
 }
 
+function createBubbleElement(text, from = "assistant") {
+  const bubble = document.createElement("div");
+  bubble.className = `msg-bubble ${from}`;
+  bubble.innerHTML = text;
+  return bubble;
+}
+
+function createBubbleWithElement(element, from = "assistant") {
+  const wrapper = document.createElement("div");
+  wrapper.className = `msg-bubble ${from}`;
+  wrapper.appendChild(element);
+  return wrapper;
+}
+
+function addMessage(text, from = "assistant") {
+  const bubble = createBubbleElement(text, from);
+  chatContainer.appendChild(bubble);
+  scrollToBottom();
+}
+
+function addUserMessage(text) {
+  const bubble = createBubbleElement(text, "user");
+  chatContainer.appendChild(bubble);
+  scrollToBottom();
+}
+
+// ------------------------------------------------------
+// TYPING INDICATOR
+// ------------------------------------------------------
 function showTypingIndicator() {
   const indicator = document.createElement("div");
   indicator.className = "typing-indicator";
@@ -47,14 +61,17 @@ function showTypingIndicator() {
     <div class="typing-dot"></div>
   `;
   chatContainer.appendChild(indicator);
-  chatContainer.scrollTop = chatContainer.scrollHeight;
+  scrollToBottom();
 }
 
 function hideTypingIndicator() {
   const indicator = document.getElementById("typingIndicator");
   if (indicator) indicator.remove();
 }
-// Timers for Chat Assistant
+
+// ------------------------------------------------------
+// ASSISTANT REPLIES
+// ------------------------------------------------------
 async function assistantReply(text, min = 600, max = 2600) {
   const delay = Math.floor(Math.random() * (max - min + 1)) + min;
   showTypingIndicator();
@@ -71,10 +88,17 @@ async function assistantReplyChunks(chunks, min = 1000, max = 2200) {
     hideTypingIndicator();
     addMessage(chunk, 'assistant');
   }
-// Placeholder for your logic
-async function handleUserTypedMessage(text) {
-  await assistantReply("Let me think…");
 }
+
+// ------------------------------------------------------
+// QUICK REPLIES
+// ------------------------------------------------------
+function setQuickReplies(options) {
+  quickRepliesContainer.innerHTML = '';
+  options.forEach((opt) => {
+    const btn = createQuickReply(opt.label, opt.value, handleQuickReply);
+    quickRepliesContainer.appendChild(btn);
+  });
 }
 
 // ------------------------------------------------------
@@ -84,10 +108,11 @@ let wizardState = {
   reason: null,
   state: null,
   employmentStatus: null,
+  awaitingEmail: false
 };
 
 // ------------------------------------------------------
-// MAPPING FUNCTIONS - Possibly Delete
+// MAPPING FUNCTIONS
 // ------------------------------------------------------
 function mapTypedReason(text) {
   text = text.toLowerCase();
@@ -119,43 +144,43 @@ function mapTypedEmployment(text) {
 }
 
 // ------------------------------------------------------
-// UNIFIED WIZARD FLOW
+// MAIN WIZARD FLOW
 // ------------------------------------------------------
 async function advanceWizard(value, fromUser = true) {
   if (fromUser) addUserMessage(value);
 
-  // STEP 1 — REASON
   if (!wizardState.reason) {
     wizardState.reason = mapTypedReason(value);
     return askState();
   }
 
-  // STEP 2 — STATE
   if (!wizardState.state) {
     wizardState.state = mapTypedState(value);
     return askEmploymentStatus();
   }
 
-  // STEP 3 — EMPLOYMENT STATUS
   if (!wizardState.employmentStatus) {
     wizardState.employmentStatus = mapTypedEmployment(value);
     return showResultsSummary();
   }
 
-  if (value.toLowerCase().includes("yes"))  {
-  await assistantReply("Great! What email address should I send it to?");
-  wizardState.awaitingEmail = true;
-  return;
-}
+  if (wizardState.awaitingEmail) {
+    wizardState.awaitingEmail = false;
+    assistantReply(`Perfect — sending your PDF to ${value}.`);
+    sendChatToEmail(value);
+    return;
+  }
 
-if (value.toLowerCase().includes("no"))  {
-  await assistantReply("Okay! Let me know if you need anything else.");
-  return;
-}
-  // ⭐ Removes leftover quick reply bubbles
-quickRepliesContainer.innerHTML = "";
-  
-  // AFTER WIZARD — general Q&A
+  if (value.toLowerCase().includes("yes")) {
+    wizardState.awaitingEmail = true;
+    return assistantReply("Great! What email address should I send it to?");
+  }
+
+  if (value.toLowerCase().includes("no")) {
+    return assistantReply("Okay! Let me know if you need anything else.");
+  }
+
+  quickRepliesContainer.innerHTML = "";
   return answerGeneralQuestion(value);
 }
 
@@ -164,22 +189,11 @@ function handleQuickReply(value) {
 }
 
 function handleUserTypedMessage(text) {
-  const email = text.trim();
-  if (wizardState.awaitingEmail) {
-  
-  wizardState.awaitingEmail = false;
-
-  assistantReply(`Perfect — sending your PDF to ${email}.`);
-  sendChatToEmail(email); 
-  return;
-}
-
-  // Otherwise continue the wizard normally
   advanceWizard(text, true);
 }
 
 // ------------------------------------------------------
-// GENERAL ANSWERS AFTER WIZARD
+// GENERAL Q&A
 // ------------------------------------------------------
 async function answerGeneralQuestion(text) {
   const lower = text.toLowerCase();
@@ -200,21 +214,23 @@ async function answerGeneralQuestion(text) {
     "\n• Do I qualify for FMLA?",
     "\n• What leave laws apply in California?",
     "\n• Is pregnancy leave paid?"
-    ]);
+  ]);
 }
+
+// ------------------------------------------------------
+// EMAIL SENDING
+// ------------------------------------------------------
 async function sendChatToEmail(email) {
-  const chatHtml = document.getElementById("chatContainer").innerHTML;
+  const chatHtml = chatContainer.innerHTML;
 
- try {
-   const response = await fetch("https://leave-of-absence-law-finder.onrender.com/send-pdf", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, chatHtml })
-  });
+  try {
+    const response = await fetch("https://leave-of-absence-law-finder.onrender.com/send-pdf", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, chatHtml })
+    });
 
-  if (!response.ok) {
-      throw new Error("Server error");
-    }
+    if (!response.ok) throw new Error("Server error");
 
     await assistantReply("Your PDF is on the way!");
   } catch (err) {
@@ -251,7 +267,7 @@ function checkEligibility(law, wizardState) {
 }
 
 // ------------------------------------------------------
-// BULLETPROOF AUTO-TAGGER (NO FALSE POSITIVES)
+// AUTO‑TAGGER
 // ------------------------------------------------------
 function autoTagLaw(law) {
   const text = (
@@ -262,145 +278,62 @@ function autoTagLaw(law) {
 
   const tags = new Set();
 
-  // Pregnancy
-  if (
-    text.includes("pregnan") ||
-    text.includes("childbirth") ||
-    text.includes("maternity") ||
-    text.includes("birth")
-  ) {
+  if (text.includes("pregnan") || text.includes("childbirth") || text.includes("maternity") || text.includes("birth"))
     tags.add("pregnancy");
-  }
 
-  // Medical (safe version)
-  if (
-    text.includes("sick leave") ||
-    text.includes("sick time") ||
-    text.includes("medical leave") ||
-    text.includes("illness") ||
-    text.includes("health condition") ||
-    text.includes("serious health condition")
-  ) {
+  if (text.includes("sick leave") || text.includes("medical leave") || text.includes("illness"))
     tags.add("medical");
-  }
 
-  // Family care
-  if (
-    text.includes("family leave") ||
-    text.includes("care for") ||
-    text.includes("caregiving") ||
-    text.includes("family member") ||
-    text.includes("parent") ||
-    text.includes("spouse") ||
-    text.includes("child")
-  ) {
+  if (text.includes("family leave") || text.includes("care for") || text.includes("family member"))
     tags.add("family_care");
-  }
 
-  // Military
-  if (
-    text.includes("military") ||
-    text.includes("active duty") ||
-    text.includes("deployment") ||
-    text.includes("servicemember")
-  ) {
+  if (text.includes("military") || text.includes("active duty"))
     tags.add("military");
-  }
 
-  // Domestic violence
-  if (
-    text.includes("domestic violence") ||
-    text.includes("sexual assault") ||
-    text.includes("stalking") ||
-    text.includes("safe leave")
-  ) {
+  if (text.includes("domestic violence") || text.includes("sexual assault"))
     tags.add("domestic_violence");
-  }
 
-  // Bereavement
-  if (
-    text.includes("bereav") ||
-    text.includes("funeral") ||
-    text.includes("death of")
-  ) {
+  if (text.includes("bereav"))
     tags.add("bereavement");
-  }
 
-  // Jury duty
-  if (
-    text.includes("jury duty") ||
-    text.includes("jury service") ||
-    text.includes("court leave") ||
-    text.includes("court appearance")
-  ) {
+  if (text.includes("jury"))
     tags.add("jury");
-  }
 
-  // Voting
-  if (
-    text.includes("voting leave") ||
-    text.includes("election leave") ||
-    text.includes("time to vote")
-  ) {
+  if (text.includes("voting"))
     tags.add("voting");
-  }
 
-  // Organ donation
-  if (
-    text.includes("organ donation") ||
-    text.includes("bone marrow")
-  ) {
+  if (text.includes("organ donation"))
     tags.add("organ_donation");
-  }
-
-  // Public employees - May Remove
-  if (
-    text.includes("public employee") ||
-    text.includes("state employee")
-  ) {
-    tags.add("public_employees");
-  }
 
   return Array.from(tags);
 }
 
 // ------------------------------------------------------
-// SMART TAG MATCHING (OPTION B)
+// TAG MATCHING
 // ------------------------------------------------------
 function getMatchingTagsForReason(reason) {
   switch (reason) {
-    case "sick":
-      return ["medical"];
-    case "pregnancy":
-      return ["pregnancy", "medical"];
-    case "family_care":
-      return ["family_care"];
-    case "military":
-      return ["military"];
-    case "court":
-      return ["jury"];
-    case "bereavement":
-      return ["bereavement"];
-    default:
-      return [];
+    case "sick": return ["medical"];
+    case "pregnancy": return ["pregnancy", "medical"];
+    case "family_care": return ["family_care"];
+    case "military": return ["military"];
+    case "court": return ["jury"];
+    case "bereavement": return ["bereavement"];
+    default: return [];
   }
 }
 
-import { createChatLawCard } from './components/ChatLawCard.js';
-
+// ------------------------------------------------------
+// SEND LAWS TO CHAT (COPILOT BUBBLES)
+// ------------------------------------------------------
 async function sendLawsToChat(laws) {
   for (const law of laws) {
     const eligibility = checkEligibility(law, wizardState);
-
     const card = createChatLawCard(law, eligibility);
 
-    const bubble = createChatBubble({
-      htmlElement: card,
-      from: "assistant"
-    });
-
+    const bubble = createBubbleWithElement(card, "assistant");
     chatContainer.appendChild(bubble);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
+    scrollToBottom();
 
     await new Promise(resolve => setTimeout(resolve, 300));
   }
@@ -444,12 +377,12 @@ async function showResultsSummary() {
 
   await assistantReply("Would you like a PDF copy of this conversation emailed to you?");
 
-setQuickReplies([
-  { label: "Yes, email it to me", value: "email_yes" },
-  { label: "No, thanks", value: "email_no" }
-]);
+  setQuickReplies([
+    { label: "Yes, email it to me", value: "email_yes" },
+    { label: "No, thanks", value: "email_no" }
+  ]);
 
-    const event = new CustomEvent("wizardComplete", { detail: { laws: filtered } });
+  const event = new CustomEvent("wizardComplete", { detail: { laws: filtered } });
   window.dispatchEvent(event);
 }
 
@@ -459,10 +392,10 @@ setQuickReplies([
 async function startWizard() {
   chatContainer.innerHTML = '';
   quickRepliesContainer.innerHTML = '';
-  wizardState = { reason: null, state: null, employmentStatus: null };
+  wizardState = { reason: null, state: null, employmentStatus: null, awaitingEmail: false };
 
   await assistantReplyChunks([
-    "Hi. I’m here to help you understand your leave options.", 
+    "Hi. I’m here to help you understand your leave options.",
     "What’s the main reason you’re looking into leave right now?"
   ]);
 
@@ -479,7 +412,7 @@ async function startWizard() {
 
 async function askState() {
   await assistantReplyChunks([
-    "Thank you for sharing that.", 
+    "Thank you for sharing that.",
     "Which state do you work in? This helps me find the right laws."
   ]);
 }
@@ -519,7 +452,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
 
 // ------------------------------------------------------
 // START OVER BUTTON
