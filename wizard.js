@@ -8,18 +8,11 @@ import { states } from "./states/state-list.js";
 // DOM ELEMENTS
 // ------------------------------------------------------
 const chatContainer = document.getElementById('chatContainer');
-const quickRepliesContainer = document.getElementById('quickRepliesContainer');
 const userInput = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
 
-// ------------------------------------------------------
-// WIZARD STATE
-// ------------------------------------------------------
-let wizardState = {
-  reason: null,
-  state: null,
-  employmentStatus: null,
-};
+//Quick Replies Will be deleted soon with new UI
+const quickRepliesContainer = document.getElementById('quickRepliesContainer');
 
 // ------------------------------------------------------
 // UI HELPERS
@@ -78,7 +71,20 @@ async function assistantReplyChunks(chunks, min = 1000, max = 2200) {
     hideTypingIndicator();
     addMessage(chunk, 'assistant');
   }
+// Placeholder for your logic
+async function processUserMessage(text) {
+  await assistantReply("Let me think…");
 }
+}
+
+// ------------------------------------------------------
+// WIZARD STATE
+// ------------------------------------------------------
+let wizardState = {
+  reason: null,
+  state: null,
+  employmentStatus: null,
+};
 
 // ------------------------------------------------------
 // MAPPING FUNCTIONS - Possibly Delete
