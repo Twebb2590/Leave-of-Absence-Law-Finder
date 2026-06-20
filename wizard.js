@@ -530,4 +530,214 @@ function autoTagLaw(law) {
   if (text.includes("jury duty") || text.includes("jury service") || text.includes("court leave") || text.includes("court appearance"))
     tags.add("jury");
 
-  if (
+   if (text.includes("voting leave") || text.includes("election leave") || text.includes("time to vote"))
+    tags.add("voting");
+
+  if (text.includes("organ donation") || text.includes("bone marrow"))
+    tags.add("organ_donation");
+
+  return Array.from(tags);
+}
+
+// ------------------------------------------------------
+// TAG MATCHING
+// ------------------------------------------------------
+function getMatchingTagsForReason(reason) {
+  switch (reason) {
+    case "sick": return ["medical"];
+    case "pregnancy": return ["pregnancy", "medical"];
+    case "family_care": return ["family_care"];
+    case "military": return ["military"];
+    case "court": return ["jury"];
+    case "bereavement": return ["bereavement"];
+    default: return [];
+  }
+}
+
+// ------------------------------------------------------
+// SEND LAWS TO CHAT
+// ------------------------------------------------------
+async function sendLawsToChat(laws) {
+  for (const law of laws) {
+    const eligibility = checkEligibility(law, wizardState);
+    const card = createChatLawCard(law, eligibility);
+
+    const bubble = createBubbleWithElement(card, "assistant");
+    chatContainer.appendChild(bubble);
+    scrollToBottom();
+
+    await new Promise(resolve => setTimeout(resolve, 300));
+  }
+}
+
+// ------------------------------------------------------
+// RESULTS SUMMARY
+// ------------------------------------------------------
+async function showResultsSummary() {
+  await assistantReplyChunks([
+    "Thank you.",
+    "I’m pulling together federal and state leave laws that may apply.",
+    "One moment while I check your state, situation, and basic eligibility."
+  ]);
+
+  const stateCode = wizardState.state === 'unknown' ? null : wizardState.state;
+
+  const federalLaws = await loadFederalLaws();
+  const stateLaws = await loadStateLaws(stateCode);
+
+  const combined = [...federalLaws, ...stateLaws];
+
+  combined.forEach(law => {
+    law.tags = autoTagLaw(law);
+  });
+
+  const matchingTags = getMatchingTagsForReason(wizardState.reason);
+
+  let filtered = combined.filter(law =>
+    law.tags.some(tag => matchingTags.includes(tag))
+  );
+
+  if (!filtered.length) {
+    await assistantReply("I didn’t find a perfect match, but here are the closest laws.");
+    filtered = combined;
+  }
+
+  await assistantReply(`I found ${filtered.length} leave laws that may apply to your situation. Here are the most relevant ones:`);
+
+  await sendLawsToChat(filtered.slice(0, 6));
+
+  await assistantReply("Would you like a PDF copy of this conversation emailed to you?");
+
+  setQuickReplies([
+    { label: "Yes, email it to me", value: "email_yes" },
+    { label: "No, thanks", value: "email_no" }
+  ]);
+
+  await assistantReply("And if you have more questions — about leave, your situation, or anything else — feel free to ask.");
+
+  const event = new CustomEvent("wizardComplete", { detail: { laws: filtered } });
+  window.dispatchEvent(event);
+}
+
+// ------------------------------------------------------
+// ASK FOR EMAIL
+// ------------------------------------------------------
+async function askForEmail() {
+  await assistantReply("Would you like a PDF copy of this conversation emailed to you?");
+  setQuickReplies([
+    { label: "Yes, email it to me", value: "email_yes" },
+    { label: "No, thanks", value: "email_no" }
+  ]);
+}
+
+// ------------------------------------------------------
+// START WIZARD
+// ------------------------------------------------------
+async function startWizard() {
+  chatContainer.innerHTML = '';
+  quickRepliesContainer.innerHTML = '';
+  wizardState = {
+    reason: null,
+    state: null,
+    employmentStatus: null,
+    tenureMonths: null,
+    hoursPerWeek: null,
+    annualHours: null,
+    meets1250Hours: null,
+    awaitingEmail: false
+  };
+  currentStep = WIZARD_STEPS.REASON;
+
+  await assistantReplyChunks([
+    "Hi. I’m here to help you understand your leave options.",
+    "What’s the main reason you’re looking into leave right now?"
+  ]);
+
+  setQuickReplies([
+    { label: "I'm sick or injured", value: "sick" },
+    { label: "Pregnancy or birth", value: "pregnancy" },
+    { label: "Caring for a family member", value: "family_care" },
+    { label: "Bereavement or loss", value: "bereavement" },
+    { label: "Military service", value: "military" },
+    { label: "Court or jury duty", value: "court" },
+    { label: "Something else", value: "other" }
+  ]);
+}
+
+async function askState() {
+  await assistantReplyChunks([
+    "Thank you for sharing that.",
+    "Which state do you work in? This helps me find the right laws."
+  ]);
+}
+
+async function askEmploymentStatus() {
+  await assistantReplyChunks([
+    "Got it. One more thing:",
+    "Are you working full-time or part-time?"
+  ]);
+
+  setQuickReplies([
+    { label: 'Full-time', value: 'Full-time' },
+    { label: 'Part-time', value: 'Part-time' },
+    { label: "I'm not sure", value: "I'm between jobs." },
+  ]);
+}
+
+async function askTenure() {
+  await assistantReplyChunks([
+    "Thanks.",
+    "How long have you been with your current employer?"
+  ]);
+
+  setQuickReplies([
+    { label: "Less than 12 months", value: "tenure_lt_12" },
+    { label: "More than 12 months", value: "tenure_ge_12" },
+    { label: "I'm not sure", value: "tenure_unknown" }
+  ]);
+}
+
+async function askWeeklyHours() {
+  await assistantReplyChunks([
+    "To help check eligibility, about how many hours do you usually work each week?"
+  ]);
+
+  setQuickReplies([
+    { label: "Less than 20", value: "hours_lt_20" },
+    { label: "20–29", value: "hours_20_29" },
+    { label: "30–39", value: "hours_30_39" },
+    { label: "40 or more", value: "hours_ge_40" },
+    { label: "I'm not sure", value: "hours_unknown" }
+  ]);
+}
+
+// ------------------------------------------------------
+// DOM LISTENERS
+// ------------------------------------------------------
+document.addEventListener("DOMContentLoaded", () => {
+  startWizard();
+
+  if (sendBtn && userInput) {
+    sendBtn.addEventListener("click", () => {
+      const text = userInput.value.trim();
+      if (!text) return;
+      handleUserTypedMessage(text);
+      userInput.value = "";
+    });
+
+    userInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendBtn.click();
+      }
+    });
+  }
+});
+
+// ------------------------------------------------------
+// START OVER BUTTON
+// ------------------------------------------------------
+document.getElementById("startOverBtn")?.addEventListener("click", () => {
+  startWizard();
+});
+
