@@ -72,7 +72,7 @@ async function assistantReplyChunks(chunks, min = 1000, max = 2200) {
     addMessage(chunk, 'assistant');
   }
 // Placeholder for your logic
-async function processUserMessage(text) {
+async function handleUserTypedMessage(text) {
   await assistantReply("Let me think…");
 }
 }
