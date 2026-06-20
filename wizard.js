@@ -138,13 +138,26 @@ let wizardState = {
 // MAPPING FUNCTIONS
 // ------------------------------------------------------
 function mapTypedReason(text) {
-  text = text.toLowerCase();
-  if (text.includes("sick") || text.includes("ill")) return "sick";
-  if (text.includes("preg")) return "pregnancy";
-  if (text.includes("family")) return "family_care";
-  if (text.includes("military")) return "military";
-  if (text.includes("court") || text.includes("jury")) return "court";
-  if (text.includes("bereav")) return "bereavement";
+  const lower = text.toLowerCase();
+
+  // Bonding / parental / childbirth → pregnancy category
+  if (
+    lower.includes("bonding") ||
+    lower.includes("parental") ||
+    lower.includes("childbirth") ||
+    lower.includes("new baby") ||
+    lower.includes("newborn")
+  ) {
+    return "pregnancy";
+  }
+
+  if (lower.includes("sick") || lower.includes("ill")) return "sick";
+  if (lower.includes("preg")) return "pregnancy";
+  if (lower.includes("family")) return "family_care";
+  if (lower.includes("military")) return "military";
+  if (lower.includes("court") || lower.includes("jury")) return "court";
+  if (lower.includes("bereav") || lower.includes("loss") || lower.includes("passed")) return "bereavement";
+
   return "other";
 }
 
@@ -159,40 +172,41 @@ function mapTypedState(text) {
 }
 
 function mapTypedEmployment(text) {
-  text = text.toLowerCase();
-  if (text.includes("full")) return "Full-time";
-  if (text.includes("part")) return "Part-time";
-  if (text.includes("self")) return "Self-employed";
+  const lower = text.toLowerCase();
+
+  if (lower.includes("full")) return "Full-time";
+  if (lower.includes("part")) return "Part-time";
+  if (lower.includes("self")) return "Self-employed";
+
+  if (
+    lower.includes("unemployed") ||
+    lower.includes("between jobs") ||
+    lower.includes("laid off") ||
+    lower.includes("not working")
+  ) {
+    return "Unemployed";
+  }
+
   return "I'm in between jobs right now.";
 }
 
 function mapTenureFromQuickReply(value) {
   switch (value) {
-    case "tenure_lt_12":
-      return "<12";
-    case "tenure_ge_12":
-      return ">=12";
-    case "tenure_unknown":
-      return "unknown";
-    default:
-      return "unknown";
+    case "tenure_lt_12": return "<12";
+    case "tenure_ge_12": return ">=12";
+    case "tenure_unknown": return "unknown";
+    default: return "unknown";
   }
 }
 
 function mapWeeklyHoursFromQuickReply(value) {
   switch (value) {
-    case "hours_lt_20":
-      return 15;
-    case "hours_20_29":
-      return 24;
-    case "hours_30_39":
-      return 35;
-    case "hours_ge_40":
-      return 40;
-    case "hours_unknown":
-      return "unknown";
-    default:
-      return "unknown";
+    case "hours_lt_20": return 15;
+    case "hours_20_29": return 24;
+    case "hours_30_39": return 35;
+    case "hours_ge_40": return 40;
+    case "hours_unknown": return "unknown";
+    default: return "unknown";
   }
 }
 
@@ -239,7 +253,7 @@ function nextStep() {
 }
 
 // ------------------------------------------------------
-// MAIN WIZARD ROUTER
+// MAIN WIZARD ROUTER (WITH EMOTIONAL RESPONSES)
 // ------------------------------------------------------
 async function advanceWizard(value) {
   addUserMessage(value);
@@ -249,30 +263,68 @@ async function advanceWizard(value) {
   }
 
   switch (currentStep) {
+
+    // -------------------------
+    // STEP 1: REASON
+    // -------------------------
     case WIZARD_STEPS.REASON:
       wizardState.reason = mapTypedReason(value);
+
+      // EMOTIONAL RESPONSES
+      if (wizardState.reason === "bereavement") {
+        await assistantReply("I’m so sorry for your loss. I’ll help you understand what leave options may support you right now.");
+      }
+
+      if (wizardState.reason === "pregnancy") {
+        await assistantReply("Congratulations on the new addition to your family. Let’s take a look at the leave options that may support you during this time.");
+      }
+
       return nextStep();
 
+    // -------------------------
+    // STEP 2: STATE
+    // -------------------------
     case WIZARD_STEPS.STATE:
       wizardState.state = mapTypedState(value);
       return nextStep();
 
+    // -------------------------
+    // STEP 3: EMPLOYMENT
+    // -------------------------
     case WIZARD_STEPS.EMPLOYMENT:
       wizardState.employmentStatus = mapTypedEmployment(value);
+
+      // EMOTIONAL RESPONSE FOR UNEMPLOYED
+      if (wizardState.employmentStatus === "Unemployed") {
+        await assistantReply("Thank you for sharing that. Your next opportunity is on its way — and I’ll still help you understand what leave protections may apply.");
+      }
+
       return nextStep();
 
+    // -------------------------
+    // STEP 4: TENURE
+    // -------------------------
     case WIZARD_STEPS.TENURE:
       wizardState.tenureMonths = interpretTenureFromText(value);
       return nextStep();
 
+    // -------------------------
+    // STEP 5: WEEKLY HOURS
+    // -------------------------
     case WIZARD_STEPS.WEEKLY_HOURS:
       wizardState.hoursPerWeek = interpretWeeklyHoursFromText(value);
       computeAnnualHours();
       return nextStep();
 
+    // -------------------------
+    // STEP 6: RESULTS
+    // -------------------------
     case WIZARD_STEPS.RESULTS:
       return handlePostResultsFlow(value);
 
+    // -------------------------
+    // STEP 7: COMPLETE
+    // -------------------------
     case WIZARD_STEPS.COMPLETE:
       return answerGeneralQuestion(value);
   }
@@ -346,16 +398,30 @@ async function handleEmailFlow(email) {
 function handleQuickReply(value) {
   clearQuickReplies();
 
-  // Route quick replies based on current step
   switch (currentStep) {
+
     case WIZARD_STEPS.REASON:
-      wizardState.reason = value; // values like "sick", "pregnancy", etc.
+      wizardState.reason = value;
       addUserMessage(value);
+
+      // EMOTIONAL RESPONSES
+      if (value === "bereavement") {
+        assistantReply("I’m so sorry for your loss. I’ll help you understand what leave options may support you right now.");
+      }
+      if (value === "pregnancy") {
+        assistantReply("Congratulations on the new addition to your family. Let’s take a look at the leave options that may support you during this time.");
+      }
+
       return nextStep();
 
     case WIZARD_STEPS.EMPLOYMENT:
       wizardState.employmentStatus = value;
       addUserMessage(value);
+
+      if (value === "I'm between jobs." || value === "Unemployed") {
+        assistantReply("Thank you for sharing that. Your next opportunity is on its way — and I’ll still help you understand what leave protections may apply.");
+      }
+
       return nextStep();
 
     case WIZARD_STEPS.TENURE:
@@ -381,7 +447,6 @@ function handleQuickReply(value) {
 
     case WIZARD_STEPS.RESULTS:
     case WIZARD_STEPS.COMPLETE:
-      // For email yes/no quick replies
       if (value === "email_yes") {
         wizardState.awaitingEmail = true;
         addUserMessage("Yes, email it to me");
