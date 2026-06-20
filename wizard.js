@@ -13,7 +13,7 @@ const sendBtn = document.getElementById("sendBtn");
 const quickRepliesContainer = document.getElementById('quickRepliesContainer');
 
 // ------------------------------------------------------
-// NEW COPILOT‑STYLE UI HELPERS
+// COPILOT-STYLE UI HELPERS
 // ------------------------------------------------------
 function scrollToBottom() {
   chatContainer.scrollTo({
@@ -127,20 +127,19 @@ let wizardState = {
   reason: null,
   state: null,
   employmentStatus: null,
-  tenureMonths: null,      // "<12" | ">=12" | "unknown"
-  hoursPerWeek: null,      // number | "unknown"
-  annualHours: null,       // number | "unknown"
-  meets1250Hours: null,    // boolean | null
+  tenureMonths: null,
+  hoursPerWeek: null,
+  annualHours: null,
+  meets1250Hours: null,
   awaitingEmail: false
 };
 
 // ------------------------------------------------------
-// MAPPING FUNCTIONS
+// MAPPING FUNCTIONS (WITH BONDING/PARENTAL LOGIC)
 // ------------------------------------------------------
 function mapTypedReason(text) {
   const lower = text.toLowerCase();
 
-  // Bonding / parental / childbirth → pregnancy category
   if (
     lower.includes("bonding") ||
     lower.includes("parental") ||
@@ -190,34 +189,6 @@ function mapTypedEmployment(text) {
   return "I'm in between jobs right now.";
 }
 
-function mapTenureFromQuickReply(value) {
-  switch (value) {
-    case "tenure_lt_12": return "<12";
-    case "tenure_ge_12": return ">=12";
-    case "tenure_unknown": return "unknown";
-    default: return "unknown";
-  }
-}
-
-function mapWeeklyHoursFromQuickReply(value) {
-  switch (value) {
-    case "hours_lt_20": return 15;
-    case "hours_20_29": return 24;
-    case "hours_30_39": return 35;
-    case "hours_ge_40": return 40;
-    case "hours_unknown": return "unknown";
-    default: return "unknown";
-  }
-}
-
-function parseWeeklyHoursFromText(text) {
-  const match = text.match(/(\d+(\.\d+)?)/);
-  if (!match) return "unknown";
-  const num = parseFloat(match[1]);
-  if (isNaN(num) || num <= 0) return "unknown";
-  return num;
-}
-
 // ------------------------------------------------------
 // STEP TRANSITIONS
 // ------------------------------------------------------
@@ -246,9 +217,6 @@ function nextStep() {
     case WIZARD_STEPS.RESULTS:
       currentStep = WIZARD_STEPS.COMPLETE;
       return askForEmail();
-
-    case WIZARD_STEPS.COMPLETE:
-      return; // stays in complete; general Q&A handles further messages
   }
 }
 
@@ -264,15 +232,11 @@ async function advanceWizard(value) {
 
   switch (currentStep) {
 
-    // -------------------------
-    // STEP 1: REASON
-    // -------------------------
     case WIZARD_STEPS.REASON:
       wizardState.reason = mapTypedReason(value);
 
-      // EMOTIONAL RESPONSES
       if (wizardState.reason === "bereavement") {
-        await assistantReply("I’m so sorry for your loss. I’ll help you understand what leave options may support you right now.");
+        await assistantReply("I’m so sorry for your loss. I’m here to help you understand what leave options may support you right now.");
       }
 
       if (wizardState.reason === "pregnancy") {
@@ -281,50 +245,31 @@ async function advanceWizard(value) {
 
       return nextStep();
 
-    // -------------------------
-    // STEP 2: STATE
-    // -------------------------
     case WIZARD_STEPS.STATE:
       wizardState.state = mapTypedState(value);
       return nextStep();
 
-    // -------------------------
-    // STEP 3: EMPLOYMENT
-    // -------------------------
     case WIZARD_STEPS.EMPLOYMENT:
       wizardState.employmentStatus = mapTypedEmployment(value);
 
-      // EMOTIONAL RESPONSE FOR UNEMPLOYED
       if (wizardState.employmentStatus === "Unemployed") {
-        await assistantReply("Thank you for sharing that. Your next opportunity is on its way — and I’ll still help you understand what leave protections may apply.");
+        await assistantReply("Thank you for sharing that. Your next opportunity is on its way — and I’ll still help you understand what protections may apply.");
       }
 
       return nextStep();
 
-    // -------------------------
-    // STEP 4: TENURE
-    // -------------------------
     case WIZARD_STEPS.TENURE:
       wizardState.tenureMonths = interpretTenureFromText(value);
       return nextStep();
 
-    // -------------------------
-    // STEP 5: WEEKLY HOURS
-    // -------------------------
     case WIZARD_STEPS.WEEKLY_HOURS:
       wizardState.hoursPerWeek = interpretWeeklyHoursFromText(value);
       computeAnnualHours();
       return nextStep();
 
-    // -------------------------
-    // STEP 6: RESULTS
-    // -------------------------
     case WIZARD_STEPS.RESULTS:
       return handlePostResultsFlow(value);
 
-    // -------------------------
-    // STEP 7: COMPLETE
-    // -------------------------
     case WIZARD_STEPS.COMPLETE:
       return answerGeneralQuestion(value);
   }
@@ -335,18 +280,10 @@ async function advanceWizard(value) {
 // ------------------------------------------------------
 function interpretTenureFromText(text) {
   const lower = text.toLowerCase();
-  if (lower.includes("less") || lower.includes("<") || lower.includes("under")) {
-    return "<12";
-  }
-  if (lower.includes("more") || lower.includes(">") || lower.includes("over")) {
-    return ">=12";
-  }
-  if (lower.includes("year") || lower.includes("12")) {
-    return ">=12";
-  }
-  if (lower.includes("not sure") || lower.includes("unsure") || lower.includes("don't know")) {
-    return "unknown";
-  }
+  if (lower.includes("less") || lower.includes("<") || lower.includes("under")) return "<12";
+  if (lower.includes("more") || lower.includes(">") || lower.includes("over")) return ">=12";
+  if (lower.includes("year") || lower.includes("12")) return ">=12";
+  if (lower.includes("not sure") || lower.includes("unsure") || lower.includes("don't know")) return "unknown";
   return "unknown";
 }
 
@@ -369,7 +306,7 @@ function computeAnnualHours() {
 }
 
 // ------------------------------------------------------
-// POST-RESULTS FLOW (YES/NO/GENERAL)
+// POST-RESULTS FLOW
 // ------------------------------------------------------
 async function handlePostResultsFlow(value) {
   const lower = value.toLowerCase();
@@ -380,7 +317,7 @@ async function handlePostResultsFlow(value) {
   }
 
   if (lower.includes("no")) {
-    return assistantReply("Okay! Let me know if you need anything else.");
+    return assistantReply("Okay. If anything else comes to mind, I’m right here.");
   }
 
   return answerGeneralQuestion(value);
@@ -389,7 +326,12 @@ async function handlePostResultsFlow(value) {
 async function handleEmailFlow(email) {
   wizardState.awaitingEmail = false;
   await assistantReply(`Perfect — sending your PDF to ${email}.`);
-  return sendChatToEmail(email);
+
+  await sendChatToEmail(email);
+
+  await assistantReply("If you want to explore more leave options or talk through anything else, I’m right here.");
+
+  currentStep = WIZARD_STEPS.COMPLETE;
 }
 
 // ------------------------------------------------------
@@ -404,9 +346,8 @@ function handleQuickReply(value) {
       wizardState.reason = value;
       addUserMessage(value);
 
-      // EMOTIONAL RESPONSES
       if (value === "bereavement") {
-        assistantReply("I’m so sorry for your loss. I’ll help you understand what leave options may support you right now.");
+        assistantReply("I’m so sorry for your loss. I’m here to help you understand what leave options may support you right now.");
       }
       if (value === "pregnancy") {
         assistantReply("Congratulations on the new addition to your family. Let’s take a look at the leave options that may support you during this time.");
@@ -419,7 +360,7 @@ function handleQuickReply(value) {
       addUserMessage(value);
 
       if (value === "I'm between jobs." || value === "Unemployed") {
-        assistantReply("Thank you for sharing that. Your next opportunity is on its way — and I’ll still help you understand what leave protections may apply.");
+        assistantReply("Thank you for sharing that. Your next opportunity is on its way — and I’ll still help you understand what protections may apply.");
       }
 
       return nextStep();
@@ -454,46 +395,33 @@ function handleQuickReply(value) {
       }
       if (value === "email_no") {
         addUserMessage("No, thanks");
-        return assistantReply("Okay! Let me know if you need anything else.");
+        return assistantReply("Okay. If anything else comes to mind, I’m right here.");
       }
       return;
   }
 }
 
 // ------------------------------------------------------
-// USER TYPED MESSAGE
-// ------------------------------------------------------
-function handleUserTypedMessage(text) {
-  const trimmed = text.trim();
-  if (!trimmed) return;
-
-  clearQuickReplies();
-  advanceWizard(trimmed);
-}
-
-// ------------------------------------------------------
-// GENERAL Q&A
+// GENERAL Q&A (NATURAL CONVERSATION MODE)
 // ------------------------------------------------------
 async function answerGeneralQuestion(text) {
   const lower = text.toLowerCase();
 
+  if (lower.includes("restart") || lower.includes("start over")) {
+    return startWizard();
+  }
+
   if (lower.includes("eligible") || lower.includes("qualify")) {
     return assistantReply(
-      "Eligibility depends on your reason for leave, your state, your employment status, and how long you've worked and how many hours you typically work. You can restart the chat anytime to check again."
+      "Eligibility can depend on your reason for leave, your state, your employment status, and how long you've worked and how many hours you typically work. I’m here to help you sort through it anytime."
     );
   }
 
-  if (lower.includes("restart")) {
-    startWizard();
-    return;
+  if (lower.includes("law") || lower.includes("leave") || lower.includes("fmla")) {
+    return assistantReply("I can definitely help with that. What would you like to understand better?");
   }
 
-  return assistantReplyChunks([
-    "I’m here to help with leave laws. You can ask things like:",
-    "\n• Do I qualify for FMLA?",
-    "\n• What leave laws apply in California?",
-    "\n• Is pregnancy leave paid?"
-  ]);
+  return assistantReply("I’m here with you. What else would you like to explore or talk through?");
 }
 
 // ------------------------------------------------------
@@ -525,7 +453,6 @@ function checkEligibility(law, wizardState) {
   const result = { eligible: true, reasons: [] };
   const e = law.eligibility || {};
 
-  // Tenure
   if (e.employee_tenure && e.employee_tenure.includes("12 months")) {
     if (wizardState.tenureMonths === "<12") {
       result.eligible = false;
@@ -537,7 +464,6 @@ function checkEligibility(law, wizardState) {
     }
   }
 
-  // Hours
   if (e.hours_worked && e.hours_worked.includes("1,250")) {
     if (wizardState.meets1250Hours === false) {
       result.eligible = false;
@@ -604,213 +530,4 @@ function autoTagLaw(law) {
   if (text.includes("jury duty") || text.includes("jury service") || text.includes("court leave") || text.includes("court appearance"))
     tags.add("jury");
 
-  if (text.includes("voting leave") || text.includes("election leave") || text.includes("time to vote"))
-    tags.add("voting");
-
-  if (text.includes("organ donation") || text.includes("bone marrow"))
-    tags.add("organ_donation");
-
-  return Array.from(tags);
-}
-
-// ------------------------------------------------------
-// TAG MATCHING
-// ------------------------------------------------------
-function getMatchingTagsForReason(reason) {
-  switch (reason) {
-    case "sick": return ["medical"];
-    case "pregnancy": return ["pregnancy", "medical"];
-    case "family_care": return ["family_care"];
-    case "military": return ["military"];
-    case "court": return ["jury"];
-    case "bereavement": return ["bereavement"];
-    default: return [];
-  }
-}
-
-// ------------------------------------------------------
-// SEND LAWS TO CHAT (COPILOT BUBBLES)
-// ------------------------------------------------------
-async function sendLawsToChat(laws) {
-  for (const law of laws) {
-    const eligibility = checkEligibility(law, wizardState);
-    const card = createChatLawCard(law, eligibility);
-
-    const bubble = createBubbleWithElement(card, "assistant");
-    chatContainer.appendChild(bubble);
-    scrollToBottom();
-
-    await new Promise(resolve => setTimeout(resolve, 300));
-  }
-}
-
-// ------------------------------------------------------
-// RESULTS SUMMARY
-// ------------------------------------------------------
-async function showResultsSummary() {
-  await assistantReplyChunks([
-    "Thank you.",
-    "I’m pulling together federal and state leave laws that may apply.",
-    "One moment while I check your state, situation, and basic eligibility."
-  ]);
-
-  const stateCode = wizardState.state === 'unknown' ? null : wizardState.state;
-
-  const federalLaws = await loadFederalLaws();
-  const stateLaws = await loadStateLaws(stateCode);
-
-  const combined = [...federalLaws, ...stateLaws];
-
-  combined.forEach(law => {
-    law.tags = autoTagLaw(law);
-  });
-
-  const matchingTags = getMatchingTagsForReason(wizardState.reason);
-
-  let filtered = combined.filter(law =>
-    law.tags.some(tag => matchingTags.includes(tag))
-  );
-
-  if (!filtered.length) {
-    await assistantReply("I didn’t find a perfect match, but here are the closest laws.");
-    filtered = combined;
-  }
-
-  await assistantReply(`I found ${filtered.length} leave laws that may apply to your situation. Here are the most relevant ones:`);
-
-  await sendLawsToChat(filtered.slice(0, 6));
-
-  currentStep = WIZARD_STEPS.RESULTS;
-
-  await assistantReply("Would you like a PDF copy of this conversation emailed to you?");
-
-  setQuickReplies([
-    { label: "Yes, email it to me", value: "email_yes" },
-    { label: "No, thanks", value: "email_no" }
-  ]);
-
-  const event = new CustomEvent("wizardComplete", { detail: { laws: filtered } });
-  window.dispatchEvent(event);
-}
-
-// ------------------------------------------------------
-// ASK FOR EMAIL (AFTER RESULTS)
-// ------------------------------------------------------
-async function askForEmail() {
-  await assistantReply("Would you like a PDF copy of this conversation emailed to you?");
-  setQuickReplies([
-    { label: "Yes, email it to me", value: "email_yes" },
-    { label: "No, thanks", value: "email_no" }
-  ]);
-}
-
-// ------------------------------------------------------
-// START WIZARD
-// ------------------------------------------------------
-async function startWizard() {
-  chatContainer.innerHTML = '';
-  quickRepliesContainer.innerHTML = '';
-  wizardState = {
-    reason: null,
-    state: null,
-    employmentStatus: null,
-    tenureMonths: null,
-    hoursPerWeek: null,
-    annualHours: null,
-    meets1250Hours: null,
-    awaitingEmail: false
-  };
-  currentStep = WIZARD_STEPS.REASON;
-
-  await assistantReplyChunks([
-    "Hi. I’m here to help you understand your leave options.",
-    "What’s the main reason you’re looking into leave right now?"
-  ]);
-
-  setQuickReplies([
-    { label: "I'm sick or injured", value: "sick" },
-    { label: "Pregnancy or birth", value: "pregnancy" },
-    { label: "Caring for a family member", value: "family_care" },
-    { label: "Bereavement or loss", value: "bereavement" },
-    { label: "Military service", value: "military" },
-    { label: "Court or jury duty", value: "court" },
-    { label: "Something else", value: "other" }
-  ]);
-}
-
-async function askState() {
-  await assistantReplyChunks([
-    "Thank you for sharing that.",
-    "Which state do you work in? This helps me find the right laws."
-  ]);
-}
-
-async function askEmploymentStatus() {
-  await assistantReplyChunks([
-    "Got it. One more thing:",
-    "Are you working full-time or part-time?"
-  ]);
-
-  setQuickReplies([
-    { label: 'Full-time', value: 'Full-time' },
-    { label: 'Part-time', value: 'Part-time' },
-    { label: "I'm not sure", value: "I'm between jobs." },
-  ]);
-}
-
-async function askTenure() {
-  await assistantReplyChunks([
-    "Thanks.",
-    "How long have you been with your current employer?"
-  ]);
-
-  setQuickReplies([
-    { label: "Less than 12 months", value: "tenure_lt_12" },
-    { label: "More than 12 months", value: "tenure_ge_12" },
-    { label: "I'm not sure", value: "tenure_unknown" }
-  ]);
-}
-
-async function askWeeklyHours() {
-  await assistantReplyChunks([
-    "To help check eligibility, about how many hours do you usually work each week?"
-  ]);
-
-  setQuickReplies([
-    { label: "Less than 20", value: "hours_lt_20" },
-    { label: "20–29", value: "hours_20_29" },
-    { label: "30–39", value: "hours_30_39" },
-    { label: "40 or more", value: "hours_ge_40" },
-    { label: "I'm not sure", value: "hours_unknown" }
-  ]);
-}
-
-// ------------------------------------------------------
-// DOM LISTENERS
-// ------------------------------------------------------
-document.addEventListener("DOMContentLoaded", () => {
-  startWizard();
-
-  if (sendBtn && userInput) {
-    sendBtn.addEventListener("click", () => {
-      const text = userInput.value.trim();
-      if (!text) return;
-      handleUserTypedMessage(text);
-      userInput.value = "";
-    });
-
-    userInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        sendBtn.click();
-      }
-    });
-  }
-});
-
-// ------------------------------------------------------
-// START OVER BUTTON
-// ------------------------------------------------------
-document.getElementById("startOverBtn")?.addEventListener("click", () => {
-  startWizard();
-});
+  if (
