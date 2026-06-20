@@ -101,6 +101,25 @@ function setQuickReplies(options) {
   });
 }
 
+function clearQuickReplies() {
+  quickRepliesContainer.innerHTML = "";
+}
+
+// ------------------------------------------------------
+// WIZARD STEPS
+// ------------------------------------------------------
+const WIZARD_STEPS = {
+  REASON: "reason",
+  STATE: "state",
+  EMPLOYMENT: "employment",
+  TENURE: "tenure",
+  WEEKLY_HOURS: "weekly_hours",
+  RESULTS: "results",
+  COMPLETE: "complete"
+};
+
+let currentStep = WIZARD_STEPS.REASON;
+
 // ------------------------------------------------------
 // WIZARD STATE
 // ------------------------------------------------------
@@ -108,6 +127,10 @@ let wizardState = {
   reason: null,
   state: null,
   employmentStatus: null,
+  tenureMonths: null,      // "<12" | ">=12" | "unknown"
+  hoursPerWeek: null,      // number | "unknown"
+  annualHours: null,       // number | "unknown"
+  meets1250Hours: null,    // boolean | null
   awaitingEmail: false
 };
 
@@ -143,53 +166,244 @@ function mapTypedEmployment(text) {
   return "I'm in between jobs right now.";
 }
 
+function mapTenureFromQuickReply(value) {
+  switch (value) {
+    case "tenure_lt_12":
+      return "<12";
+    case "tenure_ge_12":
+      return ">=12";
+    case "tenure_unknown":
+      return "unknown";
+    default:
+      return "unknown";
+  }
+}
+
+function mapWeeklyHoursFromQuickReply(value) {
+  switch (value) {
+    case "hours_lt_20":
+      return 15;
+    case "hours_20_29":
+      return 24;
+    case "hours_30_39":
+      return 35;
+    case "hours_ge_40":
+      return 40;
+    case "hours_unknown":
+      return "unknown";
+    default:
+      return "unknown";
+  }
+}
+
+function parseWeeklyHoursFromText(text) {
+  const match = text.match(/(\d+(\.\d+)?)/);
+  if (!match) return "unknown";
+  const num = parseFloat(match[1]);
+  if (isNaN(num) || num <= 0) return "unknown";
+  return num;
+}
+
 // ------------------------------------------------------
-// MAIN WIZARD FLOW
+// STEP TRANSITIONS
 // ------------------------------------------------------
-async function advanceWizard(value, fromUser = true) {
-  if (fromUser) addUserMessage(value);
+function nextStep() {
+  switch (currentStep) {
+    case WIZARD_STEPS.REASON:
+      currentStep = WIZARD_STEPS.STATE;
+      return askState();
 
-  if (!wizardState.reason) {
-    wizardState.reason = mapTypedReason(value);
-    return askState();
-  }
+    case WIZARD_STEPS.STATE:
+      currentStep = WIZARD_STEPS.EMPLOYMENT;
+      return askEmploymentStatus();
 
-  if (!wizardState.state) {
-    wizardState.state = mapTypedState(value);
-    return askEmploymentStatus();
-  }
+    case WIZARD_STEPS.EMPLOYMENT:
+      currentStep = WIZARD_STEPS.TENURE;
+      return askTenure();
 
-  if (!wizardState.employmentStatus) {
-    wizardState.employmentStatus = mapTypedEmployment(value);
-    return showResultsSummary();
+    case WIZARD_STEPS.TENURE:
+      currentStep = WIZARD_STEPS.WEEKLY_HOURS;
+      return askWeeklyHours();
+
+    case WIZARD_STEPS.WEEKLY_HOURS:
+      currentStep = WIZARD_STEPS.RESULTS;
+      return showResultsSummary();
+
+    case WIZARD_STEPS.RESULTS:
+      currentStep = WIZARD_STEPS.COMPLETE;
+      return askForEmail();
+
+    case WIZARD_STEPS.COMPLETE:
+      return; // stays in complete; general Q&A handles further messages
   }
+}
+
+// ------------------------------------------------------
+// MAIN WIZARD ROUTER
+// ------------------------------------------------------
+async function advanceWizard(value) {
+  addUserMessage(value);
 
   if (wizardState.awaitingEmail) {
-    wizardState.awaitingEmail = false;
-    assistantReply(`Perfect — sending your PDF to ${value}.`);
-    sendChatToEmail(value);
-    return;
+    return handleEmailFlow(value);
   }
 
-  if (value.toLowerCase().includes("yes")) {
+  switch (currentStep) {
+    case WIZARD_STEPS.REASON:
+      wizardState.reason = mapTypedReason(value);
+      return nextStep();
+
+    case WIZARD_STEPS.STATE:
+      wizardState.state = mapTypedState(value);
+      return nextStep();
+
+    case WIZARD_STEPS.EMPLOYMENT:
+      wizardState.employmentStatus = mapTypedEmployment(value);
+      return nextStep();
+
+    case WIZARD_STEPS.TENURE:
+      wizardState.tenureMonths = interpretTenureFromText(value);
+      return nextStep();
+
+    case WIZARD_STEPS.WEEKLY_HOURS:
+      wizardState.hoursPerWeek = interpretWeeklyHoursFromText(value);
+      computeAnnualHours();
+      return nextStep();
+
+    case WIZARD_STEPS.RESULTS:
+      return handlePostResultsFlow(value);
+
+    case WIZARD_STEPS.COMPLETE:
+      return answerGeneralQuestion(value);
+  }
+}
+
+// ------------------------------------------------------
+// TENURE & WEEKLY HOURS INTERPRETATION
+// ------------------------------------------------------
+function interpretTenureFromText(text) {
+  const lower = text.toLowerCase();
+  if (lower.includes("less") || lower.includes("<") || lower.includes("under")) {
+    return "<12";
+  }
+  if (lower.includes("more") || lower.includes(">") || lower.includes("over")) {
+    return ">=12";
+  }
+  if (lower.includes("year") || lower.includes("12")) {
+    return ">=12";
+  }
+  if (lower.includes("not sure") || lower.includes("unsure") || lower.includes("don't know")) {
+    return "unknown";
+  }
+  return "unknown";
+}
+
+function interpretWeeklyHoursFromText(text) {
+  const lower = text.toLowerCase();
+  if (lower.includes("not sure") || lower.includes("unsure") || lower.includes("don't know")) {
+    return "unknown";
+  }
+  return parseWeeklyHoursFromText(text);
+}
+
+function computeAnnualHours() {
+  if (wizardState.hoursPerWeek === "unknown") {
+    wizardState.annualHours = "unknown";
+    wizardState.meets1250Hours = null;
+    return;
+  }
+  wizardState.annualHours = wizardState.hoursPerWeek * 52;
+  wizardState.meets1250Hours = wizardState.annualHours >= 1250;
+}
+
+// ------------------------------------------------------
+// POST-RESULTS FLOW (YES/NO/GENERAL)
+// ------------------------------------------------------
+async function handlePostResultsFlow(value) {
+  const lower = value.toLowerCase();
+
+  if (lower.includes("yes")) {
     wizardState.awaitingEmail = true;
     return assistantReply("Great! What email address should I send it to?");
   }
 
-  if (value.toLowerCase().includes("no")) {
+  if (lower.includes("no")) {
     return assistantReply("Okay! Let me know if you need anything else.");
   }
 
-  quickRepliesContainer.innerHTML = "";
   return answerGeneralQuestion(value);
 }
 
-function handleQuickReply(value) {
-  advanceWizard(value, true);
+async function handleEmailFlow(email) {
+  wizardState.awaitingEmail = false;
+  await assistantReply(`Perfect — sending your PDF to ${email}.`);
+  return sendChatToEmail(email);
 }
 
+// ------------------------------------------------------
+// QUICK REPLY HANDLER
+// ------------------------------------------------------
+function handleQuickReply(value) {
+  clearQuickReplies();
+
+  // Route quick replies based on current step
+  switch (currentStep) {
+    case WIZARD_STEPS.REASON:
+      wizardState.reason = value; // values like "sick", "pregnancy", etc.
+      addUserMessage(value);
+      return nextStep();
+
+    case WIZARD_STEPS.EMPLOYMENT:
+      wizardState.employmentStatus = value;
+      addUserMessage(value);
+      return nextStep();
+
+    case WIZARD_STEPS.TENURE:
+      wizardState.tenureMonths = mapTenureFromQuickReply(value);
+      addUserMessage(
+        value === "tenure_lt_12" ? "Less than 12 months" :
+        value === "tenure_ge_12" ? "More than 12 months" :
+        "I'm not sure"
+      );
+      return nextStep();
+
+    case WIZARD_STEPS.WEEKLY_HOURS:
+      wizardState.hoursPerWeek = mapWeeklyHoursFromQuickReply(value);
+      addUserMessage(
+        value === "hours_lt_20" ? "Less than 20 hours per week" :
+        value === "hours_20_29" ? "20–29 hours per week" :
+        value === "hours_30_39" ? "30–39 hours per week" :
+        value === "hours_ge_40" ? "40 or more hours per week" :
+        "I'm not sure"
+      );
+      computeAnnualHours();
+      return nextStep();
+
+    case WIZARD_STEPS.RESULTS:
+    case WIZARD_STEPS.COMPLETE:
+      // For email yes/no quick replies
+      if (value === "email_yes") {
+        wizardState.awaitingEmail = true;
+        addUserMessage("Yes, email it to me");
+        return assistantReply("Great! What email address should I send it to?");
+      }
+      if (value === "email_no") {
+        addUserMessage("No, thanks");
+        return assistantReply("Okay! Let me know if you need anything else.");
+      }
+      return;
+  }
+}
+
+// ------------------------------------------------------
+// USER TYPED MESSAGE
+// ------------------------------------------------------
 function handleUserTypedMessage(text) {
-  advanceWizard(text, true);
+  const trimmed = text.trim();
+  if (!trimmed) return;
+
+  clearQuickReplies();
+  advanceWizard(trimmed);
 }
 
 // ------------------------------------------------------
@@ -200,7 +414,7 @@ async function answerGeneralQuestion(text) {
 
   if (lower.includes("eligible") || lower.includes("qualify")) {
     return assistantReply(
-      "Eligibility depends on your reason for leave, your state, and your employment status. You can restart the chat anytime to check again."
+      "Eligibility depends on your reason for leave, your state, your employment status, and how long you've worked and how many hours you typically work. You can restart the chat anytime to check again."
     );
   }
 
@@ -240,23 +454,34 @@ async function sendChatToEmail(email) {
 }
 
 // ------------------------------------------------------
-// ELIGIBILITY CHECK
+// ELIGIBILITY CHECK (SOFT FILTERING)
 // ------------------------------------------------------
 function checkEligibility(law, wizardState) {
   const result = { eligible: true, reasons: [] };
   const e = law.eligibility || {};
 
-  if (e.employer_size && e.employer_size.includes("50+") && wizardState.employmentStatus === "Part-time") {
-    result.eligible = false;
-    result.reasons.push("Employer must have 50+ employees within 75 miles.");
-  }
-
+  // Tenure
   if (e.employee_tenure && e.employee_tenure.includes("12 months")) {
-    result.reasons.push("Requires 12 months of employment.");
+    if (wizardState.tenureMonths === "<12") {
+      result.eligible = false;
+      result.reasons.push("Requires about 12 months of employment; you indicated less than 12 months.");
+    } else if (wizardState.tenureMonths === "unknown") {
+      result.reasons.push("Requires about 12 months of employment; your tenure is marked as not sure.");
+    } else {
+      result.reasons.push("Requires about 12 months of employment; you may meet this requirement.");
+    }
   }
 
+  // Hours
   if (e.hours_worked && e.hours_worked.includes("1,250")) {
-    result.reasons.push("Requires 1,250 hours worked in the past 12 months.");
+    if (wizardState.meets1250Hours === false) {
+      result.eligible = false;
+      result.reasons.push("Requires about 1,250 hours worked in the past 12 months; based on your weekly hours, you may not meet this.");
+    } else if (wizardState.meets1250Hours === null) {
+      result.reasons.push("Requires about 1,250 hours worked in the past 12 months; your weekly hours are marked as not sure.");
+    } else if (wizardState.meets1250Hours === true) {
+      result.reasons.push("Requires about 1,250 hours worked in the past 12 months; based on your weekly hours, you may meet this.");
+    }
   }
 
   if (e.relationship_requirement) {
@@ -267,7 +492,7 @@ function checkEligibility(law, wizardState) {
 }
 
 // ------------------------------------------------------
-// AUTO‑TAGGER
+// AUTO-TAGGER
 // ------------------------------------------------------
 function autoTagLaw(law) {
   const text = (
@@ -281,28 +506,43 @@ function autoTagLaw(law) {
   if (text.includes("pregnan") || text.includes("childbirth") || text.includes("maternity") || text.includes("birth"))
     tags.add("pregnancy");
 
-  if (text.includes("sick leave") || text.includes("medical leave") || text.includes("illness"))
+  if (
+    text.includes("sick leave") ||
+    text.includes("sick time") ||
+    text.includes("medical leave") ||
+    text.includes("illness") ||
+    text.includes("health condition") ||
+    text.includes("serious health condition")
+  )
     tags.add("medical");
 
-  if (text.includes("family leave") || text.includes("care for") || text.includes("family member"))
+  if (
+    text.includes("family leave") ||
+    text.includes("care for") ||
+    text.includes("caregiving") ||
+    text.includes("family member") ||
+    text.includes("parent") ||
+    text.includes("spouse") ||
+    text.includes("child")
+  )
     tags.add("family_care");
 
-  if (text.includes("military") || text.includes("active duty"))
+  if (text.includes("military") || text.includes("active duty") || text.includes("deployment") || text.includes("servicemember"))
     tags.add("military");
 
-  if (text.includes("domestic violence") || text.includes("sexual assault"))
+  if (text.includes("domestic violence") || text.includes("sexual assault") || text.includes("stalking") || text.includes("safe leave"))
     tags.add("domestic_violence");
 
-  if (text.includes("bereav"))
+  if (text.includes("bereav") || text.includes("funeral") || text.includes("death of"))
     tags.add("bereavement");
 
-  if (text.includes("jury"))
+  if (text.includes("jury duty") || text.includes("jury service") || text.includes("court leave") || text.includes("court appearance"))
     tags.add("jury");
 
-  if (text.includes("voting"))
+  if (text.includes("voting leave") || text.includes("election leave") || text.includes("time to vote"))
     tags.add("voting");
 
-  if (text.includes("organ donation"))
+  if (text.includes("organ donation") || text.includes("bone marrow"))
     tags.add("organ_donation");
 
   return Array.from(tags);
@@ -346,7 +586,7 @@ async function showResultsSummary() {
   await assistantReplyChunks([
     "Thank you.",
     "I’m pulling together federal and state leave laws that may apply.",
-    "One moment while I check your state and situation."
+    "One moment while I check your state, situation, and basic eligibility."
   ]);
 
   const stateCode = wizardState.state === 'unknown' ? null : wizardState.state;
@@ -375,6 +615,8 @@ async function showResultsSummary() {
 
   await sendLawsToChat(filtered.slice(0, 6));
 
+  currentStep = WIZARD_STEPS.RESULTS;
+
   await assistantReply("Would you like a PDF copy of this conversation emailed to you?");
 
   setQuickReplies([
@@ -387,12 +629,33 @@ async function showResultsSummary() {
 }
 
 // ------------------------------------------------------
+// ASK FOR EMAIL (AFTER RESULTS)
+// ------------------------------------------------------
+async function askForEmail() {
+  await assistantReply("Would you like a PDF copy of this conversation emailed to you?");
+  setQuickReplies([
+    { label: "Yes, email it to me", value: "email_yes" },
+    { label: "No, thanks", value: "email_no" }
+  ]);
+}
+
+// ------------------------------------------------------
 // START WIZARD
 // ------------------------------------------------------
 async function startWizard() {
   chatContainer.innerHTML = '';
   quickRepliesContainer.innerHTML = '';
-  wizardState = { reason: null, state: null, employmentStatus: null, awaitingEmail: false };
+  wizardState = {
+    reason: null,
+    state: null,
+    employmentStatus: null,
+    tenureMonths: null,
+    hoursPerWeek: null,
+    annualHours: null,
+    meets1250Hours: null,
+    awaitingEmail: false
+  };
+  currentStep = WIZARD_STEPS.REASON;
 
   await assistantReplyChunks([
     "Hi. I’m here to help you understand your leave options.",
@@ -427,6 +690,33 @@ async function askEmploymentStatus() {
     { label: 'Full-time', value: 'Full-time' },
     { label: 'Part-time', value: 'Part-time' },
     { label: "I'm not sure", value: "I'm between jobs." },
+  ]);
+}
+
+async function askTenure() {
+  await assistantReplyChunks([
+    "Thanks.",
+    "How long have you been with your current employer?"
+  ]);
+
+  setQuickReplies([
+    { label: "Less than 12 months", value: "tenure_lt_12" },
+    { label: "More than 12 months", value: "tenure_ge_12" },
+    { label: "I'm not sure", value: "tenure_unknown" }
+  ]);
+}
+
+async function askWeeklyHours() {
+  await assistantReplyChunks([
+    "To help check eligibility, about how many hours do you usually work each week?"
+  ]);
+
+  setQuickReplies([
+    { label: "Less than 20", value: "hours_lt_20" },
+    { label: "20–29", value: "hours_20_29" },
+    { label: "30–39", value: "hours_30_39" },
+    { label: "40 or more", value: "hours_ge_40" },
+    { label: "I'm not sure", value: "hours_unknown" }
   ]);
 }
 
