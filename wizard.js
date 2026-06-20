@@ -235,11 +235,11 @@ async function advanceWizard(value) {
     case WIZARD_STEPS.REASON:
       wizardState.reason = mapTypedReason(value);
 
-      if (wizardState.reason === "bereavement") {
+      if (wizardState.reason === "bereavement" || value === "death"|| value === "died") {
         await assistantReply("I’m so sorry for your loss. I’m here to help you understand what leave options may support you right now.");
       }
 
-      if (wizardState.reason === "pregnancy") {
+      if (wizardState.reason === "pregnancy" || value === "bonding"|| value === "child") {
         await assistantReply("Congratulations on the new addition to your family. Let’s take a look at the leave options that may support you during this time.");
       }
 
@@ -349,7 +349,7 @@ function handleQuickReply(value) {
       if (value === "bereavement") {
         assistantReply("I’m so sorry for your loss. I’m here to help you understand what leave options may support you right now.");
       }
-      if (value === "pregnancy") {
+      if (value === "pregnancy" ) {
         assistantReply("Congratulations on the new addition to your family. Let’s take a look at the leave options that may support you during this time.");
       }
 
@@ -721,7 +721,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sendBtn.addEventListener("click", () => {
       const text = userInput.value.trim();
       if (!text) return;
-      handleEmailFlow(text);
+      addUserMessage(text);
       userInput.value = "";
     });
 
