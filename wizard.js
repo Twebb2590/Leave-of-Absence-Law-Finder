@@ -339,10 +339,17 @@ if (
         await assistantReply("I’m so sorry for your loss. I’ll help you understand what leave options may support you right now.");
       }
 
+	// ⭐ Force a pause so messages don't overlap
+    await new Promise(resolve => setTimeout(resolve, 600));
+  }
+			
       if (wizardState.reason === "pregnancy") {
         await assistantReply("Congratulations on the new addition to your family. Let’s take a look at the leave options that may support you during this time.");
       }
-
+   
+	// ⭐ Pause to prevent overlap
+    await new Promise(resolve => setTimeout(resolve, 600));
+  }
       return nextStep();
 
     case WIZARD_STEPS.STATE:
