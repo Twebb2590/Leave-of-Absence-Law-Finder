@@ -712,14 +712,15 @@ async function startWizard() {
 
   // ⭐ Q&A INTRO
   await assistantReplyChunks([
-    "Before we begin, feel free to ask any questions about leave laws.",
+		"Hi. I’m here to help you understand your leave options.",
+    "Feel free to ask any questions about leave laws.",
     "When you're ready, I’ll walk you through a quick eligibility check."
   ]);
+await new Promise(resolve => setTimeout(resolve, 1200));
 
   currentStep = WIZARD_STEPS.REASON;
 
   await assistantReplyChunks([
-    "Hi. I’m here to help you understand your leave options.",
     "What’s the main reason you’re looking into leave right now?"
   ]);
 
