@@ -728,6 +728,9 @@ async function startWizard() {
     awaitingEmail: false
   };
 
+	// Stay in COMPLETE mode until user triggers wizard
+  currentStep = WIZARD_STEPS.COMPLETE;
+	
   // ⭐ Q&A INTRO
   await assistantReplyChunks([
 		"Hi. I’m here to help you understand your leave options.",
@@ -736,9 +739,6 @@ async function startWizard() {
   ]);
 
 	await new Promise(resolve => setTimeout(resolve, 1200));
-
-// Stay in COMPLETE mode until user triggers wizard
-  currentStep = WIZARD_STEPS.COMPLETE;
 
   await assistantReplyChunks([
     "What’s the main reason you’re looking into leave right now?"
