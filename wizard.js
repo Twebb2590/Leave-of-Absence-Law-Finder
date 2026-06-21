@@ -383,6 +383,7 @@ if (
       return answerGeneralQuestion(value);
   }
 }
+}
 
 // ------------------------------------------------------
 // TENURE & WEEKLY HOURS INTERPRETATION
