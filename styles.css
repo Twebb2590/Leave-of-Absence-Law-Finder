@@ -187,10 +187,8 @@ body {
   bottom: 90px;
   right: 20px;
 
-  /* Remove ALL default button styling */
   background: none;
   border: none;
-  outline: none;
   padding: 0;
   margin: 0;
   appearance: none;
@@ -209,6 +207,7 @@ body {
 .start-over-btn:active {
   transform: scale(0.9);
 }
+
 
 
 /* ------------------------------------------------------
