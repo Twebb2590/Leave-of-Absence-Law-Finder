@@ -524,8 +524,9 @@ case WIZARD_STEPS.COMPLETE:
     { label: "Restart", value: "restart" }
   ]);
 
+  } // ← closes switch
   return;
-} // ← closes switch
+
 } // ← closes handleQuickReply
 
 // ------------------------------------------------------
