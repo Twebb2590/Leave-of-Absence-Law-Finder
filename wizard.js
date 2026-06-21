@@ -48,6 +48,32 @@ function addUserMessage(text) {
   scrollToBottom();
 }
 
+function addQuickRepliesInsideChat(options) {
+  const msg = document.createElement("div");
+  msg.className = "assistant-message";
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "quick-reply-inline-wrapper";
+
+  options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.className = "quick-reply-btn";
+    btn.textContent = opt.label;
+    btn.dataset.value = opt.value;
+
+    btn.addEventListener("click", () => {
+      handleQuickReply(opt.value);
+    });
+
+    wrapper.appendChild(btn);
+  });
+
+  msg.appendChild(wrapper);
+  chatContainer.appendChild(msg);
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+
 // ------------------------------------------------------
 // TYPING INDICATOR
 // ------------------------------------------------------
