@@ -144,6 +144,12 @@ body {
 /* ------------------------------------------------------
    INPUT BAR
 ------------------------------------------------------ */
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;   /* adjust to taste */
+}
+
 #inputBar {
   display: flex;
   gap: 10px;
