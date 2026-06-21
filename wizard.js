@@ -261,6 +261,9 @@ async function advanceWizard(value) {
     return handleEmailFlow(value);
   }
 
+ // ⭐ ALWAYS define this FIRST
+  const lower = value.toLowerCase();
+	
 // ⭐ Wizard trigger — start wizard only when user mentions needing leave
 if (
   lower.includes("leave") ||
@@ -280,7 +283,6 @@ if (
 }
   
 	// ⭐ UNIVERSAL Q&A HANDLER — works at ANY step
-  const lower = value.toLowerCase();
   if (
     lower.includes("eligible") ||
     lower.includes("qualify") ||
@@ -296,6 +298,7 @@ if (
 	  return answerGeneralQuestion(value);
   }   
  
+	// ⭐ 3. If wizard already running, continue normal flow
 	switch (currentStep) {
 
     case WIZARD_STEPS.REASON:
