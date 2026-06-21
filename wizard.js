@@ -349,7 +349,8 @@ if (
     await new Promise(resolve => setTimeout(resolve, 600));
   }
     return nextStep();
-    
+	} 
+	
 	case WIZARD_STEPS.STATE: {
       wizardState.state = mapTypedState(value);
       return nextStep();
