@@ -190,7 +190,7 @@ body {
   display: none; /* Keep this if your JS switches it to display: flex or display: block */
   
   /* Strip the box visual entirely */
-  background: transparent !important;
+  background: #0078ff; 
   border: none !important;
   box-shadow: none !important;
   padding: 0 !important;
@@ -200,6 +200,7 @@ body {
   /* Ensure the clickable area matches the icon size */
   width: 26px;
   height: 26px;
+  border-radius: 50%;
   cursor: pointer;
   z-index: 9999;
   transition: transform 0.15s ease;
