@@ -383,30 +383,6 @@ function computeAnnualHours() {
 }
 
 // ------------------------------------------------------
-// POST-RESULTS FLOW
-// ------------------------------------------------------
-async function handlePostResultsFlow(value) {
-  const lower = value.toLowerCase();
-
-  if (lower.includes("yes")) {
-    wizardState.awaitingEmail = true;
-    return assistantReply("Great! What email address should I send it to?");
-  }
-
-  if (lower.includes("no")) {
-    return assistantReply("Okay! Let me know if you need anything else.");
-  }
-
-  return answerGeneralQuestion(value);
-}
-
-async function handleEmailFlow(email) {
-  wizardState.awaitingEmail = false;
-  await assistantReply(`Perfect — sending your PDF to ${email}.`);
-  return sendChatToEmail(email);
-}
-
-// ------------------------------------------------------
 // QUICK REPLY HANDLER
 // ------------------------------------------------------
 function handleQuickReply(value) {
@@ -482,53 +458,6 @@ function handleUserTypedMessage(text) {
 
   clearQuickReplies();
   advanceWizard(trimmed);
-}
-
-// ------------------------------------------------------
-// GENERAL Q&A
-// ------------------------------------------------------
-async function answerGeneralQuestion(text) {
-  const lower = text.toLowerCase();
-
-  if (lower.includes("eligible") || lower.includes("qualify")) {
-    return assistantReply(
-      "Eligibility depends on your reason for leave, your state, your employment status, and how long you've worked and how many hours you typically work. You can restart the chat anytime to check again."
-    );
-  }
-
-  if (lower.includes("restart")) {
-    startWizard();
-    return;
-  }
-
-  return assistantReplyChunks([
-    "I’m here to help with leave laws. You can ask things like:",
-    "\n• Do I qualify for FMLA?",
-    "\n• What leave laws apply in California?",
-    "\n• Is pregnancy leave paid?"
-  ]);
-}
-
-// ------------------------------------------------------
-// EMAIL SENDING
-// ------------------------------------------------------
-async function sendChatToEmail(email) {
-  const chatHtml = chatContainer.innerHTML;
-
-  try {
-    const response = await fetch("https://leave-of-absence-law-finder.onrender.com/send-pdf", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, chatHtml })
-    });
-
-    if (!response.ok) throw new Error("Server error");
-
-    await assistantReply("Your PDF is on the way!");
-  } catch (err) {
-    console.error(err);
-    await assistantReply("Hmm… I couldn’t send the email. Try again in a moment.");
-  }
 }
 
 // ------------------------------------------------------
@@ -656,6 +585,110 @@ async function sendLawsToChat(laws) {
 }
 
 // ------------------------------------------------------
+// START WIZARD
+// ------------------------------------------------------
+async function startWizard() {
+  chatContainer.innerHTML = '';
+  quickRepliesContainer.innerHTML = '';
+  wizardState = {
+    reason: null,
+    state: null,
+    employmentStatus: null,
+    tenureMonths: null,
+    hoursPerWeek: null,
+    annualHours: null,
+    meets1250Hours: null,
+    awaitingEmail: false
+  };
+
+	// Stay in COMPLETE mode until user triggers wizard
+  currentStep = WIZARD_STEPS.COMPLETE;
+	
+  // ⭐ Q&A INTRO
+  await assistantReplyChunks([
+		"Hi. I’m here to help you understand your leave options.",
+    "Feel free to ask any questions about leave laws.",
+    "When you're ready, I’ll walk you through a quick eligibility check."
+  ]);
+}
+
+// ------------------------------------------------------
+// ASK: REASON
+// ------------------------------------------------------
+async function askReason() {
+  await assistantReplyChunks([
+    "What’s the main reason you’re looking into leave right now?"
+  ]);
+
+  setQuickReplies([
+    { label: "I'm sick or injured", value: "sick" },
+    { label: "Pregnancy or birth", value: "pregnancy" },
+    { label: "Caring for a family member", value: "family_care" },
+    { label: "Bereavement or loss", value: "bereavement" },
+    { label: "Military service", value: "military" },
+    { label: "Court or jury duty", value: "court" },
+    { label: "Something else", value: "other" }
+  ]);
+}
+
+// ------------------------------------------------------
+// ASK: STATE
+// ------------------------------------------------------
+async function askState() {
+  await assistantReplyChunks([
+    "Thank you for sharing that.",
+    "Which state do you work in? This helps me find the right laws."
+  ]);
+}
+
+// ------------------------------------------------------
+// ASK: EMPLOYMENT STATUS
+// ------------------------------------------------------
+async function askEmploymentStatus() {
+  await assistantReplyChunks([
+    "Got it. One more thing:",
+    "Are you working full-time or part-time?"
+  ]);
+
+  setQuickReplies([
+    { label: 'Full-time', value: 'Full-time' },
+    { label: 'Part-time', value: 'Part-time' },
+    { label: "I'm not sure", value: "I'm between jobs." },
+  ]);
+}
+
+// ------------------------------------------------------
+// ASK: TENURE
+// ------------------------------------------------------
+async function askTenure() {
+  await assistantReplyChunks([
+    "Thanks. About how long have you been with your current employer?"
+  ]);
+
+  setQuickReplies([
+    { label: "Less than 12 months", value: "tenure_lt_12" },
+    { label: "More than 12 months", value: "tenure_ge_12" },
+    { label: "I'm not sure", value: "tenure_unknown" }
+  ]);
+}
+
+// ------------------------------------------------------
+// ASK: WEEKLY HOURS
+// ------------------------------------------------------
+async function askWeeklyHours() {
+  await assistantReplyChunks([
+    "To help check eligibility, about how many hours do you usually work each week?"
+  ]);
+
+  setQuickReplies([
+    { label: "Less than 20", value: "hours_lt_20" },
+    { label: "20–29", value: "hours_20_29" },
+    { label: "30–39", value: "hours_30_39" },
+    { label: "40 or more", value: "hours_ge_40" },
+    { label: "I'm not sure", value: "hours_unknown" }
+  ]);
+}
+// ------------------------------------------------------
 // RESULTS SUMMARY
 // ------------------------------------------------------
 async function showResultsSummary() {
@@ -716,92 +749,74 @@ async function askForEmail() {
 }
 
 // ------------------------------------------------------
-// START WIZARD
+// POST-RESULTS FLOW
 // ------------------------------------------------------
-async function startWizard() {
-  chatContainer.innerHTML = '';
-  quickRepliesContainer.innerHTML = '';
-  wizardState = {
-    reason: null,
-    state: null,
-    employmentStatus: null,
-    tenureMonths: null,
-    hoursPerWeek: null,
-    annualHours: null,
-    meets1250Hours: null,
-    awaitingEmail: false
-  };
+async function handlePostResultsFlow(value) {
+  const lower = value.toLowerCase();
 
-	// Stay in COMPLETE mode until user triggers wizard
-  currentStep = WIZARD_STEPS.COMPLETE;
-	
-  // ⭐ Q&A INTRO
-  await assistantReplyChunks([
-		"Hi. I’m here to help you understand your leave options.",
-    "Feel free to ask any questions about leave laws.",
-    "When you're ready, I’ll walk you through a quick eligibility check."
+  if (lower.includes("yes")) {
+    wizardState.awaitingEmail = true;
+    return assistantReply("Great! What email address should I send it to?");
+  }
+
+  if (lower.includes("no")) {
+    return assistantReply("Okay! Let me know if you need anything else.");
+  }
+
+  return answerGeneralQuestion(value);
+}
+
+async function handleEmailFlow(email) {
+  wizardState.awaitingEmail = false;
+  await assistantReply(`Perfect — sending your PDF to ${email}.`);
+  return sendChatToEmail(email);
+}
+
+// ------------------------------------------------------
+// GENERAL Q&A
+// ------------------------------------------------------
+async function answerGeneralQuestion(text) {
+  const lower = text.toLowerCase();
+
+  if (lower.includes("eligible") || lower.includes("qualify")) {
+    return assistantReply(
+      "Eligibility depends on your reason for leave, your state, your employment status, and how long you've worked and how many hours you typically work. You can restart the chat anytime to check again."
+    );
+  }
+
+  if (lower.includes("restart")) {
+    startWizard();
+    return;
+  }
+
+  return assistantReplyChunks([
+    "I’m here to help with leave laws. You can ask things like:",
+    "\n• Do I qualify for FMLA?",
+    "\n• What leave laws apply in California?",
+    "\n• Is pregnancy leave paid?"
   ]);
 }
 
-async function askReason() {
-  await assistantReplyChunks([
-    "What’s the main reason you’re looking into leave right now?"
-  ]);
+// ------------------------------------------------------
+// EMAIL SENDING
+// ------------------------------------------------------
+async function sendChatToEmail(email) {
+  const chatHtml = chatContainer.innerHTML;
 
-  setQuickReplies([
-    { label: "I'm sick or injured", value: "sick" },
-    { label: "Pregnancy or birth", value: "pregnancy" },
-    { label: "Caring for a family member", value: "family_care" },
-    { label: "Bereavement or loss", value: "bereavement" },
-    { label: "Military service", value: "military" },
-    { label: "Court or jury duty", value: "court" },
-    { label: "Something else", value: "other" }
-  ]);
-}
+  try {
+    const response = await fetch("https://leave-of-absence-law-finder.onrender.com/send-pdf", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, chatHtml })
+    });
 
-async function askState() {
-  await assistantReplyChunks([
-    "Thank you for sharing that.",
-    "Which state do you work in? This helps me find the right laws."
-  ]);
-}
-async function askEmploymentStatus() {
-  await assistantReplyChunks([
-    "Got it. One more thing:",
-    "Are you working full-time or part-time?"
-  ]);
+    if (!response.ok) throw new Error("Server error");
 
-  setQuickReplies([
-    { label: 'Full-time', value: 'Full-time' },
-    { label: 'Part-time', value: 'Part-time' },
-    { label: "I'm not sure", value: "I'm between jobs." },
-  ]);
-}
-
-async function askTenure() {
-  await assistantReplyChunks([
-    "Thanks. About how long have you been with your current employer?"
-  ]);
-
-  setQuickReplies([
-    { label: "Less than 12 months", value: "tenure_lt_12" },
-    { label: "More than 12 months", value: "tenure_ge_12" },
-    { label: "I'm not sure", value: "tenure_unknown" }
-  ]);
-}
-
-async function askWeeklyHours() {
-  await assistantReplyChunks([
-    "To help check eligibility, about how many hours do you usually work each week?"
-  ]);
-
-  setQuickReplies([
-    { label: "Less than 20", value: "hours_lt_20" },
-    { label: "20–29", value: "hours_20_29" },
-    { label: "30–39", value: "hours_30_39" },
-    { label: "40 or more", value: "hours_ge_40" },
-    { label: "I'm not sure", value: "hours_unknown" }
-  ]);
+    await assistantReply("Your PDF is on the way!");
+  } catch (err) {
+    console.error(err);
+    await assistantReply("Hmm… I couldn’t send the email. Try again in a moment.");
+  }
 }
 
 // ------------------------------------------------------
