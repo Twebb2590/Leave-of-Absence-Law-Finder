@@ -187,35 +187,30 @@ body {
   position: fixed;
   bottom: 90px;
   right: 50px;
-  display: none;
+  
+  /* Use this instead of display: none */
+  opacity: 0;
+  pointer-events: none; 
+  
   background: none;
   border: none;
-  appearance: none;
-  -webkit-appearance: none;
   cursor: pointer;
   z-index: 9999;
-  transition: transform 0.15s ease;
-  
-  /* Added to define symbol size and prevent default button constraints */
+  transition: transform 0.15s ease, opacity 0.2s ease;
   width: 48px;
   height: 48px;
-  padding: 0;
-  margin: 0;
   
-  /* Optional: Center your symbol inside the 48x48 area */
+  /* Centers the symbol */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.start-over-btn:hover {
-  transform: scale(1.15);
+/* When you want to show it (add this class via JavaScript) */
+.start-over-btn.is-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
-
-.start-over-btn:active {
-  transform: scale(0.9);
-}
-
 
 
 /* ------------------------------------------------------
