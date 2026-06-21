@@ -183,7 +183,8 @@ body {
 //Start Over Button //
 
 .start-over-btn {
-  bottom: 90px;
+  all: unset;
+bottom: 90px;
   right: 50px;
   
   /* Strip the box visual entirely */
