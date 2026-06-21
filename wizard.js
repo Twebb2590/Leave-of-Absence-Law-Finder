@@ -535,6 +535,17 @@ function checkEligibility(law, wizardState) {
       result.reasons.push("Requires about 1,250 hours worked in the past 12 months; your weekly hours are marked as not sure.");
     } else if (wizardState.meets1250Hours === true) {
       result.reasons.push("Requires about 1,250 hours worked in the past 12 months; based on your weekly hours, you may meet this
+      result.reasons.push("Requires about 1,250 hours worked in the past 12 months; based on your weekly hours, you may meet this.");
+    }
+  }
+
+  if (e.relationship_requirement) {
+    result.reasons.push(e.relationship_requirement);
+  }
+
+  return result;
+}
+
 // ------------------------------------------------------
 // AUTO-TAGGER
 // ------------------------------------------------------
@@ -608,7 +619,7 @@ function getMatchingTagsForReason(reason) {
 }
 
 // ------------------------------------------------------
-// SEND LAWS TO CHAT (COPILOT BUBBLES)
+// SEND LAWS TO CHAT
 // ------------------------------------------------------
 async function sendLawsToChat(laws) {
   for (const law of laws) {
@@ -673,7 +684,7 @@ async function showResultsSummary() {
 }
 
 // ------------------------------------------------------
-// ASK FOR EMAIL (AFTER RESULTS)
+// ASK FOR EMAIL
 // ------------------------------------------------------
 async function askForEmail() {
   await assistantReply("Would you like a PDF copy of this conversation emailed to you?");
@@ -699,6 +710,13 @@ async function startWizard() {
     meets1250Hours: null,
     awaitingEmail: false
   };
+
+  // ⭐ Q&A INTRO
+  await assistantReplyChunks([
+    "Before we begin, feel free to ask any questions about leave laws.",
+    "When you're ready, I’ll walk you through a quick eligibility check."
+  ]);
+
   currentStep = WIZARD_STEPS.REASON;
 
   await assistantReplyChunks([
@@ -714,53 +732,6 @@ async function startWizard() {
     { label: "Military service", value: "military" },
     { label: "Court or jury duty", value: "court" },
     { label: "Something else", value: "other" }
-  ]);
-}
-
-async function askState() {
-  await assistantReplyChunks([
-    "Thank you for sharing that.",
-    "Which state do you work in? This helps me find the right laws."
-  ]);
-}
-
-async function askEmploymentStatus() {
-  await assistantReplyChunks([
-    "Got it. One more thing:",
-    "Are you working full-time or part-time?"
-  ]);
-
-  setQuickReplies([
-    { label: 'Full-time', value: 'Full-time' },
-    { label: 'Part-time', value: 'Part-time' },
-    { label: "I'm not sure", value: "I'm between jobs." },
-  ]);
-}
-
-async function askTenure() {
-  await assistantReplyChunks([
-    "Thanks.",
-    "How long have you been with your current employer?"
-  ]);
-
-  setQuickReplies([
-    { label: "Less than 12 months", value: "tenure_lt_12" },
-    { label: "More than 12 months", value: "tenure_ge_12" },
-    { label: "I'm not sure", value: "tenure_unknown" }
-  ]);
-}
-
-async function askWeeklyHours() {
-  await assistantReplyChunks([
-    "To help check eligibility, about how many hours do you usually work each week?"
-  ]);
-
-  setQuickReplies([
-    { label: "Less than 20", value: "hours_lt_20" },
-    { label: "20–29", value: "hours_20_29" },
-    { label: "30–39", value: "hours_30_39" },
-    { label: "40 or more", value: "hours_ge_40" },
-    { label: "I'm not sure", value: "hours_unknown" }
   ]);
 }
 
