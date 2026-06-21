@@ -109,7 +109,7 @@ function clearQuickReplies() {
 // WIZARD STEPS
 // ------------------------------------------------------
 const WIZARD_STEPS = {
-  COMPLETE: "complete"
+  COMPLETE: "complete",
   REASON: "reason",
   STATE: "state",
   EMPLOYMENT: "employment",
