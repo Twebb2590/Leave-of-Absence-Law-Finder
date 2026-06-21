@@ -261,22 +261,6 @@ async function advanceWizard(value) {
     return handleEmailFlow(value);
   }
 
-  // ⭐ UNIVERSAL Q&A HANDLER — works at ANY step
-  const lower = value.toLowerCase();
-  if (
-    lower.includes("eligible") ||
-    lower.includes("qualify") ||
-    lower.includes("fmla") ||
-    lower.includes("leave") ||
-    lower.includes("law") ||
-    lower.includes("benefit") ||
-    lower.includes("rights") ||
-    lower.includes("what is") ||
-    lower.includes("how does")
-  ) {
-    return answerGeneralQuestion(value);
-  }
-
 // ⭐ Wizard trigger — start wizard only when user mentions needing leave
 if (
   lower.includes("leave") ||
@@ -294,8 +278,25 @@ if (
   currentStep = WIZARD_STEPS.REASON;
   return askReason();
 }
-    
-  switch (currentStep) {
+  
+	// ⭐ UNIVERSAL Q&A HANDLER — works at ANY step
+  const lower = value.toLowerCase();
+  if (
+    lower.includes("eligible") ||
+    lower.includes("qualify") ||
+    lower.includes("fmla") ||
+    lower.includes("leave") ||
+    lower.includes("law") ||
+    lower.includes("benefit") ||
+    lower.includes("rights") ||
+    lower.includes("what is") ||
+    lower.includes("how does")
+  ) {
+   
+	  return answerGeneralQuestion(value);
+  }   
+ 
+	switch (currentStep) {
 
     case WIZARD_STEPS.REASON:
       wizardState.reason = mapTypedReason(value);
