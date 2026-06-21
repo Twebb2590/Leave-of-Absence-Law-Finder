@@ -503,7 +503,6 @@ function handleQuickReply(value) {
       return nextStep();
 
     case WIZARD_STEPS.RESULTS:
-    case WIZARD_STEPS.COMPLETE:
       if (value === "email_yes") {
         wizardState.awaitingEmail = true;
         addUserMessage("Yes, email it to me");
@@ -514,7 +513,6 @@ function handleQuickReply(value) {
         return assistantReply("Okay! Let me know if you need anything else.");
       }
       return;
-  }
 
 case WIZARD_STEPS.COMPLETE: {
   await assistantReply("You can ask things like:");
@@ -527,7 +525,7 @@ case WIZARD_STEPS.COMPLETE: {
   ]);
 
   return;
-}	
+	}	
 }
 
 // ------------------------------------------------------
