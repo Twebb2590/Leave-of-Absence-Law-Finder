@@ -514,7 +514,7 @@ function handleQuickReply(value) {
       }
       return;
 
-case WIZARD_STEPS.COMPLETE: {
+case WIZARD_STEPS.COMPLETE:
   await assistantReply("You can ask things like:");
 
   addQuickRepliesInsideChat([
