@@ -187,7 +187,7 @@ body {
   right: 50px;
   
   /* Strip the box visual entirely */
-  background: white;
+  background: #f5f7fa;
     border-color: none;
   border: none;
   box-shadow: none;
