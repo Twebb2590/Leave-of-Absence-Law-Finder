@@ -193,6 +193,7 @@ body {
   box-shadow: none;
   padding: 0;
   margin-top: 12px;
+    margin-bottom: 20px;
   outline: none;
   
   /* Ensure the clickable area matches the icon size */
