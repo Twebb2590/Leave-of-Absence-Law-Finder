@@ -190,7 +190,7 @@ body {
   display: none; /* Keep this if your JS switches it to display: flex or display: block */
   
   /* Strip the box visual entirely */
-  background: #0078ff; 
+  background: #f5f7fa; 
   border: none;
   box-shadow: none;
   padding: 0;
