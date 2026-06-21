@@ -721,7 +721,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sendBtn.addEventListener("click", () => {
       const text = userInput.value.trim();
       if (!text) return;
-      addUserMessage(text);
+      handleUserMessage(text);
       userInput.value = "";
     });
 
