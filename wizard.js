@@ -515,6 +515,19 @@ function handleQuickReply(value) {
       }
       return;
   }
+
+case WIZARD_STEPS.COMPLETE: {
+  await assistantReply("You can ask things like:");
+
+  addQuickRepliesInsideChat([
+    { label: "What is FMLA", value: "what is fmla" },
+    { label: "State leave laws", value: "state leave laws" },
+    { label: "Pregnancy leave", value: "pregnancy leave" },
+    { label: "Restart", value: "restart" }
+  ]);
+
+  return;
+}	
 }
 
 // ------------------------------------------------------
