@@ -741,8 +741,6 @@ async function startWizard() {
     "Feel free to ask any questions about leave laws.",
     "When you're ready, I’ll walk you through a quick eligibility check."
   ]);
-
-	await new Promise(resolve => setTimeout(resolve, 1200));
 }
 
 async function askReason() {
@@ -760,6 +758,52 @@ async function askReason() {
     { label: "Something else", value: "other" }
   ]);
 }
+
+async function askState() {
+  await assistantReplyChunks([
+    "Thank you for sharing that.",
+    "Which state do you work in? This helps me find the right laws."
+  ]);
+}
+async function askEmploymentStatus() {
+  await assistantReplyChunks([
+    "Got it. One more thing:",
+    "Are you working full-time or part-time?"
+  ]);
+
+  setQuickReplies([
+    { label: 'Full-time', value: 'Full-time' },
+    { label: 'Part-time', value: 'Part-time' },
+    { label: "I'm not sure", value: "I'm between jobs." },
+  ]);
+}
+
+async function askTenure() {
+  await assistantReplyChunks([
+    "Thanks. About how long have you been with your current employer?"
+  ]);
+
+  setQuickReplies([
+    { label: "Less than 12 months", value: "tenure_lt_12" },
+    { label: "More than 12 months", value: "tenure_ge_12" },
+    { label: "I'm not sure", value: "tenure_unknown" }
+  ]);
+}
+
+async function askWeeklyHours() {
+  await assistantReplyChunks([
+    "To help check eligibility, about how many hours do you usually work each week?"
+  ]);
+
+  setQuickReplies([
+    { label: "Less than 20", value: "hours_lt_20" },
+    { label: "20–29", value: "hours_20_29" },
+    { label: "30–39", value: "hours_30_39" },
+    { label: "40 or more", value: "hours_ge_40" },
+    { label: "I'm not sure", value: "hours_unknown" }
+  ]);
+}
+
 // ------------------------------------------------------
 // DOM LISTENERS
 // ------------------------------------------------------
