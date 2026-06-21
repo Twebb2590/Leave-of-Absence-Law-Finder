@@ -183,8 +183,6 @@ body {
 //Start Over Button //
 
 .start-over-btn {
-  /* Do not use all: unset; it breaks layout behavior */
-  position: fixed;
   bottom: 90px;
   right: 50px;
   
