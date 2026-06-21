@@ -127,10 +127,10 @@ let wizardState = {
   reason: null,
   state: null,
   employmentStatus: null,
-  tenureMonths: null,      // "<12" | ">=12" | "unknown"
-  hoursPerWeek: null,      // number | "unknown"
-  annualHours: null,       // number | "unknown"
-  meets1250Hours: null,    // boolean | null
+  tenureMonths: null,
+  hoursPerWeek: null,
+  annualHours: null,
+  meets1250Hours: null,
   awaitingEmail: false
 };
 
@@ -140,7 +140,6 @@ let wizardState = {
 function mapTypedReason(text) {
   const lower = text.toLowerCase();
 
-  // Bonding / parental / childbirth → pregnancy category
   if (
     lower.includes("bonding") ||
     lower.includes("parental") ||
@@ -248,12 +247,12 @@ function nextStep() {
       return askForEmail();
 
     case WIZARD_STEPS.COMPLETE:
-      return; // stays in complete; general Q&A handles further messages
+      return;
   }
 }
 
 // ------------------------------------------------------
-// MAIN WIZARD ROUTER (WITH EMOTIONAL RESPONSES)
+// MAIN WIZARD ROUTER (WITH UNIVERSAL Q&A)
 // ------------------------------------------------------
 async function advanceWizard(value) {
   addUserMessage(value);
@@ -262,15 +261,27 @@ async function advanceWizard(value) {
     return handleEmailFlow(value);
   }
 
+  // ⭐ UNIVERSAL Q&A HANDLER — works at ANY step
+  const lower = value.toLowerCase();
+  if (
+    lower.includes("eligible") ||
+    lower.includes("qualify") ||
+    lower.includes("fmla") ||
+    lower.includes("leave") ||
+    lower.includes("law") ||
+    lower.includes("benefit") ||
+    lower.includes("rights") ||
+    lower.includes("what is") ||
+    lower.includes("how does")
+  ) {
+    return answerGeneralQuestion(value);
+  }
+
   switch (currentStep) {
 
-    // -------------------------
-    // STEP 1: REASON
-    // -------------------------
     case WIZARD_STEPS.REASON:
       wizardState.reason = mapTypedReason(value);
 
-      // EMOTIONAL RESPONSES
       if (wizardState.reason === "bereavement") {
         await assistantReply("I’m so sorry for your loss. I’ll help you understand what leave options may support you right now.");
       }
@@ -281,50 +292,31 @@ async function advanceWizard(value) {
 
       return nextStep();
 
-    // -------------------------
-    // STEP 2: STATE
-    // -------------------------
     case WIZARD_STEPS.STATE:
       wizardState.state = mapTypedState(value);
       return nextStep();
 
-    // -------------------------
-    // STEP 3: EMPLOYMENT
-    // -------------------------
     case WIZARD_STEPS.EMPLOYMENT:
       wizardState.employmentStatus = mapTypedEmployment(value);
 
-      // EMOTIONAL RESPONSE FOR UNEMPLOYED
       if (wizardState.employmentStatus === "Unemployed") {
         await assistantReply("Thank you for sharing that. Your next opportunity is on its way — and I’ll still help you understand what leave protections may apply.");
       }
 
       return nextStep();
 
-    // -------------------------
-    // STEP 4: TENURE
-    // -------------------------
     case WIZARD_STEPS.TENURE:
       wizardState.tenureMonths = interpretTenureFromText(value);
       return nextStep();
 
-    // -------------------------
-    // STEP 5: WEEKLY HOURS
-    // -------------------------
     case WIZARD_STEPS.WEEKLY_HOURS:
       wizardState.hoursPerWeek = interpretWeeklyHoursFromText(value);
       computeAnnualHours();
       return nextStep();
 
-    // -------------------------
-    // STEP 6: RESULTS
-    // -------------------------
     case WIZARD_STEPS.RESULTS:
       return handlePostResultsFlow(value);
 
-    // -------------------------
-    // STEP 7: COMPLETE
-    // -------------------------
     case WIZARD_STEPS.COMPLETE:
       return answerGeneralQuestion(value);
   }
@@ -369,7 +361,7 @@ function computeAnnualHours() {
 }
 
 // ------------------------------------------------------
-// POST-RESULTS FLOW (YES/NO/GENERAL)
+// POST-RESULTS FLOW
 // ------------------------------------------------------
 async function handlePostResultsFlow(value) {
   const lower = value.toLowerCase();
@@ -404,7 +396,6 @@ function handleQuickReply(value) {
       wizardState.reason = value;
       addUserMessage(value);
 
-      // EMOTIONAL RESPONSES
       if (value === "bereavement") {
         assistantReply("I’m so sorry for your loss. I’ll help you understand what leave options may support you right now.");
       }
@@ -519,13 +510,12 @@ async function sendChatToEmail(email) {
 }
 
 // ------------------------------------------------------
-// ELIGIBILITY CHECK (SOFT FILTERING)
+// ELIGIBILITY CHECK
 // ------------------------------------------------------
 function checkEligibility(law, wizardState) {
   const result = { eligible: true, reasons: [] };
   const e = law.eligibility || {};
 
-  // Tenure
   if (e.employee_tenure && e.employee_tenure.includes("12 months")) {
     if (wizardState.tenureMonths === "<12") {
       result.eligible = false;
@@ -537,7 +527,6 @@ function checkEligibility(law, wizardState) {
     }
   }
 
-  // Hours
   if (e.hours_worked && e.hours_worked.includes("1,250")) {
     if (wizardState.meets1250Hours === false) {
       result.eligible = false;
@@ -545,17 +534,7 @@ function checkEligibility(law, wizardState) {
     } else if (wizardState.meets1250Hours === null) {
       result.reasons.push("Requires about 1,250 hours worked in the past 12 months; your weekly hours are marked as not sure.");
     } else if (wizardState.meets1250Hours === true) {
-      result.reasons.push("Requires about 1,250 hours worked in the past 12 months; based on your weekly hours, you may meet this.");
-    }
-  }
-
-  if (e.relationship_requirement) {
-    result.reasons.push(e.relationship_requirement);
-  }
-
-  return result;
-}
-
+      result.reasons.push("Requires about 1,250 hours worked in the past 12 months; based on your weekly hours, you may meet this
 // ------------------------------------------------------
 // AUTO-TAGGER
 // ------------------------------------------------------
