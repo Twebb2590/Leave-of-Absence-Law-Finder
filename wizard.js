@@ -277,6 +277,24 @@ async function advanceWizard(value) {
     return answerGeneralQuestion(value);
   }
 
+// ⭐ Wizard trigger — start wizard only when user mentions needing leave
+if (
+  lower.includes("leave") ||
+  lower.includes("time off") ||
+  lower.includes("fmla") ||
+  lower.includes("pregnan") ||
+  lower.includes("sick") ||
+  lower.includes("injury") ||
+  lower.includes("family") ||
+  lower.includes("bereav") ||
+  lower.includes("military") ||
+  lower.includes("jury") ||
+  lower.includes("court")
+) {
+  currentStep = WIZARD_STEPS.REASON;
+  return askReason();
+}
+    
   switch (currentStep) {
 
     case WIZARD_STEPS.REASON:
@@ -716,9 +734,14 @@ async function startWizard() {
     "Feel free to ask any questions about leave laws.",
     "When you're ready, I’ll walk you through a quick eligibility check."
   ]);
-await new Promise(resolve => setTimeout(resolve, 1200));
 
-  currentStep = WIZARD_STEPS.REASON;
+	await new Promise(resolve => setTimeout(resolve, 1200));
+
+// Stay in COMPLETE mode until user triggers wizard
+  currentStep = WIZARD_STEPS.COMPLETE;
+}
+ 
+currentStep = WIZARD_STEPS.REASON;
 
   await assistantReplyChunks([
     "What’s the main reason you’re looking into leave right now?"
