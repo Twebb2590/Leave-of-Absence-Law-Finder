@@ -739,8 +739,9 @@ async function startWizard() {
   ]);
 
 	await new Promise(resolve => setTimeout(resolve, 1200));
+}
 
-async function askReason()
+async function askReason(){
   await assistantReplyChunks([
     "What’s the main reason you’re looking into leave right now?"
   ]);
@@ -755,7 +756,6 @@ async function askReason()
     { label: "Something else", value: "other" }
   ]);
 }
-
 // ------------------------------------------------------
 // DOM LISTENERS
 // ------------------------------------------------------
