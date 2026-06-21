@@ -407,7 +407,7 @@ if (
 	}
    
 	case WIZARD_STEPS.COMPLETE: {
-      return answerGeneralQuestion(value);
+      return assistantReply("If you need anything else, just ask!");
   }
 }
 }
@@ -525,8 +525,8 @@ case WIZARD_STEPS.COMPLETE:
   ]);
 
   return;
-}	
-}
+} // ← closes switch
+} // ← closes handleQuickReply
 
 // ------------------------------------------------------
 // USER TYPED MESSAGE
