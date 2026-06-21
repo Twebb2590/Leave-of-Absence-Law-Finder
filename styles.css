@@ -183,34 +183,41 @@ body {
 //Start Over Button //
 
 .start-over-btn {
-  all: unset;
+  /* Do not use all: unset; it breaks layout behavior */
   position: fixed;
   bottom: 90px;
   right: 50px;
+  display: none; /* Keep this if your JS switches it to display: flex or display: block */
   
-  /* Use this instead of display: none */
-  opacity: 0;
-  pointer-events: none; 
+  /* Strip the box visual entirely */
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  outline: none;
   
-  background: none;
-  border: none;
+  /* Ensure the clickable area matches the icon size */
+  width: 26px;
+  height: 26px;
   cursor: pointer;
   z-index: 9999;
-  transition: transform 0.15s ease, opacity 0.2s ease;
-  width: 48px;
-  height: 48px;
-  
-  /* Centers the symbol */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: transform 0.15s ease;
 }
 
-/* When you want to show it (add this class via JavaScript) */
-.start-over-btn.is-visible {
-  opacity: 1;
-  pointer-events: auto;
+.start-over-btn:hover {
+  transform: scale(1.15);
 }
+
+.start-over-btn:active {
+  transform: scale(0.9);
+}
+
+/* Ensure the SVG scales nicely inside if your JS uses 'flex' to show it */
+.start-over-btn svg {
+  display: block;
+}
+
 
 
 /* ------------------------------------------------------
