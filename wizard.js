@@ -281,7 +281,33 @@ if (
   currentStep = WIZARD_STEPS.REASON;
   return askReason();
 }
-  
+// ⭐ Eligibility intent trigger — start wizard immediately
+if (
+  lower.includes("eligible") ||
+  lower.includes("qualify") ||
+  lower.includes("fmla") ||
+  lower.includes("paid family leave") ||
+  lower.includes("pfl") ||
+  lower.includes("pfml") ||
+  lower.includes("leave for") ||
+  lower.includes("time off for") ||
+  lower.includes("can i take leave") ||
+  lower.includes("do i get leave") ||
+  lower.includes("am i allowed leave")
+) {
+  currentStep = WIZARD_STEPS.REASON;
+  return askReason();
+}
+ // ⭐ General Q&A fallback (runs only if wizard not triggered)
+if (
+  lower.includes("what is") ||
+  lower.includes("how does") ||
+  lower.includes("explain") ||
+  lower.includes("definition")
+) {
+  return answerGeneralQuestion(value);
+}
+ 
 	// ⭐ UNIVERSAL Q&A HANDLER — works at ANY step
   if (
     lower.includes("eligible") ||
