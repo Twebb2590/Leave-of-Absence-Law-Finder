@@ -346,13 +346,6 @@ function handleQuickReply(value) {
       wizardState.reason = value;
       addUserMessage(value);
 
-      if (value === "bereavement") {
-        assistantReply("I’m so sorry for your loss. I’m here to help you understand what leave options may support you right now.");
-      }
-      if (value === "pregnancy" ) {
-        assistantReply("Congratulations on the new addition to your family. Let’s take a look at the leave options that may support you during this time.");
-      }
-
       return nextStep();
 
     case WIZARD_STEPS.EMPLOYMENT:
