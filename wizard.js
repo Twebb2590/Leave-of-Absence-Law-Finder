@@ -678,8 +678,8 @@ async function askReason() {
 // ------------------------------------------------------
 async function askState() {
   await assistantReplyChunks([
-    "Thank you for sharing that.",
-    "Which state do you work in? This helps me find the right laws."
+    "Let me check what laws apply.",
+    "Which state do you work in?"
   ]);
 }
 
