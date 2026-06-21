@@ -188,6 +188,7 @@ body {
   bottom: 90px;
   right: 50px;
 
+  display: none;
   background: none;
   border: none;
   border-radius: 50%;
