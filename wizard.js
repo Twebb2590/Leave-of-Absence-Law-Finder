@@ -276,7 +276,11 @@ if (
     lower.includes("do i get leave") ||
     lower.includes("am i allowed leave")
 ) {
-  currentStep = WIZARD_STEPS.STATE;
+	 // ⭐ Set default reason so wizard doesn't break
+  wizardState.reason = "medical";
+ 
+	// ⭐ Start eligibility flow at STATE
+	currentStep = WIZARD_STEPS.STATE;
   return askState();
 }
 
