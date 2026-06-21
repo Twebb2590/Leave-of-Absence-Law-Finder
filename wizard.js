@@ -515,7 +515,7 @@ function handleQuickReply(value) {
       return;
 
 case WIZARD_STEPS.COMPLETE:
-  await assistantReply("You can ask things like:");
+  return assistantReply("You can ask things like:");
 
   addQuickRepliesInsideChat([
     { label: "What is FMLA", value: "what is fmla" },
