@@ -819,12 +819,6 @@ async function handleEmailFlow(email) {
 async function answerGeneralQuestion(text) {
   const lower = text.toLowerCase();
 
-  if (lower.includes("eligible") || lower.includes("qualify")) {
-    return assistantReply(
-      "Eligibility depends on your reason for leave, your state, your employment status, and how long you've worked and how many hours you typically work. You can restart the chat anytime to check again."
-    );
-  }
-
   if (lower.includes("restart")) {
     startWizard();
     return;
