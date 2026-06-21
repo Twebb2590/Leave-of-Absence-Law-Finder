@@ -182,32 +182,33 @@ body {
 
 //Start Over Button
 
-.startOverBtn {
+.start-over-btn {
   position: fixed;
-  bottom: 20px;
+  bottom: 90px;
   right: 20px;
-  width: 55px;
-  height: 55px;
+  width: 48px;
+  height: 48px;
+  background: #0078ff;
+  color: white;
+  border: none;
   border-radius: 50%;
-  background: #ffffff;
-  border: 1px solid #ddd;
-  font-size: 24px;
-  cursor: pointer;
+  font-size: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
-  transition: transform 0.2s ease, background 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  cursor: pointer;
   z-index: 9999;
+  transition: background 0.2s ease, transform 0.15s ease;
 }
 
-.startOverBtn:hover {
-  background: #f3f3f3;
-  transform: scale(1.08);
+.start-over-btn:hover {
+  background: #005fcc;
+  transform: scale(1.05);
 }
 
-.startOverBtn:active {
-  transform: scale(0.92);
+.start-over-btn:active {
+  transform: scale(0.95);
 }
 
 
