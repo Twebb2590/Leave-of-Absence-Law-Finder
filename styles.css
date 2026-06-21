@@ -187,7 +187,6 @@ body {
   position: fixed;
   bottom: 90px;
   right: 50px;
-  display: none; /* Keep this if your JS switches it to display: flex or display: block */
   
   /* Strip the box visual entirely */
   background: white;
