@@ -360,7 +360,6 @@ if (
 
       if (wizardState.employmentStatus === "Unemployed") {
         await assistantReply("Thank you for sharing that. Your next opportunity is on its way — and I’ll still help you understand what leave protections may apply.");
-      }
 
       return nextStep();
 
