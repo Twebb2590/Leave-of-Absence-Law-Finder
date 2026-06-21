@@ -534,7 +534,6 @@ function checkEligibility(law, wizardState) {
     } else if (wizardState.meets1250Hours === null) {
       result.reasons.push("Requires about 1,250 hours worked in the past 12 months; your weekly hours are marked as not sure.");
     } else if (wizardState.meets1250Hours === true) {
-      result.reasons.push("Requires about 1,250 hours worked in the past 12 months; based on your weekly hours, you may meet this
       result.reasons.push("Requires about 1,250 hours worked in the past 12 months; based on your weekly hours, you may meet this.");
     }
   }
