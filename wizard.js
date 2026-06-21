@@ -332,7 +332,7 @@ if (
 	// ⭐ 3. If wizard already running, continue normal flow
 	switch (currentStep) {
 
-    case WIZARD_STEPS.REASON:
+    case WIZARD_STEPS.REASON: {
       wizardState.reason = mapTypedReason(value);
 
       if (wizardState.reason === "bereavement") {
@@ -351,31 +351,36 @@ if (
     return nextStep();
 }
     
-	case WIZARD_STEPS.STATE:
+	case WIZARD_STEPS.STATE: {
       wizardState.state = mapTypedState(value);
       return nextStep();
-
-    case WIZARD_STEPS.EMPLOYMENT:
+	}
+   
+		case WIZARD_STEPS.EMPLOYMENT: {
       wizardState.employmentStatus = mapTypedEmployment(value);
 
       if (wizardState.employmentStatus === "Unemployed") {
         await assistantReply("Thank you for sharing that. Your next opportunity is on its way — and I’ll still help you understand what leave protections may apply.");
-
+	  }
       return nextStep();
-
-    case WIZARD_STEPS.TENURE:
+	}
+   
+	case WIZARD_STEPS.TENURE: {
       wizardState.tenureMonths = interpretTenureFromText(value);
       return nextStep();
-
-    case WIZARD_STEPS.WEEKLY_HOURS:
+	}
+  
+	case WIZARD_STEPS.WEEKLY_HOURS: {
       wizardState.hoursPerWeek = interpretWeeklyHoursFromText(value);
       computeAnnualHours();
       return nextStep();
-
-    case WIZARD_STEPS.RESULTS:
+	}
+   
+	case WIZARD_STEPS.RESULTS: {
       return handlePostResultsFlow(value);
-
-    case WIZARD_STEPS.COMPLETE:
+	}
+   
+	case WIZARD_STEPS.COMPLETE: {
       return answerGeneralQuestion(value);
   }
 }
