@@ -183,25 +183,29 @@ body {
 //Start Over Button //
 
 .start-over-btn {
-  all: unset; 
+  all: unset;
   position: fixed;
   bottom: 90px;
   right: 50px;
-
   display: none;
   background: none;
   border: none;
-  border-radius: 50%;
-  padding: 0;
-  margin: 0;
-    margin-top: 30px;
   appearance: none;
   -webkit-appearance: none;
-
   cursor: pointer;
   z-index: 9999;
-
   transition: transform 0.15s ease;
+  
+  /* Added to define symbol size and prevent default button constraints */
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  margin: 0;
+  
+  /* Optional: Center your symbol inside the 48x48 area */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .start-over-btn:hover {
