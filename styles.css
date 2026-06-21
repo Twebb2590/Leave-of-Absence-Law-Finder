@@ -184,8 +184,8 @@ body {
 
 .start-over-btn {
   all: unset;
-bottom: 90px;
-  right: 50px;
+bottom: 100px;
+  right: 70px;
   
   /* Strip the box visual entirely */
   background: #f5f7fa;
@@ -193,7 +193,7 @@ bottom: 90px;
   border: none;
   box-shadow: none;
   padding: 0;
-  margin-top: 12px;
+  margin-top: 20px;
     margin-bottom: 20px;
   outline: none;
   
