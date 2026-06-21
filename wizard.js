@@ -740,8 +740,7 @@ async function startWizard() {
 
 	await new Promise(resolve => setTimeout(resolve, 1200));
 
-	currentStep = WIZARD_STEPS.REASON;
-	
+async function askReason() {
   await assistantReplyChunks([
     "What’s the main reason you’re looking into leave right now?"
   ]);
