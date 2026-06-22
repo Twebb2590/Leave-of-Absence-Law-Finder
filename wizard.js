@@ -167,15 +167,26 @@ function mapTypedReason(text) {
   const lower = text.toLowerCase();
 
   if (
-    lower.includes("bonding") ||
-    lower.includes("parental") ||
+    lower.includes("maternity") ||
+    lower.includes("birth") ||
     lower.includes("childbirth") ||
-    lower.includes("new baby") ||
+    lower.includes("baby") ||
     lower.includes("newborn")
   ) {
     return "pregnancy";
   }
 
+	if (
+  lower.includes("bonding") ||
+  lower.includes("baby bonding") ||
+  lower.includes("parental") ||
+  lower.includes("new baby") ||
+  lower.includes("adoption") ||
+  lower.includes("foster")
+) {
+  return "bonding";
+}
+	
   if (lower.includes("sick") || lower.includes("ill")) return "sick";
   if (lower.includes("preg")) return "pregnancy";
   if (lower.includes("family")) return "family_care";
@@ -332,6 +343,11 @@ if (
   lower.includes("time off") ||
   lower.includes("fmla") ||
   lower.includes("pregnan") ||
+	lower.includes("bonding") ||
+lower.includes("parental") ||
+lower.includes("new baby") ||
+lower.includes("adoption") ||
+lower.includes("foster") ||
   lower.includes("sick") ||
   lower.includes("injury") ||
   lower.includes("family") ||
@@ -356,7 +372,12 @@ if (
 	// ⭐ Force a pause so messages don't overlap
     await new Promise(resolve => setTimeout(resolve, 600));
   }
-			
+	
+		if (wizardState.reason === "bonding") {
+  await assistantReply("Congratulations on your growing family. Let’s take a look at the bonding and parental leave options that may support you.");
+  await new Promise(resolve => setTimeout(resolve, 600));
+}
+		
       if (wizardState.reason === "pregnancy") {
         await assistantReply("Congratulations on the new addition to your family. Let’s take a look at the leave options that may support you during this time.");
    
