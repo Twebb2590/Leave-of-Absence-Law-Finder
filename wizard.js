@@ -514,17 +514,6 @@ function handleQuickReply(value) {
       }
       return;
 
-case WIZARD_STEPS.COMPLETE:
-  return assistantReply("You can ask things like:");
-
-  addQuickRepliesInsideChat([
-    { label: "What is FMLA", value: "what is fmla" },
-    { label: "State leave laws", value: "state leave laws" },
-    { label: "Pregnancy leave", value: "pregnancy leave" },
-    { label: "Restart", value: "restart" }
-  ]);
-
-  return;
  } // ← closes switch
 } // ← closes handleQuickReply
 
@@ -862,12 +851,17 @@ async function answerGeneralQuestion(text) {
     return;
   }
 
-  return assistantReplyChunks([
-    "I’m here to help with leave laws. You can ask things like:",
-    "\n• Do I qualify for FMLA?",
-    "\n• What leave laws apply in California?",
-    "\n• Is pregnancy leave paid?"
+async function handleQuickReply(value) {
+  return assistantReply("You can ask things like:");
+
+  addQuickRepliesInsideChat([
+    { label: "What is FMLA", value: "what is fmla" },
+    { label: "State leave laws", value: "state leave laws" },
+    { label: "Pregnancy leave", value: "pregnancy leave" },
+    { label: "Restart", value: "restart" }
   ]);
+
+  return;
 }
 
 // ------------------------------------------------------
