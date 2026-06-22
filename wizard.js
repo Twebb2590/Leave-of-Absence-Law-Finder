@@ -933,11 +933,14 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-document.addEventListener("click", (e) => {
-  if (e.target.classList.contains("quick-reply")) {
-    const value = e.target.dataset.value;
-    handleQuickReply(value);
-  }
+document.addEventListener('click', function (e) {
+  const btn = e.target.closest('.quick-reply');
+  if (!btn) return;
+
+  const value = btn.dataset.value || btn.getAttribute('data-value');
+  if (!value) return;
+
+  handleQuickReply(value);
 });
 });
 
