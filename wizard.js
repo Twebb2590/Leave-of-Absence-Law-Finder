@@ -528,10 +528,16 @@ function handleQuickReply(value) {
 // ------------------------------------------------------
 // USER TYPED MESSAGE
 // ------------------------------------------------------
-function handleUserTypedMessage(text) {
+async function handleUserTypedMessage(text) {
   const trimmed = text.trim();
   if (!trimmed) return;
 
+if (/death|passed away|loss|funeral|bereavement/i.test(trimmed)) {
+  wizardState.reason = "bereavement";
+  await assistantReply("I’m so sorry for your loss. I’m here to help you understand what leave options may support you right now.");
+  return askState();
+}
+	
   clearQuickReplies();
   advanceWizard(trimmed);
 }
