@@ -850,9 +850,9 @@ async function answerGeneralQuestion(text) {
     startWizard();
     return;
   }
-
+}
 async function handleQuickReply(value) {
-  return assistantReply("You can ask things like:");
+  await assistantReply("You can ask things like:");
 
   addQuickRepliesInsideChat([
     { label: "What is FMLA", value: "what is fmla" },
