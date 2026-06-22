@@ -912,6 +912,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("quick-reply")) {
+    const value = e.target.dataset.value;
+    handleQuickReply(value);
+  }
+});
 });
 
 // ------------------------------------------------------
