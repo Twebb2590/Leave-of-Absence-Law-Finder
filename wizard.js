@@ -289,18 +289,23 @@ async function advanceWizard(value) {
  // ⭐ ALWAYS define this FIRST
   const lower = value.toLowerCase();
 
-// ⭐ Eligibility intent trigger — start wizard immediately
-if (
-    lower.includes("am i eligible") ||
-    lower.includes("do i qualify") ||
-    lower.includes("need leave") ||
-    lower.includes("need time off") ||
-    lower.includes("time off for") ||
-    lower.includes("leave for") ||
-    lower.includes("can i take leave") ||
-    lower.includes("do i get leave") ||
-    lower.includes("am i allowed leave")
-) {
+// ⭐ Universal Q&A — ONLY when wizard is NOT running
+if (currentStep === WIZARD_STEPS.NONE) {
+  if (
+      lower.includes("eligible") ||
+      lower.includes("qualify") ||
+      lower.includes("fmla") ||
+      lower.includes("leave") ||
+      lower.includes("law") ||
+      lower.includes("benefit") ||
+      lower.includes("rights") ||
+      lower.includes("what is") ||
+      lower.includes("how does")
+  ) {
+    return answerGeneralQuestion(value);
+  }
+}
+
 	 // ⭐ Set default reason so wizard doesn't break
   wizardState.reason = "medical";
  
@@ -309,16 +314,19 @@ if (
   return askState();
 }
 
- // ⭐ General Q&A fallback (runs only if wizard not triggered)
-if (
-    lower.includes("what is") ||
-    lower.includes("how does") ||
-    lower.includes("explain") ||
-    lower.includes("definition") ||
-    lower.includes("what are")
-) {
-  return answerGeneralQuestion(value);
+// ⭐ General Q&A fallback — ONLY when wizard is NOT running
+if (currentStep === WIZARD_STEPS.NONE) {
+  if (
+      lower.includes("what is") ||
+      lower.includes("how does") ||
+      lower.includes("explain") ||
+      lower.includes("definition") ||
+      lower.includes("what are")
+  ) {
+    return answerGeneralQuestion(value);
+  }
 }
+
 	
 // ⭐ Wizard trigger — start wizard only when user mentions needing leave (Might need to DELETE)
 if (
