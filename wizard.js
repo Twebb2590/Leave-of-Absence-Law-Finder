@@ -304,7 +304,6 @@ if (currentStep === null) {
   ) {
     return answerGeneralQuestion(value);
   }
-}
 
 	 // ⭐ Set default reason so wizard doesn't break
   wizardState.reason = "medical";
