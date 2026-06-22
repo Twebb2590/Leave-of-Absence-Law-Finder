@@ -290,7 +290,7 @@ async function advanceWizard(value) {
   const lower = value.toLowerCase();
 
 // ⭐ Universal Q&A — ONLY when wizard is NOT running
-if (currentStep === WIZARD_STEPS.NONE) {
+if (currentStep === null) {
   if (
       lower.includes("eligible") ||
       lower.includes("qualify") ||
@@ -315,7 +315,7 @@ if (currentStep === WIZARD_STEPS.NONE) {
 }
 
 // ⭐ General Q&A fallback — ONLY when wizard is NOT running
-if (currentStep === WIZARD_STEPS.NONE) {
+if (currentStep === null) {
   if (
       lower.includes("what is") ||
       lower.includes("how does") ||
@@ -326,7 +326,6 @@ if (currentStep === WIZARD_STEPS.NONE) {
     return answerGeneralQuestion(value);
   }
 }
-
 	
 // ⭐ Wizard trigger — start wizard only when user mentions needing leave (Might need to DELETE)
 if (
@@ -345,22 +344,6 @@ if (
   currentStep = WIZARD_STEPS.REASON;
   return askReason();
 }
- 
-	// ⭐ UNIVERSAL Q&A HANDLER — works at ANY step
-  if (
-    lower.includes("eligible") ||
-    lower.includes("qualify") ||
-    lower.includes("fmla") ||
-    lower.includes("leave") ||
-    lower.includes("law") ||
-    lower.includes("benefit") ||
-    lower.includes("rights") ||
-    lower.includes("what is") ||
-    lower.includes("how does")
-  ) {
-   
-	  return answerGeneralQuestion(value);
-  }   
  
 	// ⭐ 3. If wizard already running, continue normal flow
 	switch (currentStep) {
