@@ -281,7 +281,6 @@ function nextStep() {
 // MAIN WIZARD ROUTER (TRIGGERS)
 // ------------------------------------------------------
 async function advanceWizard(value) {
-  addUserMessage(value);
 
   if (wizardState.awaitingEmail) {
     return handleEmailFlow(value);
