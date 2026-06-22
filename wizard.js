@@ -776,7 +776,18 @@ async function askWeeklyHours() {
 // RESULTS SUMMARY
 // ------------------------------------------------------
 async function showResultsSummary() {
-  await assistantReplyChunks([
+ 
+  // ⭐ PREVENT EARLY JUMP TO COMPLETE
+  if (
+    !wizardState.state ||
+    !wizardState.employmentStatus ||
+    wizardState.tenureMonths == null ||   // ← FIXED
+    wizardState.hoursPerWeek == null      // ← FIXED
+  ) {
+    return assistantReply("I need a little more information before I can calculate your eligibility.");
+  }
+
+	await assistantReplyChunks([
     "Thank you.",
     "I’m pulling together federal and state leave laws that may apply.",
     "One moment while I check your state, situation, and basic eligibility."
