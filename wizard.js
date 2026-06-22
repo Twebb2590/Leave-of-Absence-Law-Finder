@@ -406,9 +406,17 @@ if (
       return handlePostResultsFlow(value);
 	}
    
-	case WIZARD_STEPS.COMPLETE: {
-      return assistantReply("If you need anything else, just ask!");
-  }
+    case WIZARD_STEPS.COMPLETE:
+      await assistantReply("You can ask things like:");
+
+      addQuickRepliesInsideChat([
+        { label: "What is FMLA", value: "what is fmla" },
+        { label: "State leave laws", value: "state leave laws" },
+        { label: "Pregnancy leave", value: "pregnancy leave" },
+        { label: "Restart", value: "restart" }
+      ]);
+
+      return;
 }
 }
 
@@ -850,18 +858,6 @@ async function answerGeneralQuestion(text) {
     startWizard();
     return;
   }
-}
-async function handleQuickReply(value) {
-  await assistantReply("You can ask things like:");
-
-  addQuickRepliesInsideChat([
-    { label: "What is FMLA", value: "what is fmla" },
-    { label: "State leave laws", value: "state leave laws" },
-    { label: "Pregnancy leave", value: "pregnancy leave" },
-    { label: "Restart", value: "restart" }
-  ]);
-
-  return;
 }
 
 // ------------------------------------------------------
