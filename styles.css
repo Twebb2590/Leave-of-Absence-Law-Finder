@@ -386,6 +386,14 @@ bottom: 100px;
     background: #e8f0ff;
 }
 
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+
 /* Results Section */
 #resultsArea {
     margin-top: 2rem;
