@@ -19,10 +19,31 @@ let currentFilters = {
 };
 
 // All laws loaded into the system
-import { lawsData } from "./data-loader.js";
+import { loadFederalLaws, loadStateLaws } from "./data-loader.js";
 
-allLaws = lawsData;
-applyFiltersAndSearch();
+// Load all laws before enabling search
+async function loadAllLaws() {
+  let laws = [];
+
+  // Load federal laws
+  const federal = await loadFederalLaws();
+  laws.push(...federal);
+
+  // Load all states
+  for (const s of states) {
+    const stateLaws = await loadStateLaws(s.code);
+    laws.push(...stateLaws);
+  }
+
+  allLaws = laws;
+
+  // Now that data exists, run search + filters
+  applyFiltersAndSearch();
+}
+
+// Start loading immediately
+loadAllLaws();
+
 
 // -----------------------------
 // STATE LIST
