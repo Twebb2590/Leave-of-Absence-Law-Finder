@@ -1,0 +1,50 @@
+{
+  "jurisdiction": "US-IN",
+  "jurisdiction_name": "Indiana",
+  "laws": [
+    {
+      "id": "in_military_family_leave",
+      "name": "Indiana Military Family Leave",
+      "description": "Provides job-protected leave for eligible employees with family members on active duty or notified of an impending call to active duty.",
+      "leave_types": [
+        { "type": "military_family" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.in.gov/dol/",
+      "type": ["military_family"]
+    },
+    {
+      "id": "in_victim_leave",
+      "name": "Indiana Crime Victim Leave",
+      "description": "Provides job-protected leave for employees who are victims of a crime to attend legal proceedings or cooperate with law enforcement.",
+      "leave_types": [
+        { "type": "domestic_violence" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.in.gov",
+      "type": ["domestic_violence"]
+    },
+    {
+      "id": "in_state_employee_sick_leave",
+      "name": "Indiana State Employee Sick Leave",
+      "description": "Provides paid sick leave for eligible Indiana state employees for personal illness or injury.",
+      "leave_types": [
+        { "type": "medical" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.in.gov/spd/",
+      "type": ["medical"]
+    },
+    {
+      "id": "in_state_employee_family_sick_leave",
+      "name": "Indiana State Employee Family Sick Leave",
+      "description": "Allows Indiana state employees to use accrued sick leave to care for an immediate family member with an illness or injury.",
+      "leave_types": [
+        { "type": "family_care" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.in.gov/spd/",
+      "type": ["family"]
+    }
+  ]
+}
