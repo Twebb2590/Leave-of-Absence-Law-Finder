@@ -601,10 +601,10 @@ function autoTagLaw(law) {
     JSON.stringify(law.leave_types || [])
   ).toLowerCase();
 
-  const tags = new Set();
+  const type = new Set();
 
   if (text.includes("pregnan") || text.includes("childbirth") || text.includes("maternity") || text.includes("birth"))
-    tags.add("pregnancy");
+    type.add("pregnancy");
 
   if (
     text.includes("sick leave") ||
@@ -614,7 +614,7 @@ function autoTagLaw(law) {
     text.includes("health condition") ||
     text.includes("serious health condition")
   )
-    tags.add("medical");
+    type.add("medical");
 
   if (
     text.includes("family leave") ||
@@ -625,33 +625,33 @@ function autoTagLaw(law) {
     text.includes("spouse") ||
     text.includes("child")
   )
-    tags.add("family_care");
+    type.add("family_care");
 
   if (text.includes("military") || text.includes("active duty") || text.includes("deployment") || text.includes("servicemember"))
-    tags.add("military");
+    type.add("military");
 
   if (text.includes("domestic violence") || text.includes("sexual assault") || text.includes("stalking") || text.includes("safe leave"))
-    tags.add("domestic_violence");
+    type.add("domestic_violence");
 
   if (text.includes("bereav") || text.includes("funeral") || text.includes("death of"))
-    tags.add("bereavement");
+    type.add("bereavement");
 
   if (text.includes("jury duty") || text.includes("jury service") || text.includes("court leave") || text.includes("court appearance"))
-    tags.add("jury");
+    type.add("jury");
 
   if (text.includes("voting leave") || text.includes("election leave") || text.includes("time to vote"))
-    tags.add("voting");
+    type.add("voting");
 
   if (text.includes("organ donation") || text.includes("bone marrow"))
-    tags.add("organ_donation");
+    type.add("organ_donation");
 
-  return Array.from(tags);
+  return Array.from(type);
 }
 
 // ------------------------------------------------------
 // TAG MATCHING
 // ------------------------------------------------------
-function getMatchingTagsForReason(reason) {
+function getMatchingTypeForReason(reason) {
   switch (reason) {
     case "sick": return ["medical"];
     case "pregnancy": return ["pregnancy", "medical"];
@@ -812,13 +812,13 @@ async function showResultsSummary() {
   const combined = [...federalLaws, ...stateLaws];
 
   combined.forEach(law => {
-    law.tags = autoTagLaw(law);
+    law.type = autoTagLaw(law);
   });
 
-  const matchingTags = getMatchingTagsForReason(wizardState.reason);
+  const matchingType = getMatchingTypeForReason(wizardState.reason);
 
   let filtered = combined.filter(law =>
-    law.tags.some(tag => matchingTags.includes(tag))
+    law.type.some(tag => matchingType.includes(tag))
   );
 
   if (!filtered.length) {
