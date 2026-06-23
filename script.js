@@ -19,7 +19,10 @@ let currentFilters = {
 };
 
 // All laws loaded into the system
-let allLaws = [];
+import { lawsData } from "./data-loader.js";
+
+allLaws = lawsData;
+applyFiltersAndSearch();
 
 // -----------------------------
 // STATE LIST
