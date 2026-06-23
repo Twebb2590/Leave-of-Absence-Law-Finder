@@ -23,27 +23,18 @@ import { allLaws, loadFederalLaws, loadStateLaws } from "./data-loader.js";
 
 // Load all laws before enabling search
 async function loadAllLaws() {
-  let laws = [];
-
-  // Load federal laws
   const federal = await loadFederalLaws();
-  laws.push(...federal);
+  allLaws.push(...federal);
 
-  // Load all states
   for (const s of states) {
     const stateLaws = await loadStateLaws(s.code);
-    laws.push(...stateLaws);
+    allLaws.push(...stateLaws);
   }
 
-  allLaws = laws;
-
-  // Now that data exists, run search + filters
   applyFiltersAndSearch();
 }
 
-// Start loading immediately
 loadAllLaws();
-
 
 // -----------------------------
 // STATE LIST
