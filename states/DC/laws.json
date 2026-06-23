@@ -1,0 +1,44 @@
+{
+  "jurisdiction": "US-DC",
+  "jurisdiction_name": "District of Columbia",
+  "laws": [
+    {
+      "id": "dc_fmla",
+      "name": "District of Columbia Family and Medical Leave Act (DCFMLA)",
+      "description": "Provides job-protected unpaid leave for family and medical reasons for eligible employees in the District of Columbia.",
+      "leave_types": [
+        { "type": "medical" },
+        { "type": "family_care" },
+        { "type": "bonding" }
+      ],
+      "job_protection": true,
+      "official_url": "https://does.dc.gov/service/family-and-medical-leave",
+      "type": ["medical", "family", "bonding"]
+    },
+    {
+      "id": "dc_pfl",
+      "name": "District of Columbia Paid Family Leave (DCPFML)",
+      "description": "Provides paid leave benefits funded through employer payroll taxes for bonding, family caregiving, medical leave, and prenatal leave.",
+      "leave_types": [
+        { "type": "medical" },
+        { "type": "family_care" },
+        { "type": "bonding" },
+        { "type": "prenatal" }
+      ],
+      "job_protection": false,
+      "official_url": "https://dcpaidfamilyleave.dc.gov/",
+      "type": ["medical", "family", "bonding", "prenatal"]
+    },
+    {
+      "id": "dc_parents_leave",
+      "name": "District of Columbia Parental Leave Act",
+      "description": "Provides job-protected leave for school-related activities for parents and guardians.",
+      "leave_types": [
+        { "type": "school_activities" }
+      ],
+      "job_protection": true,
+      "official_url": "https://code.dccouncil.gov/us/dc/council/code/sections/32-521.02",
+      "type": ["school_activities"]
+    }
+  ]
+}
