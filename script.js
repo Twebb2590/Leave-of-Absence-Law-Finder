@@ -122,13 +122,23 @@ document.getElementById("searchBtn").addEventListener("click", () => {
   runSearch(query);
 });
 
-document.getElementById("searchInput").addEventListener("keydown", (e) => {
+  document.getElementById("searchInput").addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
-    const query = e.target.value.trim();
-    runSearch(query);
+    runSearch(e.target.value.trim());
   }
 });
- 
+
+  let searchTimeout = null;
+
+function debounceSearch(query) {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => runSearch(query), 150);
+}
+
+document.getElementById("searchInput").addEventListener("input", (e) => {
+  debounceSearch(e.target.value.trim());
+});
+
   function runSearch(query) {
   if (!query) {
     renderResults(allLaws); // show everything if empty
