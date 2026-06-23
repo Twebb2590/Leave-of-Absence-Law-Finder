@@ -1,3 +1,6 @@
+// All laws loaded into the system
+import { allLaws, loadFederalLaws, loadStateLaws } from "./data-loader.js";
+
 // -----------------------------
 // DOM ELEMENTS
 // -----------------------------
@@ -18,10 +21,9 @@ let currentFilters = {
   includeState: true,
 };
 
-// All laws loaded into the system
-import { allLaws, loadFederalLaws, loadStateLaws } from "./data-loader.js";
-
-// Load all laws before enabling search
+// -----------------------------
+// LOAD ALL LAWS
+// -----------------------------
 async function loadAllLaws() {
   const federal = await loadFederalLaws();
 
@@ -41,6 +43,7 @@ async function loadAllLaws() {
   applyFiltersAndSearch();
 }
 
+loadAllLaws();
 
 // -----------------------------
 // STATE LIST
