@@ -418,6 +418,31 @@ bottom: 100px;
     background: #d1d5db;
 }
 
+.filters-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #2563eb;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 10;
+  transition: opacity 0.2s ease;
+}
+
+.filters-badge.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#filterPanelContainer {
+  position: relative; /* required for floating badge */
+}
+
+
 /* Results Section */
 #resultsArea {
     margin-top: 2rem;
