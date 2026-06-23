@@ -1,8 +1,6 @@
 // -----------------------------
-// Multi‑Page Safe Script.js
+// DOM ELEMENTS
 // -----------------------------
-
-// Detect elements safely
 const filterPanelContainer = document.getElementById("filterPanelContainer");
 const currentFiltersSummary = document.getElementById("currentFiltersSummary");
 const searchInput = document.getElementById("searchInput");
@@ -10,7 +8,9 @@ const clearAllFiltersBtn = document.getElementById("clearAllFiltersBtn");
 const compareStatesBtn = document.getElementById("compareStatesBtn");
 const resultsContainer = document.getElementById("resultsContainer");
 
-// Track filters
+// -----------------------------
+// GLOBAL FILTER STATE
+// -----------------------------
 let currentFilters = {
   state: null,
   leaveType: null,
@@ -18,81 +18,56 @@ let currentFilters = {
   includeState: true,
 };
 
-if (!document.body.classList.contains("wizard-page")) {
-    // put ALL your search logic inside here
-}
-
-// Master list of all laws loaded into the system
+// All laws loaded into the system
 let allLaws = [];
 
-  const states = [
-    { code: "AL", name: "Alabama" },
-    { code: "AK", name: "Alaska" },
-    { code: "AZ", name: "Arizona" },
-    { code: "AR", name: "Arkansas" },
-    { code: "CA", name: "California" },
-    { code: "CO", name: "Colorado" },
-    { code: "CT", name: "Connecticut" },
-    { code: "DE", name: "Delaware" },
-    { code: "FL", name: "Florida" },
-    { code: "GA", name: "Georgia" },
-    { code: "HI", name: "Hawaii" },
-    { code: "ID", name: "Idaho" },
-    { code: "IL", name: "Illinois" },
-    { code: "IN", name: "Indiana" },
-    { code: "IA", name: "Iowa" },
-    { code: "KS", name: "Kansas" },
-    { code: "KY", name: "Kentucky" },
-    { code: "LA", name: "Louisiana" },
-    { code: "ME", name: "Maine" },
-    { code: "MD", name: "Maryland" },
-    { code: "MA", name: "Massachusetts" },
-    { code: "MI", name: "Michigan" },
-    { code: "MN", name: "Minnesota" },
-    { code: "MS", name: "Mississippi" },
-    { code: "MO", name: "Missouri" },
-    { code: "MT", name: "Montana" },
-    { code: "NE", name: "Nebraska" },
-    { code: "NV", name: "Nevada" },
-    { code: "NH", name: "New Hampshire" },
-    { code: "NJ", name: "New Jersey" },
-    { code: "NM", name: "New Mexico" },
-    { code: "NY", name: "New York" },
-    { code: "NC", name: "North Carolina" },
-    { code: "ND", name: "North Dakota" },
-    { code: "OH", name: "Ohio" },
-    { code: "OK", name: "Oklahoma" },
-    { code: "OR", name: "Oregon" },
-    { code: "PA", name: "Pennsylvania" },
-    { code: "RI", name: "Rhode Island" },
-    { code: "SC", name: "South Carolina" },
-    { code: "SD", name: "South Dakota" },
-    { code: "TN", name: "Tennessee" },
-    { code: "TX", name: "Texas" },
-    { code: "UT", name: "Utah" },
-    { code: "VT", name: "Vermont" },
-    { code: "VA", name: "Virginia" },
-    { code: "WA", name: "Washington" },
-    { code: "WV", name: "West Virginia" },
-    { code: "WI", name: "Wisconsin" },
-    { code: "WY", name: "Wyoming" },
-    { code: "DC", name: "District of Columbia" }
-  ];
-
-  // -----------------------------
-// Only run FILTER PANEL if it exists
 // -----------------------------
-if (filterPanelContainer) {
-  
-  const LEAVE_TYPES = [
-    { id: "medical", label: "Medical / Sick" },
-    { id: "pregnancy", label: "Pregnancy / Birth" },
-    { id: "family", label: "Family Care" },
-    { id: "bereavement", label: "Bereavement" },
-    { id: "military", label: "Military" },
-    { id: "jury", label: "Court / Jury Duty" },
-  ];
+// STATE LIST
+// -----------------------------
+const states = [
+  { code: "AL", name: "Alabama" }, { code: "AK", name: "Alaska" },
+  { code: "AZ", name: "Arizona" }, { code: "AR", name: "Arkansas" },
+  { code: "CA", name: "California" }, { code: "CO", name: "Colorado" },
+  { code: "CT", name: "Connecticut" }, { code: "DE", name: "Delaware" },
+  { code: "FL", name: "Florida" }, { code: "GA", name: "Georgia" },
+  { code: "HI", name: "Hawaii" }, { code: "ID", name: "Idaho" },
+  { code: "IL", name: "Illinois" }, { code: "IN", name: "Indiana" },
+  { code: "IA", name: "Iowa" }, { code: "KS", name: "Kansas" },
+  { code: "KY", name: "Kentucky" }, { code: "LA", name: "Louisiana" },
+  { code: "ME", name: "Maine" }, { code: "MD", name: "Maryland" },
+  { code: "MA", name: "Massachusetts" }, { code: "MI", name: "Michigan" },
+  { code: "MN", name: "Minnesota" }, { code: "MS", name: "Mississippi" },
+  { code: "MO", name: "Missouri" }, { code: "MT", name: "Montana" },
+  { code: "NE", name: "Nebraska" }, { code: "NV", name: "Nevada" },
+  { code: "NH", name: "New Hampshire" }, { code: "NJ", name: "New Jersey" },
+  { code: "NM", name: "New Mexico" }, { code: "NY", name: "New York" },
+  { code: "NC", name: "North Carolina" }, { code: "ND", name: "North Dakota" },
+  { code: "OH", name: "Ohio" }, { code: "OK", name: "Oklahoma" },
+  { code: "OR", name: "Oregon" }, { code: "PA", name: "Pennsylvania" },
+  { code: "RI", name: "Rhode Island" }, { code: "SC", name: "South Carolina" },
+  { code: "SD", name: "South Dakota" }, { code: "TN", name: "Tennessee" },
+  { code: "TX", name: "Texas" }, { code: "UT", name: "Utah" },
+  { code: "VT", name: "Vermont" }, { code: "VA", name: "Virginia" },
+  { code: "WA", name: "Washington" }, { code: "WV", name: "West Virginia" },
+  { code: "WI", name: "Wisconsin" }, { code: "WY", name: "Wyoming" },
+  { code: "DC", name: "District of Columbia" }
+];
 
+// -----------------------------
+// LEAVE TYPES
+// -----------------------------
+const LEAVE_TYPES = [
+  { id: "medical", label: "Medical / Sick" },
+  { id: "pregnancy", label: "Pregnancy / Birth" },
+  { id: "family", label: "Family Care" },
+  { id: "bereavement", label: "Bereavement" },
+  { id: "military", label: "Military" },
+  { id: "jury", label: "Court / Jury Duty" },
+];
+
+// -----------------------------
+// FILTER PANEL RENDERING
+// -----------------------------
 function renderFilterPanel(container, { states, leaveTypes, onChange }) {
   container.innerHTML = `
     <label>State:</label>
@@ -117,43 +92,81 @@ function renderFilterPanel(container, { states, leaveTypes, onChange }) {
   });
 }
 
-document.getElementById("searchBtn").addEventListener("click", () => {
-  const query = document.getElementById("searchInput").value.trim();
-  runSearch(query);
-});
+// -----------------------------
+// UNIFIED SEARCH + FILTER ENGINE
+// -----------------------------
+function applyFiltersAndSearch() {
+  let query = searchInput ? searchInput.value.trim().toLowerCase() : "";
 
-  document.getElementById("searchInput").addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    runSearch(e.target.value.trim());
-  }
-});
+  let results = allLaws.filter(law => {
+    const matchesSearch =
+      !query ||
+      law.title.toLowerCase().includes(query) ||
+      law.description.toLowerCase().includes(query);
 
-  let searchTimeout = null;
+    const matchesState =
+      !currentFilters.state || law.state === currentFilters.state;
 
-function debounceSearch(query) {
-  clearTimeout(searchTimeout);
-  searchTimeout = setTimeout(() => runSearch(query), 150);
-}
+    const matchesType =
+      !currentFilters.leaveType || law.type === currentFilters.leaveType;
 
-document.getElementById("searchInput").addEventListener("input", (e) => {
-  debounceSearch(e.target.value.trim());
-});
-
-  function runSearch(query) {
-  if (!query) {
-    renderResults(allLaws); // show everything if empty
-    return;
-  }
-
-  const results = allLaws.filter(law =>
-    law.title.toLowerCase().includes(query.toLowerCase()) ||
-    law.description.toLowerCase().includes(query.toLowerCase())
-  );
+    return matchesSearch && matchesState && matchesType;
+  });
 
   renderResults(results);
 }
 
-  function renderResults(laws) {
+// -----------------------------
+// INSTANT SEARCH LISTENER
+// -----------------------------
+let searchTimeout = null;
+
+if (searchInput) {
+  searchInput.addEventListener("input", () => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => applyFiltersAndSearch(), 150);
+  });
+}
+
+// -----------------------------
+// SEARCH BUTTON (optional)
+// -----------------------------
+if (document.getElementById("searchBtn")) {
+  document.getElementById("searchBtn").addEventListener("click", () => {
+    applyFiltersAndSearch();
+  });
+}
+
+// -----------------------------
+// CLEAR FILTERS
+// -----------------------------
+if (clearAllFiltersBtn) {
+  clearAllFiltersBtn.addEventListener("click", () => {
+    currentFilters = {
+      state: null,
+      leaveType: null,
+      includeFederal: true,
+      includeState: true,
+    };
+
+    if (searchInput) searchInput.value = "";
+    applyFiltersAndSearch();
+  });
+}
+
+// -----------------------------
+// COMPARE STATES BUTTON
+// -----------------------------
+if (compareStatesBtn) {
+  compareStatesBtn.addEventListener("click", () => {
+    window.location.href = "compare.html";
+  });
+}
+
+// -----------------------------
+// RENDER RESULTS
+// -----------------------------
+function renderResults(laws) {
   const container = document.getElementById("resultsContainer");
   const count = document.getElementById("resultsCount");
 
@@ -166,103 +179,29 @@ document.getElementById("searchInput").addEventListener("input", (e) => {
     card.innerHTML = `
       <h3>${law.title}</h3>
       <p>${law.description}</p>
+      <p><strong>State:</strong> ${law.state}</p>
+      <p><strong>Type:</strong> ${law.type}</p>
     `;
     container.appendChild(card);
   });
 }
- 
+
+// -----------------------------
+// INITIALIZE FILTER PANEL
+// -----------------------------
+if (filterPanelContainer) {
   renderFilterPanel(filterPanelContainer, {
     states: states,
     leaveTypes: LEAVE_TYPES,
     onChange: (filters) => {
       currentFilters = { ...currentFilters, ...filters };
-      applyFiltersAndRender();
+      applyFiltersAndSearch();
     },
   });
 }
 
 // -----------------------------
-// Only run SEARCH if searchInput exists
-// -----------------------------
-if (searchInput) {
-  let searchDebounce;
-
-  searchInput.addEventListener("input", () => {
-    clearTimeout(searchDebounce);
-    searchDebounce = setTimeout(() => applyFiltersAndRender(), 200);
-  });
-}
-
-// -----------------------------
-// Only run CLEAR FILTERS if button exists
-// -----------------------------
-if (clearAllFiltersBtn) {
-  clearAllFiltersBtn.addEventListener("click", () => {
-    currentFilters = {
-      state: null,
-      leaveType: null,
-      includeFederal: true,
-      includeState: true,
-    };
-
-    if (searchInput) searchInput.value = "";
-    applyFiltersAndRender();
-  });
-}
-
-// -----------------------------
-// Only run COMPARE STATES button if it exists
-// -----------------------------
-if (compareStatesBtn) {
-  compareStatesBtn.addEventListener("click", () => {
-    window.location.href = "compare.html";
-  });
-}
-// -----------------------------
-// Populate Compare States dropdowns if they exist
-// -----------------------------
-document.addEventListener("DOMContentLoaded", () => {
-  const dropdowns = document.querySelectorAll("select[data-state-dropdown]");
-
-  dropdowns.forEach(drop => {
-    states.forEach(s => {
-      const opt = document.createElement("option");
-      opt.value = s.code;
-      opt.textContent = s.name;
-      drop.appendChild(opt);
-    });
-  });
-});
-
-// -----------------------------
-// Only run RESULTS RENDERING if resultsContainer exists
-// -----------------------------
-function applyFiltersAndRender() {
-  if (!resultsContainer) return;
-
-  resultsContainer.innerHTML = "";
-
-  const filtered = allLaws.filter((law) => {
-    if (currentFilters.state && law.state !== currentFilters.state) return false;
-    if (currentFilters.leaveType && law.type !== currentFilters.leaveType) return false;
-    return true;
-  });
-
-  filtered.forEach((law) => {
-    const card = document.createElement("div");
-    card.className = "law-card";
-    card.innerHTML = `
-      <h3>${law.title}</h3>
-      <p>${law.description}</p>
-      <p><strong>State:</strong> ${law.state}</p>
-      <p><strong>Type:</strong> ${law.type}</p>
-    `;
-    resultsContainer.appendChild(card);
-  });
-}
-
-// -----------------------------
-// Wizard → Search integration (safe)
+// WIZARD → SEARCH INTEGRATION
 // -----------------------------
 window.addEventListener("wizardResults", (event) => {
   const { laws, wizardState } = event.detail;
@@ -277,5 +216,5 @@ window.addEventListener("wizardResults", (event) => {
     currentFilters.state = wizardState.state;
   }
 
-  applyFiltersAndRender();
+  applyFiltersAndSearch();
 });
