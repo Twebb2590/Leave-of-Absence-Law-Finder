@@ -1,5 +1,7 @@
 const BASE = `${window.location.origin}/Leave-of-Absence-Law-Finder/`;
 
+export let allLaws = [];
+
 // ------------------------------
 // FEDERAL LAWS
 // ------------------------------
