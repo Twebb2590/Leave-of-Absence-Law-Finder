@@ -4,14 +4,53 @@
   "laws": [
     {
       "id": "ct_fmla",
-      "name": "Connecticut Family and Medical Leave Act",
-      "description": "Provides job-protected leave for family and medical reasons.",
+      "name": "Connecticut Family and Medical Leave Act (CTFMLA)",
+      "description": "Provides job-protected unpaid leave for eligible employees for medical leave, family caregiving, bonding, and certain military-related reasons.",
       "leave_types": [
+        { "type": "medical" },
         { "type": "family_care" },
-        { "type": "medical" }
+        { "type": "bonding" },
+        { "type": "military_family" }
       ],
       "job_protection": true,
-      "official_url": "https://portal.ct.gov/DOLUI/new-fmla"
+      "official_url": "https://portal.ct.gov/DOLUI/Family-and-Medical-Leave/Connecticut-Family-and-Medical-Leave",
+      "type": ["medical", "family", "bonding", "military_family"]
+    },
+    {
+      "id": "ct_pfml",
+      "name": "Connecticut Paid Family and Medical Leave (CT PFML)",
+      "description": "Provides paid wage replacement benefits for medical leave, family caregiving, bonding, and certain military-related reasons. Funded through employee payroll contributions.",
+      "leave_types": [
+        { "type": "medical" },
+        { "type": "family_care" },
+        { "type": "bonding" },
+        { "type": "military_family" }
+      ],
+      "job_protection": false,
+      "official_url": "https://ctpaidleave.org",
+      "type": ["medical", "family", "bonding", "military_family"]
+    },
+    {
+      "id": "ct_school_activities",
+      "name": "Connecticut School Parental Leave (K–12 Conferences)",
+      "description": "Allows employees to take time off to attend school-related conferences or classroom activities for their children.",
+      "leave_types": [
+        { "type": "school_activities" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.cga.ct.gov",
+      "type": ["school_activities"]
+    },
+    {
+      "id": "ct_domestic_violence_leave",
+      "name": "Connecticut Domestic Violence Leave",
+      "description": "Provides job-protected leave for victims of domestic violence to seek medical care, counseling, legal assistance, or relocate for safety.",
+      "leave_types": [
+        { "type": "domestic_violence" }
+      ],
+      "job_protection": true,
+      "official_url": "https://portal.ct.gov",
+      "type": ["domestic_violence"]
     }
   ]
 }
