@@ -3,15 +3,64 @@
   "jurisdiction_name": "Maryland",
   "laws": [
     {
-      "id": "md_hwfa",
-      "name": "Healthy Working Families Act",
-      "description": "Provides job-protected sick and safe leave.",
+      "id": "md_pfml",
+      "name": "Maryland Paid Family and Medical Leave (Time to Care Act)",
+      "description": "Provides paid leave benefits for medical leave, family caregiving, bonding, and military-related leave. Funded through employer and employee contributions.",
       "leave_types": [
-        { "type": "sick" },
-        { "type": "safe_leave" }
+        { "type": "medical" },
+        { "type": "family_care" },
+        { "type": "bonding" },
+        { "type": "military_family" }
       ],
       "job_protection": true,
-      "official_url": "https://www.dllr.state.md.us/paidleave/"
+      "official_url": "https://labor.maryland.gov",
+      "type": ["medical", "family", "bonding", "military_family"]
+    },
+    {
+      "id": "md_psl",
+      "name": "Maryland Healthy Working Families Act (Paid Sick and Safe Leave)",
+      "description": "Provides paid sick and safe leave for medical needs, family caregiving, and issues related to domestic violence, sexual assault, or stalking.",
+      "leave_types": [
+        { "type": "medical" },
+        { "type": "family_care" },
+        { "type": "domestic_violence" }
+      ],
+      "job_protection": true,
+      "official_url": "https://labor.maryland.gov/paidleave/",
+      "type": ["medical", "family", "domestic_violence"]
+    },
+    {
+      "id": "md_school_activities",
+      "name": "Maryland School Conference and Activity Leave",
+      "description": "Allows employees of certain employers to take leave to attend school conferences or classroom activities for their children.",
+      "leave_types": [
+        { "type": "school_activities" }
+      ],
+      "job_protection": true,
+      "official_url": "https://mgaleg.maryland.gov",
+      "type": ["school_activities"]
+    },
+    {
+      "id": "md_state_employee_sick_leave",
+      "name": "Maryland State Employee Sick Leave",
+      "description": "Provides paid sick leave for eligible Maryland state employees for personal illness or injury.",
+      "leave_types": [
+        { "type": "medical" }
+      ],
+      "job_protection": true,
+      "official_url": "https://dbm.maryland.gov",
+      "type": ["medical"]
+    },
+    {
+      "id": "md_state_employee_family_sick_leave",
+      "name": "Maryland State Employee Family Sick Leave",
+      "description": "Allows Maryland state employees to use accrued sick leave to care for an immediate family member with an illness or injury.",
+      "leave_types": [
+        { "type": "family_care" }
+      ],
+      "job_protection": true,
+      "official_url": "https://dbm.maryland.gov",
+      "type": ["family"]
     }
   ]
 }
