@@ -1,26 +1,17 @@
-// components/FilterPanel.js
-
 export function renderFilterPanel(container, { states, leaveTypes, onChange }) {
   container.innerHTML = '';
 
-  const form = document.createElement('div');
-  form.className = 'space-y-3 text-xs text-slate-700';
+  // Create a flex row for all filter controls
+  const row = document.createElement('div');
+  row.className = 'filter-row'; // You will style this in CSS
 
   // -------------------------
   // STATE MULTI-SELECT
   // -------------------------
-  const stateGroup = document.createElement('div');
-
-  const stateLabel = document.createElement('label');
-  stateLabel.className = 'block text-[11px] font-medium mb-1';
-  stateLabel.textContent = 'States (select multiple)';
-  stateGroup.appendChild(stateLabel);
-
   const stateSelect = document.createElement('select');
-  stateSelect.multiple = true;          // <-- MULTI-SELECT ENABLED
-  stateSelect.size = 5;                 // optional: shows 5 rows
-  stateSelect.className =
-    'w-full rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs';
+  stateSelect.multiple = true;
+  stateSelect.size = 5;
+  stateSelect.className = 'filter-select';
 
   states.forEach((s) => {
     const opt = document.createElement('option');
@@ -29,21 +20,11 @@ export function renderFilterPanel(container, { states, leaveTypes, onChange }) {
     stateSelect.appendChild(opt);
   });
 
-  stateGroup.appendChild(stateSelect);
-
   // -------------------------
   // LEAVE TYPE SELECT
   // -------------------------
-  const typeGroup = document.createElement('div');
-
-  const typeLabel = document.createElement('label');
-  typeLabel.className = 'block text-[11px] font-medium mb-1';
-  typeLabel.textContent = 'Leave type';
-  typeGroup.appendChild(typeLabel);
-
   const typeSelect = document.createElement('select');
-  typeSelect.className =
-    'w-full rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs';
+  typeSelect.className = 'filter-select';
 
   const defaultType = document.createElement('option');
   defaultType.value = '';
@@ -57,64 +38,47 @@ export function renderFilterPanel(container, { states, leaveTypes, onChange }) {
     typeSelect.appendChild(opt);
   });
 
-  typeGroup.appendChild(typeSelect);
-
   // -------------------------
-  // FEDERAL / STATE CHECKBOXES
+  // CLEAR FILTERS BUTTON
   // -------------------------
-  const levelGroup = document.createElement('div');
-  levelGroup.className = 'flex flex-wrap gap-2 items-center';
+  const clearBtn = document.createElement('button');
+  clearBtn.id = 'clearAllFiltersBtn';
+  clearBtn.textContent = 'Clear Filters';
+  clearBtn.className = 'clear-btn';
 
-  const levelLabel = document.createElement('span');
-  levelLabel.className = 'text-[11px] font-medium';
-  levelLabel.textContent = 'Scope';
-  levelGroup.appendChild(levelLabel);
+  clearBtn.addEventListener('click', () => {
+    stateSelect.selectedIndex = -1;
+    typeSelect.value = '';
+    onChange({
+      states: [],
+      leaveType: null,
+      includeFederal: true,
+      includeState: true
+    });
+  });
 
-  const federalCheckbox = document.createElement('input');
-  federalCheckbox.type = 'checkbox';
-  federalCheckbox.checked = true;
+  // Add everything to the row
+  row.appendChild(stateSelect);
+  row.appendChild(typeSelect);
+  row.appendChild(clearBtn);
 
-  const federalLabel = document.createElement('label');
-  federalLabel.textContent = 'Federal';
-  levelGroup.appendChild(federalCheckbox);
-  levelGroup.appendChild(federalLabel);
+  // Add row to container
+  container.appendChild(row);
 
-  const stateCheckbox = document.createElement('input');
-  stateCheckbox.type = 'checkbox';
-  stateCheckbox.checked = true;
-
-  const stateLabel2 = document.createElement('label');
-  stateLabel2.textContent = 'State';
-  levelGroup.appendChild(stateCheckbox);
-  levelGroup.appendChild(stateLabel2);
-
-  // Add groups to form
-  form.appendChild(stateGroup);
-  form.appendChild(typeGroup);
-  form.appendChild(levelGroup);
-
-  container.appendChild(form);
-
-  // -------------------------
-  // EMIT FILTER CHANGES
-  // -------------------------
+  // Emit changes
   const emitChange = () => {
-    const selectedStates = Array.from(stateSelect.selectedOptions).map(
-      (o) => o.value
-    );
+    const selectedStates = Array.from(stateSelect.selectedOptions).map(o => o.value);
 
     onChange({
-      states: selectedStates,                 // <-- MULTIPLE STATES SENT OUT
+      states: selectedStates,
       leaveType: typeSelect.value || null,
-      includeFederal: federalCheckbox.checked,
-      includeState: stateCheckbox.checked,
+      includeFederal: true,
+      includeState: true
     });
   };
 
   stateSelect.addEventListener('change', emitChange);
   typeSelect.addEventListener('change', emitChange);
-  federalCheckbox.addEventListener('change', emitChange);
-  stateCheckbox.addEventListener('change', emitChange);
 
-  emitChange(); // initialize filters
+  emitChange();
 }
