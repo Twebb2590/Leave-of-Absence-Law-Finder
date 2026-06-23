@@ -85,7 +85,7 @@ export function renderFilterPanel(container, { states, leaveTypes, onChange }) {
   container.appendChild(row);
 
   // Emit changes
-emitChange = () => {
+const emitChange = () => {
   const selectedStates = Array.from(stateSelect.selectedOptions).map(o => o.value);
 
   const filters = {
