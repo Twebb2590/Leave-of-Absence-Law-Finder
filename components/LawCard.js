@@ -23,10 +23,10 @@ export function createLawCard(law) {
   desc.className = 'text-[11px] text-slate-600 dark:text-slate-300 mb-1';
   desc.textContent = law.description || '';
 
-  // REMOVE TAGS COMPLETELY
+  // REMOVE type COMPLETELY
   // const meta = document.createElement('div');
   // meta.className = 'flex flex-wrap gap-1 mb-2';
-  // (law.tags || []).forEach(...)
+  // (law.type || []).forEach(...)
 
   const footer = document.createElement('div');
   footer.className = 'flex justify-between items-center mt-1';
