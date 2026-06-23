@@ -1,36 +1,42 @@
 {
+  "jurisdiction": "US-DE",
+  "jurisdiction_name": "Delaware",
   "laws": [
     {
-      "id": "de_fmla",
-      "name": "Delaware Family and Medical Leave (FMLA – Federal)",
-      "description": "Delaware employees are covered by the federal FMLA, which provides up to 12 weeks of job‑protected unpaid leave for qualifying medical and family reasons.",
-      "job_protection": true,
+      "id": "de_pfml",
+      "name": "Delaware Paid Family and Medical Leave (Healthy Delaware Families Act)",
+      "description": "Provides paid leave benefits for medical leave, family caregiving, bonding, and safe leave for issues related to domestic violence, sexual assault, or stalking. Applies to most employers with 10 or more employees.",
       "leave_types": [
         { "type": "medical" },
-        { "type": "family" }
+        { "type": "family_care" },
+        { "type": "bonding" },
+        { "type": "domestic_violence" }
       ],
-      "official_url": "https://www.dol.gov/agencies/whd/fmla"
+      "job_protection": true,
+      "official_url": "https://labor.delaware.gov/fmla/",
+      "type": ["medical", "family", "bonding", "domestic_violence"]
     },
     {
-      "id": "de_pregnancy_accommodation",
-      "name": "Delaware Pregnant Workers Fairness Act",
-      "description": "Requires employers to provide reasonable accommodations for pregnancy, childbirth, and related conditions. Includes job protection against discrimination or retaliation.",
-      "job_protection": true,
+      "id": "de_state_employee_sick_leave",
+      "name": "Delaware State Employee Sick Leave",
+      "description": "Provides paid sick leave for eligible Delaware state employees for personal illness or injury.",
       "leave_types": [
-        { "type": "pregnancy" }
+        { "type": "medical" }
       ],
-      "official_url": "https://labor.delaware.gov/divisions/anti-discrimination/"
+      "job_protection": true,
+      "official_url": "https://dhr.delaware.gov",
+      "type": ["medical"]
     },
     {
-      "id": "de_domestic_violence_leave",
-      "name": "Delaware Domestic Violence Leave",
-      "description": "Employees may take leave to address domestic violence issues, including seeking medical care, counseling, legal assistance, or relocation. Employers may not retaliate against employees for taking this leave.",
-      "job_protection": true,
+      "id": "de_state_employee_family_sick_leave",
+      "name": "Delaware State Employee Family Sick Leave",
+      "description": "Allows Delaware state employees to use accrued sick leave to care for an immediate family member with an illness or injury.",
       "leave_types": [
-        { "type": "family" },
-        { "type": "court" }
+        { "type": "family_care" }
       ],
-      "official_url": "https://delcode.delaware.gov/title19/c007/index.html"
+      "job_protection": true,
+      "official_url": "https://dhr.delaware.gov",
+      "type": ["family"]
     }
   ]
 }
