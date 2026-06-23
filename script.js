@@ -133,7 +133,7 @@ function applyFiltersAndSearch() {
 
     const matchesType =
   !currentFilters.leaveType ||
-  (law.tags && law.tags.includes(currentFilters.leaveType));
+  (law.type && law.type.includes(currentFilters.leaveType));
 
     return matchesSearch && matchesState && matchesType;
   });
