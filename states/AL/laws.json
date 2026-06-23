@@ -3,64 +3,37 @@
   "jurisdiction_name": "Alabama",
   "laws": [
     {
-      "id": "al_sick_leave",
-      "name": "Alabama Sick Leave Law",
-      "abbreviation": "ASL",
-      "statute_code": "Ala. Code § 34-8-2",
-      "effective_date": "2020-01-01",
-      "description": "Alabama does not have a state-mandated sick leave law. However, employers may choose to provide sick leave as part of their employment policies.",
+      "id": "al_military_family",
+      "name": "Alabama Military Family Leave Act",
+      "description": "Provides unpaid leave for eligible employees with family members in the U.S. Armed Forces who are on active duty or have been notified of an impending call to active duty.",
       "leave_types": [
-        {
-          "type": "sick",
-          "duration": {
-            "value": 0,
-            "unit": "days",
-            "notes": "No state mandate; employer discretion"
-          },
-          "paid": null,
-          "eligibility": {
-            "min_employment_duration": "Employer determined",
-            "other_requirements": [
-              "Not mandated by state law"
-            ]
-          },
-          "notice_requirement": "Employer determined",
-          "job_protection": false
-        }
+        { "type": "military_family" }
       ],
-      "official_url": "https://www.alabamaworks.com/",
-      "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Alabama is an at-will employment state with limited leave protections. FMLA applies federally to covered employers."
+      "job_protection": true,
+      "official_url": "https://labor.alabama.gov",
+      "type": ["military_family"]
     },
     {
-      "id": "al_jury_duty",
-      "name": "Alabama Jury Duty Leave",
-      "abbreviation": "AYJD",
-      "statute_code": "Ala. Code § 12-16-1",
-      "effective_date": "1975-01-01",
-      "description": "Alabama prohibits employers from firing or penalizing employees for jury duty service.",
+      "id": "al_state_employee_sick_leave",
+      "name": "Alabama State Employee Sick Leave",
+      "description": "Provides paid sick leave for eligible Alabama state employees for personal illness or injury.",
       "leave_types": [
-        {
-          "type": "jury_duty",
-          "duration": {
-            "value": 0,
-            "unit": "days",
-            "notes": "Duration depends on trial length"
-          },
-          "paid": false,
-          "eligibility": {
-            "min_employment_duration": "0",
-            "other_requirements": [
-              "Summoned for jury service"
-            ]
-          },
-          "notice_requirement": "Court summons",
-          "job_protection": true
-        }
+        { "type": "medical" }
       ],
-      "official_url": "https://www.alaocourts.org/",
-      "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Employers cannot retaliate against employees for jury service. Compensation for jury duty varies by court."
+      "job_protection": true,
+      "official_url": "https://personnel.alabama.gov",
+      "type": ["medical"]
+    },
+    {
+      "id": "al_state_employee_family_sick_leave",
+      "name": "Alabama State Employee Family Sick Leave",
+      "description": "Allows Alabama state employees to use accrued sick leave to care for an immediate family member with an illness or injury.",
+      "leave_types": [
+        { "type": "family_care" }
+      ],
+      "job_protection": true,
+      "official_url": "https://personnel.alabama.gov",
+      "type": ["family"]
     }
   ]
 }
