@@ -116,7 +116,51 @@ function renderFilterPanel(container, { states, leaveTypes, onChange }) {
     onChange({ leaveType: e.target.value || null });
   });
 }
-  
+
+document.getElementById("searchBtn").addEventListener("click", () => {
+  const query = document.getElementById("searchInput").value.trim();
+  runSearch(query);
+});
+
+document.getElementById("searchInput").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    const query = e.target.value.trim();
+    runSearch(query);
+  }
+});
+ 
+  function runSearch(query) {
+  if (!query) {
+    renderResults(allLaws); // show everything if empty
+    return;
+  }
+
+  const results = allLaws.filter(law =>
+    law.title.toLowerCase().includes(query.toLowerCase()) ||
+    law.description.toLowerCase().includes(query.toLowerCase())
+  );
+
+  renderResults(results);
+}
+
+  function renderResults(laws) {
+  const container = document.getElementById("resultsContainer");
+  const count = document.getElementById("resultsCount");
+
+  container.innerHTML = "";
+  count.textContent = `${laws.length} results`;
+
+  laws.forEach(law => {
+    const card = document.createElement("div");
+    card.className = "law-card";
+    card.innerHTML = `
+      <h3>${law.title}</h3>
+      <p>${law.description}</p>
+    `;
+    container.appendChild(card);
+  });
+}
+ 
   renderFilterPanel(filterPanelContainer, {
     states: states,
     leaveTypes: LEAVE_TYPES,
