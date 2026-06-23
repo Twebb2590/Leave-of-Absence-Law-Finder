@@ -3,14 +3,29 @@
   "jurisdiction_name": "Arizona",
   "laws": [
     {
-      "id": "az_epsl",
-      "name": "Earned Paid Sick Leave",
-      "description": "Provides job-protected sick leave for health and safety needs.",
+      "id": "az_psl",
+      "name": "Arizona Fair Wages and Healthy Families Act (Earned Paid Sick Time)",
+      "description": "Provides paid sick time for employees in Arizona for medical needs, family care, public health emergencies, and issues related to domestic violence, sexual violence, or stalking.",
       "leave_types": [
-        { "type": "sick" }
+        { "type": "medical" },
+        { "type": "family_care" },
+        { "type": "domestic_violence" },
+        { "type": "public_health" }
       ],
       "job_protection": true,
-      "official_url": "https://www.azica.gov/labor/earned-paid-sick-time"
+      "official_url": "https://www.azica.gov/labor-earnedsicktime",
+      "type": ["medical", "family", "domestic_violence", "public_health"]
+    },
+    {
+      "id": "az_parent_teacher",
+      "name": "Arizona School Activity Leave (Public Employees)",
+      "description": "Allows state employees to use paid leave to attend school conferences or classroom activities for their children.",
+      "leave_types": [
+        { "type": "school_activities" }
+      ],
+      "job_protection": true,
+      "official_url": "https://hr.az.gov",
+      "type": ["school_activities"]
     }
   ]
 }
