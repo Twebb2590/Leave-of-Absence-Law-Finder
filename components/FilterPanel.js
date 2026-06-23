@@ -1,6 +1,25 @@
 export function renderFilterPanel(container, { states, leaveTypes, onChange }) {
   container.innerHTML = '';
 
+  function updateFiltersBadge(filters) {
+  const badge = document.getElementById("filtersAppliedBadge");
+  const countEl = document.getElementById("filtersAppliedCount");
+
+  let count = 0;
+
+  if (filters.states && filters.states.length > 0) count++;
+  if (filters.leaveType) count++;
+  if (filters.includeFederal === false) count++;
+  if (filters.includeState === false) count++;
+
+  if (count > 0) {
+    countEl.textContent = count;
+    badge.classList.remove("hidden");
+  } else {
+    badge.classList.add("hidden");
+  }
+}
+
   // Create a flex row for all filter controls
   const row = document.createElement('div');
   row.className = 'filter-row'; // You will style this in CSS
@@ -66,16 +85,19 @@ export function renderFilterPanel(container, { states, leaveTypes, onChange }) {
   container.appendChild(row);
 
   // Emit changes
-  const emitChange = () => {
-    const selectedStates = Array.from(stateSelect.selectedOptions).map(o => o.value);
+emitChange = () => {
+  const selectedStates = Array.from(stateSelect.selectedOptions).map(o => o.value);
 
-    onChange({
-      states: selectedStates,
-      leaveType: typeSelect.value || null,
-      includeFederal: true,
-      includeState: true
-    });
+  const filters = {
+    states: selectedStates,
+    leaveType: typeSelect.value || null,
+    includeFederal: true,
+    includeState: true
   };
+
+  onChange(filters);
+  updateFiltersBadge(filters);
+};
 
   stateSelect.addEventListener('change', emitChange);
   typeSelect.addEventListener('change', emitChange);
