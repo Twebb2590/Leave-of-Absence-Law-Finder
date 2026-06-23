@@ -8,24 +8,28 @@ export let allLaws = [];
 export async function loadFederalLaws() {
   try {
     const res = await fetch(`${BASE}federal/laws.json`);
-    if (!res.ok) throw new Error('Failed to load federal laws');
+    if (!res.ok) throw new Error("Failed to load federal laws");
 
     const data = await res.json();
-
-    // Accept BOTH formats:
-    // 1. { "laws": [ ... ] }
-    // 2. [ ... ]
     const laws = Array.isArray(data) ? data : data.laws || [];
 
-    return laws.map(law => ({
-      id: law.id,
-      title: law.name,
-      level: "Federal",
-      state: "US",
-      description: law.description,
-      link: law.official_url,
-      type: type
-    }));
+    return laws.map(law => {
+      let type = null;
+
+      if (Array.isArray(law.leave_types) && law.leave_types.length > 0) {
+        type = law.leave_types[0].type;
+      }
+
+      return {
+        id: law.id,
+        title: law.name,
+        level: "Federal",
+        state: "US",
+        description: law.description,
+        link: law.official_url,
+        type: type
+      };
+    });
   } catch (e) {
     console.error("Federal law load failed:", e);
     return [];
@@ -43,21 +47,25 @@ export async function loadStateLaws(stateCode) {
     if (!res.ok) throw new Error(`Failed to load state laws for ${stateCode}`);
 
     const data = await res.json();
-
-    // Accept BOTH formats:
-    // 1. { "laws": [ ... ] }
-    // 2. [ ... ]
     const laws = Array.isArray(data) ? data : data.laws || [];
 
-    return laws.map(law => ({
-      id: law.id,
-      title: law.name,
-      level: "State",
-      state: stateCode,
-      description: law.description,
-      link: law.official_url,
-      type: type
-    }));
+    return laws.map(law => {
+      let type = null;
+
+      if (Array.isArray(law.leave_types) && law.leave_types.length > 0) {
+        type = law.leave_types[0].type;
+      }
+
+      return {
+        id: law.id,
+        title: law.name,
+        level: "State",
+        state: stateCode,
+        description: law.description,
+        link: law.official_url,
+        type: type
+      };
+    });
   } catch (e) {
     console.error(`State law load failed for ${stateCode}:`, e);
     return [];
