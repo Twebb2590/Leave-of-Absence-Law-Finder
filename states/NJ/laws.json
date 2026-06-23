@@ -4,14 +4,86 @@
   "laws": [
     {
       "id": "nj_fla",
-      "name": "New Jersey Family Leave Act",
-      "description": "Provides job-protected leave for family caregiving.",
+      "name": "New Jersey Family Leave Act (NJFLA)",
+      "description": "Provides job-protected unpaid leave for family caregiving and bonding. Does not cover the employee’s own medical condition.",
+      "leave_types": [
+        { "type": "family_care" },
+        { "type": "bonding" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.nj.gov/labor/worker-protections/myworkrights/fmla.shtml",
+      "type": ["family", "bonding"]
+    },
+    {
+      "id": "nj_fli",
+      "name": "New Jersey Family Leave Insurance (FLI)",
+      "description": "Provides paid benefits for family caregiving and bonding. Funded through employee payroll contributions.",
+      "leave_types": [
+        { "type": "family_care" },
+        { "type": "bonding" }
+      ],
+      "job_protection": false,
+      "official_url": "https://myleavebenefits.nj.gov",
+      "type": ["family", "bonding"]
+    },
+    {
+      "id": "nj_tdi",
+      "name": "New Jersey Temporary Disability Insurance (TDI)",
+      "description": "Provides paid wage replacement for employees unable to work due to a non-work-related illness, injury, or pregnancy.",
+      "leave_types": [
+        { "type": "medical" },
+        { "type": "pregnancy" }
+      ],
+      "job_protection": false,
+      "official_url": "https://myleavebenefits.nj.gov",
+      "type": ["medical", "pregnancy"]
+    },
+    {
+      "id": "nj_psl",
+      "name": "New Jersey Earned Sick Leave Law",
+      "description": "Provides paid sick leave for medical needs, family caregiving, school closures, and domestic or sexual violence situations.",
+      "leave_types": [
+        { "type": "medical" },
+        { "type": "family_care" },
+        { "type": "domestic_violence" },
+        { "type": "public_health" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.nj.gov/labor/worker-protections/earnedsick/",
+      "type": ["medical", "family", "domestic_violence", "public_health"]
+    },
+    {
+      "id": "nj_safe_act",
+      "name": "New Jersey SAFE Act",
+      "description": "Provides job-protected leave for victims of domestic violence or sexual assault to seek medical care, counseling, legal assistance, or safety services.",
+      "leave_types": [
+        { "type": "domestic_violence" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.nj.gov/labor",
+      "type": ["domestic_violence"]
+    },
+    {
+      "id": "nj_state_employee_sick_leave",
+      "name": "New Jersey State Employee Sick Leave",
+      "description": "Provides paid sick leave for eligible New Jersey state employees for personal illness or injury.",
+      "leave_types": [
+        { "type": "medical" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.nj.gov/csc",
+      "type": ["medical"]
+    },
+    {
+      "id": "nj_state_employee_family_sick_leave",
+      "name": "New Jersey State Employee Family Sick Leave",
+      "description": "Allows New Jersey state employees to use accrued sick leave to care for an immediate family member with an illness or injury.",
       "leave_types": [
         { "type": "family_care" }
       ],
       "job_protection": true,
-      "official_url": "https://www.nj.gov/labor/worker-protections/myrights/family-leave-act/"
+      "official_url": "https://www.nj.gov/csc",
+      "type": ["family"]
     }
   ]
 }
-
