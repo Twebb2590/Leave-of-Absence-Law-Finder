@@ -24,7 +24,7 @@ export async function loadFederalLaws() {
       state: "US",
       description: law.description,
       link: law.official_url,
-      tags: law.tags || []
+      type: law.type || []
     }));
   } catch (e) {
     console.error("Federal law load failed:", e);
@@ -56,7 +56,7 @@ export async function loadStateLaws(stateCode) {
       state: stateCode,
       description: law.description,
       link: law.official_url,
-      tags: law.tags || []
+      type: law.type || []
     }));
   } catch (e) {
     console.error(`State law load failed for ${stateCode}:`, e);
