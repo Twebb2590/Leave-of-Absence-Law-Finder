@@ -4,13 +4,38 @@
   "laws": [
     {
       "id": "hi_fla",
-      "name": "Hawaii Family Leave Law",
-      "description": "Provides job-protected leave to care for a family member.",
+      "name": "Hawaii Family Leave Law (HFLL)",
+      "description": "Provides job-protected leave for eligible employees to care for a family member with a serious health condition or for bonding with a new child.",
       "leave_types": [
-        { "type": "family_care" }
+        { "type": "family_care" },
+        { "type": "bonding" }
       ],
       "job_protection": true,
-      "official_url": "https://labor.hawaii.gov/wsd/family-leave/"
+      "official_url": "https://labor.hawaii.gov/wsd/family-leave/",
+      "type": ["family", "bonding"]
+    },
+    {
+      "id": "hi_tdi",
+      "name": "Hawaii Temporary Disability Insurance (TDI)",
+      "description": "Provides partial wage replacement for employees unable to work due to a non-work-related illness or injury, including pregnancy-related conditions.",
+      "leave_types": [
+        { "type": "medical" },
+        { "type": "pregnancy" }
+      ],
+      "job_protection": false,
+      "official_url": "https://labor.hawaii.gov/dcd/home/temporary-disability-insurance/",
+      "type": ["medical", "pregnancy"]
+    },
+    {
+      "id": "hi_victim_leave",
+      "name": "Hawaii Victims Leave",
+      "description": "Provides job-protected leave for victims of domestic or sexual violence to seek medical care, counseling, legal assistance, or safety-related services.",
+      "leave_types": [
+        { "type": "domestic_violence" }
+      ],
+      "job_protection": true,
+      "official_url": "https://labor.hawaii.gov",
+      "type": ["domestic_violence"]
     }
   ]
 }
