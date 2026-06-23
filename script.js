@@ -19,7 +19,7 @@ let currentFilters = {
 };
 
 // All laws loaded into the system
-import { loadFederalLaws, loadStateLaws } from "./data-loader.js";
+import { allLaws, loadFederalLaws, loadStateLaws } from "./data-loader.js";
 
 // Load all laws before enabling search
 async function loadAllLaws() {
