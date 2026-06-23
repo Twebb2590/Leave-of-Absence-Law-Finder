@@ -3,95 +3,48 @@
   "jurisdiction_name": "Texas",
   "laws": [
     {
-      "id": "tx_sick_leave",
-      "name": "Texas Sick Leave",
-      "abbreviation": "TSL",
-      "statute_code": "Texas Labor Code § 61.001",
-      "effective_date": "2009-09-01",
-      "description": "Texas does not have a state-mandated sick leave law. Employers are not required to provide paid sick leave, though some choose to do so.",
+      "id": "tx_military_family_leave",
+      "name": "Texas Military Family Leave",
+      "description": "Provides job-protected leave for employees who are spouses of military members called to active duty or on leave from deployment.",
       "leave_types": [
-        {
-          "type": "sick",
-          "duration": {
-            "value": 0,
-            "unit": "days",
-            "notes": "No state mandate; employer discretion"
-          },
-          "paid": null,
-          "eligibility": {
-            "min_employment_duration": "Employer determined",
-            "other_requirements": [
-              "Not mandated by state law"
-            ]
-          },
-          "notice_requirement": "Employer determined",
-          "job_protection": false
-        }
+        { "type": "military_family" }
       ],
-      "official_url": "https://www.twc.texas.gov/",
-      "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Texas is an at-will employment state. FMLA applies to covered employers federally."
+      "job_protection": true,
+      "official_url": "https://statutes.capitol.texas.gov/",
+      "type": ["military_family"]
     },
     {
-      "id": "tx_jury_duty",
-      "name": "Texas Jury Duty Leave",
-      "abbreviation": "TXJD",
-      "statute_code": "Texas Code of Criminal Procedure § 22.09",
-      "effective_date": "1975-01-01",
-      "description": "Texas prohibits employers from penalizing employees for jury duty service.",
+      "id": "tx_victim_leave",
+      "name": "Texas Crime Victim Leave",
+      "description": "Provides job-protected leave for employees who are victims of a crime to attend court proceedings or participate in the criminal justice process.",
       "leave_types": [
-        {
-          "type": "jury_duty",
-          "duration": {
-            "value": 0,
-            "unit": "days",
-            "notes": "Duration depends on trial length"
-          },
-          "paid": false,
-          "eligibility": {
-            "min_employment_duration": "0",
-            "other_requirements": [
-              "Summoned for jury service"
-            ]
-          },
-          "notice_requirement": "Court summons",
-          "job_protection": true
-        }
+        { "type": "domestic_violence" }
       ],
-      "official_url": "https://www.txcourts.gov/",
-      "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Employers cannot fire or threaten employees for jury duty service. Jury duty pay varies by court."
+      "job_protection": true,
+      "official_url": "https://statutes.capitol.texas.gov/",
+      "type": ["domestic_violence"]
     },
     {
-      "id": "tx_voting",
-      "name": "Texas Voting Leave",
-      "abbreviation": "TXVL",
-      "statute_code": "Texas Election Code § 122.001",
-      "effective_date": "1985-01-01",
-      "description": "Texas allows employees reasonable time off to vote in any election without loss of pay.",
+      "id": "tx_state_employee_sick_leave",
+      "name": "Texas State Employee Sick Leave",
+      "description": "Provides paid sick leave for eligible Texas state employees for personal illness or injury.",
       "leave_types": [
-        {
-          "type": "voting",
-          "duration": {
-            "value": 1,
-            "unit": "hours",
-            "notes": "Or more if needed; reasonable time"
-          },
-          "paid": true,
-          "eligibility": {
-            "min_employment_duration": "0",
-            "other_requirements": [
-              "Registered voter",
-              "Not enough time before/after work to vote"
-            ]
-          },
-          "notice_requirement": "Employer may require advance notice",
-          "job_protection": true
-        }
+        { "type": "medical" }
       ],
-      "official_url": "https://www.sos.texas.gov/elections/",
-      "last_updated": "2024-01-01T00:00:00Z",
-      "notes": "Applies to all employers. Time off should be taken before or after work if possible."
+      "job_protection": true,
+      "official_url": "https://www.txcourts.gov",
+      "type": ["medical"]
+    },
+    {
+      "id": "tx_state_employee_family_sick_leave",
+      "name": "Texas State Employee Family Sick Leave",
+      "description": "Allows Texas state employees to use accrued sick leave to care for an immediate family member with an illness or injury.",
+      "leave_types": [
+        { "type": "family_care" }
+      ],
+      "job_protection": true,
+      "official_url": "https://www.txcourts.gov",
+      "type": ["family"]
     }
   ]
 }
