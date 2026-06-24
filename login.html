@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <header class="header">
+    <h1>Login</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="wizard.html">Wizard</a>
+      <a href="search.html">Search</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <section class="auth-box">
+      <h2>Welcome Back</h2>
+
+      <form id="loginForm">
+        <label>Email</label>
+        <input type="email" id="email" required>
+
+        <label>Password</label>
+        <input type="password" id="password" required>
+
+        <button type="submit" class="primary-btn">Login</button>
+      </form>
+
+      <p class="auth-note">
+        Don’t have an account?
+        <a href="register.html">Create one</a>
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>© 2026 Leave of Absence Law Finder</p>
+  </footer>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      // Placeholder logic — replace with your backend later
+      if (email === "" || password === "") {
+        alert("Please enter your email and password.");
+        return;
+      }
+
+      alert("Logged in (placeholder). Connect to backend next.");
+    });
+  </script>
+
+</body>
+</html>
