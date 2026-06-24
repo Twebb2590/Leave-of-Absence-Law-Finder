@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <header class="header">
+    <h1>Create Account</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <section class="auth-box">
+      <h2>Register</h2>
+
+      <form id="registerForm">
+        <label>Name</label>
+        <input type="text" id="name" required>
+
+        <label>Email</label>
+        <input type="email" id="email" required>
+
+        <label>Password</label>
+        <input type="password" id="password" required>
+
+        <button type="submit" class="primary-btn">Create Account</button>
+      </form>
+
+      <p class="auth-note">
+        Already have an account?
+        <a href="login.html">Login</a>
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>© 2026 Leave of Absence Law Finder</p>
+  </footer>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!name || !email || !password) {
+        alert("All fields are required.");
+        return;
+      }
+
+      // Load existing localStorage users
+      let storedUsers = JSON.parse(localStorage.getItem("mockUsers")) || [];
+
+      // Check if email already exists
+      if (storedUsers.some(u => u.email === email)) {
+        alert("An account with this email already exists.");
+        return;
+      }
+
+      // Create new user
+      const newUser = { name, email, password };
+
+      // Save to localStorage
+      storedUsers.push(newUser);
+      localStorage.setItem("mockUsers", JSON.stringify(storedUsers));
+
+      // Auto-login
+      localStorage.setItem("loggedInUser", JSON.stringify(newUser));
+
+      alert("Account created successfully!");
+      window.location.href = "dashboard.html";
+    });
+  </script>
+
+</body>
+</html>
