@@ -46,22 +46,36 @@
     <p>© 2026 Leave of Absence Law Finder</p>
   </footer>
 
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", (e) => {
-      e.preventDefault();
+<script>
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-      // Placeholder logic — replace with your backend later
-      if (email === "" || password === "") {
-        alert("Please enter your email and password.");
-        return;
+    try {
+      const response = await fetch("users.json");
+      const data = await response.json();
+
+      const user = data.users.find(
+        u => u.email === email && u.password === password
+      );
+
+      if (user) {
+        localStorage.setItem("loggedInUser", JSON.stringify(user));
+        alert("Login successful!");
+        window.location.href = "dashboard.html";
+      } else {
+        alert("Invalid email or password.");
       }
 
-      alert("Logged in (placeholder). Connect to backend next.");
-    });
-  </script>
+    } catch (error) {
+      console.error("Error loading users.json:", error);
+      alert("Unable to load user data.");
+    }
+  });
+</script>
+
 
 </body>
 </html>
