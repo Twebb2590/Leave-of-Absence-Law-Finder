@@ -53,11 +53,23 @@
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
 
+    // 1. Check localStorage users first
+    let storedUsers = JSON.parse(localStorage.getItem("mockUsers")) || [];
+    let user = storedUsers.find(u => u.email === email && u.password === password);
+
+    if (user) {
+      localStorage.setItem("loggedInUser", JSON.stringify(user));
+      alert("Login successful!");
+      window.location.href = "dashboard.html";
+      return;
+    }
+
+    // 2. Fallback to users.json
     try {
       const response = await fetch("users.json");
       const data = await response.json();
 
-      const user = data.users.find(
+      user = data.users.find(
         u => u.email === email && u.password === password
       );
 
@@ -75,6 +87,7 @@
     }
   });
 </script>
+
 
 
 </body>
