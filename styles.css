@@ -269,6 +269,88 @@ bottom: 100px;
   }
 }
 
+/* Floating Chat Button */
+#chatButton {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #2a6df4;
+  color: white;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 9999;
+}
+
+/* Chat Popup */
+#chatPopup {
+  position: fixed;
+  bottom: 95px;
+  right: 25px;
+  width: 320px;
+  height: 420px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+/* Chat Header */
+#chatHeader {
+  background: #2a6df4;
+  color: white;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#chatHeader button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Messages */
+#chatMessages {
+  flex: 1;
+  padding: 12px;
+  overflow-y: auto;
+}
+
+/* Input Area */
+#chatInputArea {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+#chatInput {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  outline: none;
+}
+
+#sendChat {
+  background: #2a6df4;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+
 /* Search Section */
 #searchSection {
     margin: 1rem 0;
