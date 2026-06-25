@@ -568,11 +568,16 @@ bottom: 100px;
   gap: 20px;
 }
 
-.top-nav .login-link {
-  margin-left: auto;
-  font-weight: bold;
-  color: #2a6df4;
+.login-link {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 600;
 }
+
+.login-link:hover {
+  text-decoration: none;
+}
+
 
 /* -----------------------------
    Pretty State Comparison
