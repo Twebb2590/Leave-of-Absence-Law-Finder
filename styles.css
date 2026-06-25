@@ -210,7 +210,9 @@ body {
   background: #005fcc;
 }
 
-//Start Over Button //
+/* ------------------------------------------------------
+   START OVER BUTTON
+------------------------------------------------------ */
 
 .start-over-btn {
   all: unset;
@@ -304,6 +306,15 @@ bottom: 100px;
   z-index: 9999;
 }
 
+#chatPopup {
+  resize: both;
+  overflow: auto;
+  min-width: 260px;
+  min-height: 300px;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
 /* Chat Header */
 #chatHeader {
   background: #2a6df4;
@@ -320,6 +331,15 @@ bottom: 100px;
   color: white;
   font-size: 20px;
   cursor: pointer;
+}
+
+#refreshChat {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  margin-right: 8px;
 }
 
 /* Messages */
@@ -705,7 +725,9 @@ bottom: 100px;
     }
 }
 
-//LOGIN NAV BAR //
+/* ------------------------------------------------------
+   LOGIN NAV BAR
+------------------------------------------------------ */
 .top-nav {
   display: flex;
   justify-content: flex-start;
@@ -782,7 +804,9 @@ bottom: 100px;
     }
 }
 
-//LOGIN HTML PAGE //
+/* ------------------------------------------------------
+   LOGIN HTML BAR
+------------------------------------------------------ */
 .auth-box {
   max-width: 400px;
   margin: 40px auto;
