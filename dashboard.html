@@ -104,13 +104,25 @@
     <button id="closeChat">×</button>
   </div>
 
-  <div id="chatMessages"></div>
+  <!-- Help Topics Menu -->
+  <div id="helpTopics">
+    <p class="help-title">How can I help you?</p>
+    <button class="help-option" data-topic="laws">Understanding Leave Laws</button>
+    <button class="help-option" data-topic="eligibility">Eligibility Questions</button>
+    <button class="help-option" data-topic="wizard">Using the Wizard</button>
+    <button class="help-option" data-topic="account">Account & Login Help</button>
+  </div>
 
-  <div id="chatInputArea">
+  <!-- Chat Messages -->
+  <div id="chatMessages" style="display:none;"></div>
+
+  <!-- Input Area -->
+  <div id="chatInputArea" style="display:none;">
     <input type="text" id="chatInput" placeholder="Type a message...">
     <button id="sendChat">Send</button>
   </div>
 </div>
+
 
 </body>
 </html>
