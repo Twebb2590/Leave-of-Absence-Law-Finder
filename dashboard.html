@@ -58,7 +58,43 @@
     authLink.href = "login.html";
   }
 </script>
-<!-- Floating Chat Button -->
+
+<script>
+  const chatButton = document.getElementById("chatButton");
+  const chatPopup = document.getElementById("chatPopup");
+  const closeChat = document.getElementById("closeChat");
+  const sendChat = document.getElementById("sendChat");
+  const chatInput = document.getElementById("chatInput");
+  const chatMessages = document.getElementById("chatMessages");
+
+  chatButton.addEventListener("click", () => {
+    chatPopup.style.display = "flex";
+  });
+
+  closeChat.addEventListener("click", () => {
+    chatPopup.style.display = "none";
+  });
+
+  sendChat.addEventListener("click", () => {
+    const text = chatInput.value.trim();
+    if (!text) return;
+
+    const bubble = document.createElement("div");
+    bubble.textContent = text;
+    bubble.style.background = "#e8f0fe";
+    bubble.style.padding = "8px 12px";
+    bubble.style.margin = "6px 0";
+    bubble.style.borderRadius = "8px";
+    bubble.style.alignSelf = "flex-end";
+
+    chatMessages.appendChild(bubble);
+    chatInput.value = "";
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  });
+</script>
+
+  
+  <!-- Floating Chat Button -->
 <div id="chatButton">💬</div>
 
 <!-- Chat Popup -->
