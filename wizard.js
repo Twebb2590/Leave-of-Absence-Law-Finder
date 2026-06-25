@@ -958,8 +958,8 @@ helpButtons.forEach(btn => {
     if (topic === "eligibility") {
       supportReply("Let’s talk eligibility. Are you asking about FMLA, state leave, or employer policy?");
     }
-    if (topic === "wizard") {
-      supportReply("Need help using the wizard? Tell me what step you're stuck on.");
+    if (topic === "chat") {
+      supportReply("Need help using the chat? Tell me what you need assistance with.");
     }
     if (topic === "account") {
       supportReply("Account help: Are you having trouble logging in, registering, or resetting your password?");
