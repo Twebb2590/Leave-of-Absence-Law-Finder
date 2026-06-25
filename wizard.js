@@ -11,6 +11,8 @@ const chatContainer = document.getElementById('chatContainer');
 const userInput = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
 const quickRepliesContainer = document.getElementById('quickRepliesContainer');
+const helpButtons = document.querySelectorAll(".help-button");
+
 
 // ------------------------------------------------------
 // NEW COPILOT‑STYLE UI HELPERS
