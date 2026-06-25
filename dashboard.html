@@ -78,7 +78,35 @@
       document.getElementById("logoutBtn").addEventListener("click", () => {
         localStorage.removeItem("loggedInUser");
         window.location.href = "login.html";
+
+        let knowledgeBase = null;
+
+        async function loadKnowledgeBase() {
+          try {
+            const response = await fetch("knowledgeBase.json");
+            knowledgeBase = await response.json();
+            console.log("Knowledge base loaded:", knowledgeBase);
+          } catch (error) {
+            console.error("Error loading knowledge base:", error);
+          }
+        }
+
+        loadKnowledgeBase();
+
+        let KB = {};
+
+        fetch("knowledgeBase.json")
+          .then((res) => res.json())
+          .then((data) => (KB = data));
       });
+
+      function getLoggedInUserData() {
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!user || !knowledgeBase || !knowledgeBase.privateUserData) return null;
+
+    return knowledgeBase.privateUserData[user.email] || null;
+}
+
     </script>
     <script>
       const authLink = document.getElementById("authLink");
@@ -201,7 +229,7 @@
             bubble.textContent =
               "Let’s talk eligibility. Are you asking about FMLA, state leave, or employer policy?";
           }
-          if (topic === "wizard") {
+          if (topic === "chat") {
             bubble.textContent =
               "Need help using the Chat? Tell me what step you need assistance with.";
           }

@@ -300,6 +300,24 @@ async function advanceWizard(value) {
  // ⭐ ALWAYS define this FIRST
   const lower = value.toLowerCase();
 
+const kbAnswer = answerFromKnowledgeBase(userMessage);
+if (kbAnswer) {
+    addBotMessage(kbAnswer);
+    return;
+}
+
+const userData = getLoggedInUserData();
+if (userData) {
+    if (userMessage.toLowerCase().includes("my leave") ||
+        userMessage.toLowerCase().includes("my case") ||
+        userMessage.toLowerCase().includes("my status")) {
+
+        addBotMessage(`Here’s what I have for you: ${userData.summary}`);
+        return;
+    }
+}
+
+
 // ⭐ Universal Q&A — ONLY when wizard is NOT running
 if (currentStep === null) {
   if (
@@ -966,6 +984,42 @@ helpButtons.forEach(btn => {
     }
   });
 });
+
+let KB = {};
+
+fetch("knowledgeBase.json")
+  .then(res => res.json())
+  .then(data => KB = data);
+
+function answerFromKnowledgeBase(userMessage) {
+    if (!knowledgeBase) return null;
+
+    const lower = userMessage.toLowerCase();
+
+    // 1. Check FAQs
+    for (const faq of knowledgeBase.faqs) {
+        if (lower.includes(faq.keywords)) {
+            return faq.answer;
+        }
+    }
+
+    // 2. Check federal laws
+    for (const law of knowledgeBase.federalLaws) {
+        if (lower.includes(law.name.toLowerCase())) {
+            return law.summary;
+        }
+    }
+
+    // 3. Check state laws
+    for (const state in knowledgeBase.stateLaws) {
+        if (lower.includes(state.toLowerCase())) {
+            return knowledgeBase.stateLaws[state].summary;
+        }
+    }
+
+    return null;
+}
+
 
 
 // ------------------------------------------------------

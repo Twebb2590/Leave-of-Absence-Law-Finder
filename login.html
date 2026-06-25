@@ -58,11 +58,16 @@
     let user = storedUsers.find(u => u.email === email && u.password === password);
 
     if (user) {
-      localStorage.setItem("loggedInUser", JSON.stringify(user));
-      alert("Login successful!");
-      window.location.href = "dashboard.html";
-      return;
-    }
+  const loggedInUser = {
+    email: user.email,
+    name: user.name
+  };
+
+  localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+  alert("Login successful!");
+  window.location.href = "dashboard.html";
+  return;
+}
 
     // 2. Fallback to users.json
     try {
@@ -74,12 +79,17 @@
       );
 
       if (user) {
-        localStorage.setItem("loggedInUser", JSON.stringify(user));
-        alert("Login successful!");
-        window.location.href = "dashboard.html";
-      } else {
-        alert("Invalid email or password.");
-      }
+    const loggedInUser = {
+      email: user.email,
+      name: user.name
+    };
+
+    localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+    alert("Login successful!");
+    window.location.href = "dashboard.html";
+  } else {
+    alert("Invalid email or password.");
+  }
 
     } catch (error) {
       console.error("Error loading users.json:", error);

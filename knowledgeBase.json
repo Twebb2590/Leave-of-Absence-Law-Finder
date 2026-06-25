@@ -1,0 +1,124 @@
+{
+  "public": {
+    "federal": {
+      "fmla": "The Family and Medical Leave Act (FMLA) provides eligible employees up to 12 weeks of unpaid, job-protected leave in a 12-month period for qualifying reasons including serious health conditions, bonding with a new child, caring for a family member, or certain military-related needs.",
+      "ada": "The Americans with Disabilities Act (ADA/ADAAA) requires employers to provide reasonable accommodations to qualified individuals with disabilities unless doing so causes undue hardship. Leave can be a reasonable accommodation.",
+      "userra": "USERRA protects the job rights of individuals who voluntarily or involuntarily leave employment to undertake military service.",
+      "pregnancy": "The Pregnancy Discrimination Act prohibits discrimination based on pregnancy, childbirth, or related medical conditions.",
+      "title_vii": "Title VII prohibits employment discrimination based on race, color, religion, sex, or national origin."
+    },
+
+    "states": {
+      "AL": { "pfml": "No state PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "AK": { "pfml": "No state PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "AZ": { "pfml": "No PFML program.", "sick_leave": "Paid sick leave required statewide.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "AR": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "CA": { "pfml": "California PFL provides partial wage replacement for bonding and caregiving.", "sick_leave": "Statewide paid sick leave required.", "pregnancy_leave": "California provides Pregnancy Disability Leave (PDL)." },
+      "CO": { "pfml": "Colorado PFML provides paid leave for bonding, caregiving, and medical needs.", "sick_leave": "Statewide paid sick leave required.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "CT": { "pfml": "Connecticut PFML provides paid leave for bonding and medical needs.", "sick_leave": "Statewide paid sick leave required for some employers.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "DE": { "pfml": "Delaware PFML begins phased rollout.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "DC": { "pfml": "DC Paid Family Leave provides paid bonding, caregiving, and medical leave.", "sick_leave": "Paid sick leave required.", "pregnancy_leave": "Covered under DC Human Rights Act." },
+      "FL": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "GA": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "HI": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Hawaii TDI provides wage replacement for employee medical conditions." },
+      "ID": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "IL": { "pfml": "No PFML program.", "sick_leave": "Paid sick leave required statewide.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "IN": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "IA": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "KS": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "KY": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "LA": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "ME": { "pfml": "Maine PFML launching soon.", "sick_leave": "Earned paid leave required statewide.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "MD": { "pfml": "Maryland PFML launching soon.", "sick_leave": "Paid sick leave required statewide.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "MA": { "pfml": "Massachusetts PFML provides paid bonding, caregiving, and medical leave.", "sick_leave": "Paid sick leave required statewide.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "MI": { "pfml": "No PFML program.", "sick_leave": "Paid sick leave required statewide.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "MN": { "pfml": "Minnesota PFML launching soon.", "sick_leave": "Paid sick leave required statewide.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "MS": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "MO": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "MT": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "NE": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "NV": { "pfml": "No PFML program.", "sick_leave": "Paid leave required statewide.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "NH": { "pfml": "Voluntary PFML program available.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "NJ": { "pfml": "NJ Family Leave Insurance provides paid bonding and caregiving leave.", "sick_leave": "Paid sick leave required statewide.", "pregnancy_leave": "NJFLA and TDI apply." },
+      "NM": { "pfml": "No PFML program.", "sick_leave": "Paid sick leave required statewide.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "NY": { "pfml": "NY Paid Family Leave provides paid bonding and caregiving leave.", "sick_leave": "Paid sick leave required statewide.", "pregnancy_leave": "NY DBL and PFL apply." },
+      "NC": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "ND": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "OH": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "OK": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "OR": { "pfml": "Oregon Paid Leave provides paid bonding, caregiving, and medical leave.", "sick_leave": "Paid sick leave required statewide.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "PA": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "RI": { "pfml": "Rhode Island TCI provides paid bonding and caregiving leave.", "sick_leave": "Paid sick leave required statewide.", "pregnancy_leave": "TDI applies." },
+      "SC": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "SD": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "TN": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "TX": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "UT": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "VT": { "pfml": "Voluntary PFML program available.", "sick_leave": "Paid sick leave required statewide.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "VA": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "WA": { "pfml": "Washington PFML provides paid bonding, caregiving, and medical leave.", "sick_leave": "Paid sick leave required statewide.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "WV": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." },
+      "WI": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Wisconsin FMLA applies." },
+      "WY": { "pfml": "No PFML program.", "sick_leave": "No statewide paid sick leave.", "pregnancy_leave": "Follows federal FMLA/ADA." }
+    },
+
+    "eligibility": {
+      "fmla": {
+        "hours": "Must have worked 1,250 hours in the past 12 months.",
+        "tenure": "Must have been employed for at least 12 months.",
+        "employer_size": "Employer must have 50+ employees within 75 miles."
+      },
+      "ada": {
+        "definition": "A qualified individual with a disability who can perform essential job functions with or without accommodation.",
+        "interactive_process": "Employer and employee must engage in an interactive process to identify reasonable accommodations."
+      }
+    },
+
+    "documentation": {
+      "medical_certification": "Medical certification is typically due within 15 days of request.",
+      "recertification": "Recertification may be required periodically or when circumstances change.",
+      "fitness_for_duty": "Fitness-for-duty may be required before returning from certain leaves."
+    },
+
+    "wizard_steps": {
+      "step1": "Collect employee details and employment status.",
+      "step2": "Identify the reason for leave.",
+      "step3": "Check federal and state eligibility.",
+      "step4": "Determine documentation requirements.",
+      "step5": "Summarize leave options and protections."
+    },
+
+    "faq": {
+      "intermittent_leave": "Intermittent leave allows reduced schedule or episodic absences when medically necessary.",
+      "job_protection": "FMLA and some state laws provide job protection but not pay.",
+      "coordination_with_pto": "Employers may require PTO to run concurrently with protected leave."
+    }
+  },
+
+  "private": {
+    "users": {
+      "test@example.com": {
+        "name": "Test User",
+        "leave_type": "FMLA",
+        "hours_available": 480,
+        "hours_used": 120,
+        "case_status": "Open",
+        "next_step": "Upload updated medical certification by 2026-07-01.",
+        "documentation_status": "Certification on file; recertification requested.",
+        "return_to_work_date": "2026-07-15",
+        "case_manager": "Alex Johnson"
+      },
+      "admin@example.com": {
+        "name": "Admin User",
+        "leave_type": "ADA Accommodation",
+        "hours_available": 0,
+        "hours_used": 0,
+        "case_status": "Monitoring",
+        "next_step": "Confirm accommodation effectiveness in follow-up meeting.",
+        "documentation_status": "Accommodation agreement on file.",
+        "return_to_work_date": "",
+        "case_manager": "Jordan Smith"
+      }
+    }
+  }
+}
