@@ -346,6 +346,15 @@ bottom: 100px;
   overflow-y: auto;
 }
 
+.support-bubble {
+  background: none;
+  padding: 4px 0;
+  margin: 4px 0;
+  align-self: flex-start;
+  color: #333;
+  font-size: 14px;
+}
+
 /* Input Area */
 #chatInputArea {
   display: flex;

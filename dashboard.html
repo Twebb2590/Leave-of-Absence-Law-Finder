@@ -22,44 +22,48 @@
     </main>
 
     <!-- Floating Chat Button -->
-<div id="chatButton">💬</div>
+    <div id="chatButton">💬</div>
 
-<!-- Chat Popup -->
-<div id="chatPopup">
+    <!-- Chat Popup -->
+    <div id="chatPopup">
+      <div id="chatHeader">
+        <span>Chat Support</span>
+        <div>
+          <button id="refreshChat">⟳</button>
+          <button id="closeChat">×</button>
+        </div>
+      </div>
 
-  <div id="chatHeader">
-    <span>Chat Support</span>
-    <div>
-      <button id="refreshChat">⟳</button>
-      <button id="closeChat">×</button>
+      <!-- Help Topics Menu -->
+      <div id="helpTopics">
+        <p class="help-title">How can I help you?</p>
+        <button class="help-option" data-topic="laws">
+          Understanding Leave Laws
+        </button>
+        <button class="help-option" data-topic="eligibility">
+          Eligibility Questions
+        </button>
+        <button class="help-option" data-topic="wizard">Using the Chat</button>
+        <button class="help-option" data-topic="account">
+          Account & Login Help
+        </button>
+      </div>
+
+      <!-- Chat Messages -->
+      <div id="chatMessages" style="display: none"></div>
+
+      <!-- Typing Indicator -->
+      <div id="typingIndicator" style="display: none">
+        <div class="typing-dots"><span></span><span></span><span></span></div>
+        <p>Support is typing…</p>
+      </div>
+
+      <!-- Input Area -->
+      <div id="chatInputArea" style="display: none">
+        <input type="text" id="chatInput" placeholder="Type a message..." />
+        <button id="sendChat">Send</button>
+      </div>
     </div>
-  </div>
-
-  <!-- Help Topics Menu -->
-  <div id="helpTopics">
-    <p class="help-title">How can I help you?</p>
-    <button class="help-option" data-topic="laws">Understanding Leave Laws</button>
-    <button class="help-option" data-topic="eligibility">Eligibility Questions</button>
-    <button class="help-option" data-topic="wizard">Using the Chat</button>
-    <button class="help-option" data-topic="account">Account & Login Help</button>
-  </div>
-
-  <!-- Chat Messages -->
-  <div id="chatMessages" style="display:none;"></div>
-
-  <!-- Typing Indicator -->
-  <div id="typingIndicator" style="display:none;">
-    <div class="typing-dots"><span></span><span></span><span></span></div>
-    <p>Support is typing…</p>
-  </div>
-
-  <!-- Input Area -->
-  <div id="chatInputArea" style="display:none;">
-    <input type="text" id="chatInput" placeholder="Type a message...">
-    <button id="sendChat">Send</button>
-  </div>
-
-</div>
 
     <script>
       const user = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -110,7 +114,7 @@
       const helpButtons = document.querySelectorAll(".help-option");
       const typingIndicator = document.getElementById("typingIndicator");
 
-   // OPEN CHAT
+      // OPEN CHAT
       chatButton.addEventListener("click", () => {
         chatPopup.style.display = "flex";
       });
@@ -139,18 +143,18 @@
       });
 
       // REFRESH CHAT
-        refreshChat.addEventListener("click", () => {
-          // Clear messages
-          chatMessages.innerHTML = "";
+      refreshChat.addEventListener("click", () => {
+        // Clear messages
+        chatMessages.innerHTML = "";
 
-          // Reset UI
-          helpTopics.style.display = "block";
-          chatMessages.style.display = "none";
-          chatInputArea.style.display = "none";
-          typingIndicator.style.display = "none";
-        });
-    
-    // TYPING INDICATOR
+        // Reset UI
+        helpTopics.style.display = "block";
+        chatMessages.style.display = "none";
+        chatInputArea.style.display = "none";
+        typingIndicator.style.display = "none";
+      });
+
+      // TYPING INDICATOR
       function showTyping() {
         typingIndicator.style.display = "flex";
       }
@@ -166,60 +170,54 @@
           hideTyping();
 
           const bubble = document.createElement("div");
-          bubble.style.background = "#f0f4ff";
-          bubble.style.padding = "8px 12px";
-          bubble.style.margin = "6px 0";
-          bubble.style.borderRadius = "8px";
-          bubble.style.alignSelf = "flex-start";
+          bubble.classList.add("support-bubble"); // <-- THIS is what applies the style
           bubble.textContent = text;
 
           chatMessages.appendChild(bubble);
           chatMessages.scrollTop = chatMessages.scrollHeight;
         }, 1200); // delay to simulate typing
       }
-  
+
       // HELP TOPICS
       helpButtons.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const topic = btn.dataset.topic;
+        btn.addEventListener("click", () => {
+          const topic = btn.dataset.topic;
 
-    // Hide help menu, show chat
-    helpTopics.style.display = "none";
-    chatMessages.style.display = "block";
-    chatInputArea.style.display = "flex";
+          // Hide help menu, show chat
+          helpTopics.style.display = "none";
+          chatMessages.style.display = "block";
+          chatInputArea.style.display = "flex";
 
-    // CREATE THE BUBBLE HERE
-    const bubble = document.createElement("div");
-    bubble.style.background = "#e8f0fe";
-    bubble.style.padding = "8px 12px";
-    bubble.style.margin = "6px 0";
-    bubble.style.borderRadius = "8px";
-    bubble.style.alignSelf = "flex-start";
+          // CREATE THE BUBBLE HERE
+          const bubble = document.createElement("div");
+          bubble.style.background = "#e8f0fe";
+          bubble.style.padding = "8px 12px";
+          bubble.style.margin = "6px 0";
+          bubble.style.borderRadius = "8px";
+          bubble.style.alignSelf = "flex-start";
 
-    // Set the text based on topic
-    if (topic === "laws") {
-      bubble.textContent =
-        "Here’s help with leave laws. What state or situation are you asking about?";
-    }
-    if (topic === "eligibility") {
-      bubble.textContent =
-        "Let’s talk eligibility. Are you asking about FMLA, state leave, or employer policy?";
-    }
-    if (topic === "wizard") {
-      bubble.textContent =
-        "Need help using the Chat? Tell me what step you need assistance with.";
-    }
-    if (topic === "account") {
-      bubble.textContent =
-        "Account help: Are you having trouble logging in, registering, or resetting your password?";
-    }
+          // Set the text based on topic
+          if (topic === "laws") {
+            bubble.textContent =
+              "Here’s help with leave laws. What state or situation are you asking about?";
+          }
+          if (topic === "eligibility") {
+            bubble.textContent =
+              "Let’s talk eligibility. Are you asking about FMLA, state leave, or employer policy?";
+          }
+          if (topic === "wizard") {
+            bubble.textContent =
+              "Need help using the Chat? Tell me what step you need assistance with.";
+          }
+          if (topic === "account") {
+            bubble.textContent =
+              "Account help: Are you having trouble logging in, registering, or resetting your password?";
+          }
 
-    chatMessages.appendChild(bubble);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  });
-});
+          chatMessages.appendChild(bubble);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+      });
     </script>
-
-
   </body>
 </html>
