@@ -184,32 +184,44 @@
   
       // HELP TOPICS
       helpButtons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const topic = btn.dataset.topic;
+  btn.addEventListener("click", () => {
+    const topic = btn.dataset.topic;
 
-          // Hide help menu, show chat
-          helpTopics.style.display = "none";
-          chatMessages.style.display = "block";
-          chatInputArea.style.display = "flex";
+    // Hide help menu, show chat
+    helpTopics.style.display = "none";
+    chatMessages.style.display = "block";
+    chatInputArea.style.display = "flex";
 
-          if (topic === "laws") {
-            bubble.textContent =
-              "Here’s help with leave laws. What state or situation are you asking about?";
-          }
-          if (topic === "eligibility") {
-            bubble.textContent =
-              "Let’s talk eligibility. Are you asking about FMLA, state leave, or employer policy?";
-          }
-          if (topic === "wizard") {
-            bubble.textContent =
-              "Need help using the Chat? Tell me what step you need assistance with.";
-          }
-          if (topic === "account") {
-            bubble.textContent =
-              "Account help: Are you having trouble logging in, registering, or resetting your password?";
-          }
-        });
-      });
+    // CREATE THE BUBBLE HERE
+    const bubble = document.createElement("div");
+    bubble.style.background = "#e8f0fe";
+    bubble.style.padding = "8px 12px";
+    bubble.style.margin = "6px 0";
+    bubble.style.borderRadius = "8px";
+    bubble.style.alignSelf = "flex-start";
+
+    // Set the text based on topic
+    if (topic === "laws") {
+      bubble.textContent =
+        "Here’s help with leave laws. What state or situation are you asking about?";
+    }
+    if (topic === "eligibility") {
+      bubble.textContent =
+        "Let’s talk eligibility. Are you asking about FMLA, state leave, or employer policy?";
+    }
+    if (topic === "wizard") {
+      bubble.textContent =
+        "Need help using the Chat? Tell me what step you need assistance with.";
+    }
+    if (topic === "account") {
+      bubble.textContent =
+        "Account help: Are you having trouble logging in, registering, or resetting your password?";
+    }
+
+    chatMessages.appendChild(bubble);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  });
+});
     </script>
 
 
