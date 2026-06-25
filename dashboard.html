@@ -22,48 +22,44 @@
     </main>
 
     <!-- Floating Chat Button -->
-    <div id="chatButton">💬</div>
+<div id="chatButton">💬</div>
 
-    <!-- Chat Popup -->
-      <div id="chatPopup"></div>
-        <div id="chatHeader">
-        <span>Chat Support</span>
-        <div>
-          <button id="refreshChat">⟳</button>
-          <button id="closeChat">×</button>
-        </div>
-      </div>
+<!-- Chat Popup -->
+<div id="chatPopup">
 
-      <!-- Help Topics Menu -->
-      <div id="helpTopics">
-        <p class="help-title">How can I help you?</p>
-        <button class="help-option" data-topic="laws">
-          Understanding Leave Laws
-        </button>
-        <button class="help-option" data-topic="eligibility">
-          Eligibility Questions
-        </button>
-        <button class="help-option" data-topic="wizard">Using the Chat</button>
-        <button class="help-option" data-topic="account">
-          Account & Login Help
-        </button>
-      </div>
-
-      <!-- Chat Messages -->
-      <div id="chatMessages" style="display: none"></div>
-
-      <!-- Typing Indicator -->
-      <div id="typingIndicator" style="display: none">
-        <div class="typing-dots"><span></span><span></span><span></span></div>
-        <p>Support is typing…</p>
-      </div>
-
-      <!-- Input Area -->
-      <div id="chatInputArea" style="display: none">
-        <input type="text" id="chatInput" placeholder="Type a message..." />
-        <button id="sendChat">Send</button>
-      </div>
+  <div id="chatHeader">
+    <span>Chat Support</span>
+    <div>
+      <button id="refreshChat">⟳</button>
+      <button id="closeChat">×</button>
     </div>
+  </div>
+
+  <!-- Help Topics Menu -->
+  <div id="helpTopics">
+    <p class="help-title">How can I help you?</p>
+    <button class="help-option" data-topic="laws">Understanding Leave Laws</button>
+    <button class="help-option" data-topic="eligibility">Eligibility Questions</button>
+    <button class="help-option" data-topic="wizard">Using the Chat</button>
+    <button class="help-option" data-topic="account">Account & Login Help</button>
+  </div>
+
+  <!-- Chat Messages -->
+  <div id="chatMessages" style="display:none;"></div>
+
+  <!-- Typing Indicator -->
+  <div id="typingIndicator" style="display:none;">
+    <div class="typing-dots"><span></span><span></span><span></span></div>
+    <p>Support is typing…</p>
+  </div>
+
+  <!-- Input Area -->
+  <div id="chatInputArea" style="display:none;">
+    <input type="text" id="chatInput" placeholder="Type a message...">
+    <button id="sendChat">Send</button>
+  </div>
+
+</div>
 
     <script>
       const user = JSON.parse(localStorage.getItem("loggedInUser"));

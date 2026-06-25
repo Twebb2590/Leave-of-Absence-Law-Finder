@@ -302,18 +302,15 @@ bottom: 100px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   display: none;
   flex-direction: column;
-  overflow: hidden;
-  z-index: 9999;
-}
-
-#chatPopup {
-  resize: both;
   overflow: auto;
+  resize: both;
   min-width: 260px;
   min-height: 300px;
   max-width: 90vw;
   max-height: 90vh;
+  z-index: 9999;
 }
+
 
 /* Chat Header */
 #chatHeader {
