@@ -564,7 +564,7 @@ bottom: 100px;
 .top-nav {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: right;
   gap: 20px;
 }
 
