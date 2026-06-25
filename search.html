@@ -74,6 +74,27 @@ document.addEventListener("DOMContentLoaded", () => {
   
   <script type="module" src="data-loader.js"></script>
   <script type="module" src="script.js"></script>
+<script>
+  const authLink = document.getElementById("authLink");
+  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+  if (loggedInUser) {
+    // User is logged in → show Logout
+    authLink.textContent = "Logout";
+    authLink.href = "#";
+
+    authLink.addEventListener("click", () => {
+      localStorage.removeItem("loggedInUser");
+      alert("You have been logged out.");
+      window.location.href = "login.html";
+    });
+
+  } else {
+    // User is not logged in → show Login
+    authLink.textContent = "Login";
+    authLink.href = "login.html";
+  }
+</script>
 
 </body>
 </html>
