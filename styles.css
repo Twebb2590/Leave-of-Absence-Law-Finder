@@ -559,6 +559,21 @@ bottom: 100px;
         display: flex;        /* SHOW MENU WHEN ACTIVE */
     }
 }
+
+//LOGIN NAV BAR //
+.top-nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+.top-nav .login-link {
+  margin-left: auto;
+  font-weight: bold;
+  color: #2a6df4;
+}
+
 /* -----------------------------
    Pretty State Comparison
 ------------------------------*/
