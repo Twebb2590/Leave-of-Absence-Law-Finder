@@ -190,11 +190,7 @@
 
           // CREATE THE BUBBLE HERE
           const bubble = document.createElement("div");
-          bubble.style.background = "#e8f0fe";
-          bubble.style.padding = "8px 12px";
-          bubble.style.margin = "6px 0";
-          bubble.style.borderRadius = "8px";
-          bubble.style.alignSelf = "flex-start";
+          bubble.classList.add("support-bubble");
 
           // Set the text based on topic
           if (topic === "laws") {
