@@ -195,6 +195,12 @@ function renderResults(laws) {
   const container = document.getElementById("resultsContainer");
   const count = document.getElementById("resultsCount");
 
+  // Prevent crashes on pages that don't have resultsContainer or resultsCount
+  if (!container || !count) {
+    console.warn("renderResults() skipped: resultsContainer or resultsCount not found on this page.");
+    return;
+  }
+
   container.innerHTML = "";
   count.textContent = `${laws.length} results`;
 
@@ -210,6 +216,8 @@ function renderResults(laws) {
     container.appendChild(card);
   });
 }
+
+
 
 // -----------------------------
 // INITIALIZE FILTER PANEL
