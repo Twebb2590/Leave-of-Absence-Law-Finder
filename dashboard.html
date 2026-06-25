@@ -131,7 +131,36 @@
     });
   });
 </script>
-  
+
+  <script>
+  function showTyping() {
+    typingIndicator.style.display = "flex";
+  }
+
+  function hideTyping() {
+    typingIndicator.style.display = "none";
+  }
+
+  function supportReply(text) {
+    showTyping();
+
+    setTimeout(() => {
+      hideTyping();
+
+      const bubble = document.createElement("div");
+      bubble.style.background = "#f0f4ff";
+      bubble.style.padding = "8px 12px";
+      bubble.style.margin = "6px 0";
+      bubble.style.borderRadius = "8px";
+      bubble.style.alignSelf = "flex-start";
+      bubble.textContent = text;
+
+      chatMessages.appendChild(bubble);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }, 1200); // delay to simulate typing
+  }
+</script>
+
   
   <!-- Floating Chat Button -->
 <div id="chatButton">💬</div>
@@ -155,6 +184,14 @@
   <!-- Chat Messages -->
   <div id="chatMessages" style="display:none;"></div>
 
+<div id="typingIndicator" style="display:none;">
+  <div class="typing-dots">
+    <span></span><span></span><span></span>
+  </div>
+  <p>Support is typing…</p>
+</div>
+
+  
   <!-- Input Area -->
   <div id="chatInputArea" style="display:none;">
     <input type="text" id="chatInput" placeholder="Type a message...">
