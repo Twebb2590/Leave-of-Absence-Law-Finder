@@ -944,6 +944,30 @@ document.addEventListener('click', function (e) {
 });
 });
 
+helpButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const topic = btn.dataset.topic;
+
+    helpTopics.style.display = "none";
+    chatMessages.style.display = "block";
+    chatInputArea.style.display = "flex";
+
+    if (topic === "laws") {
+      supportReply("Here’s help with leave laws. What state or situation are you asking about?");
+    }
+    if (topic === "eligibility") {
+      supportReply("Let’s talk eligibility. Are you asking about FMLA, state leave, or employer policy?");
+    }
+    if (topic === "wizard") {
+      supportReply("Need help using the wizard? Tell me what step you're stuck on.");
+    }
+    if (topic === "account") {
+      supportReply("Account help: Are you having trouble logging in, registering, or resetting your password?");
+    }
+  });
+});
+
+
 // ------------------------------------------------------
 // START OVER BUTTON
 // ------------------------------------------------------
