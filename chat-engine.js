@@ -88,6 +88,23 @@ function detectLeaveType(message) {
     return convoMemory.lastLeaveType; // fallback to memory
 }
 
+function showSuggestions(list) {
+    const container = document.getElementById("suggestions");
+    container.innerHTML = "";
+
+    list.forEach(text => {
+        const chip = document.createElement("div");
+        chip.className = "suggestion-chip";
+        chip.textContent = text;
+        chip.addEventListener("click", () => {
+            chatInput.value = text;
+            handleChat();
+        });
+        container.appendChild(chip);
+    });
+}
+
+    
     // -------------------------------
     // Main Search Function
     // -------------------------------
@@ -95,65 +112,72 @@ function detectLeaveType(message) {
     if (!kb) return "Still loading my knowledge… try again in a moment.";
 
     message = message.toLowerCase();
+    convoMemory.lastQuestion = message;
 
-    // Auto-detect state
-    const detectedState = detectState(message);
-    if (detectedState) {
-        return Object.values(kb.public.states[detectedState]).join(" ");
+    // 1. Detect state + leave type
+    const state = detectState(message);
+    const leaveType = detectLeaveType(message);
+
+    // 2. Private user data
+    if (userEmail && kb.private?.users?.[userEmail]) {
+        const userData = kb.private.users[userEmail];
+        for (const [key, value] of Object.entries(userData)) {
+            if (message.includes(key.replace(/_/g, " "))) {
+                convoMemory.lastTopic = "private";
+                return `${key.replace(/_/g, " ")}: ${value}`;
+            }
+        }
     }
 
-    // Auto-detect leave type
-    const detectedLeave = detectLeaveType(message);
-    if (detectedLeave && kb.public.eligibility[detectedLeave]) {
-        return Object.values(kb.public.eligibility[detectedLeave]).join(" ");
+    // 3. If user asks about state leave
+    if (state && kb.public.states[state]) {
+        convoMemory.lastTopic = "state";
+        return Object.values(kb.public.states[state]).join(" ");
     }
 
-
-        // 1. Private user data
-        if (userEmail && kb.private?.users?.[userEmail]) {
-            const userData = kb.private.users[userEmail];
-            for (const [key, value] of Object.entries(userData)) {
-                if (message.includes(key.replace(/_/g, " "))) {
-                    return `${key.replace(/_/g, " ")}: ${value}`;
-                }
-            }
-        }
-
-        // 2. Federal laws
-        for (const [key, value] of Object.entries(kb.public.federal)) {
-            if (message.includes(key)) return value;
-        }
-
-        // 3. State laws
-        for (const [state, laws] of Object.entries(kb.public.states)) {
-            if (message.includes(state.toLowerCase())) {
-                return Object.values(laws).join(" ");
-            }
-        }
-
-        // 4. Eligibility
-        for (const [law, rules] of Object.entries(kb.public.eligibility)) {
-            if (message.includes(law)) {
-                return Object.values(rules).join(" ");
-            }
-        }
-
-        // 5. Documentation
-        for (const [doc, text] of Object.entries(kb.public.documentation)) {
-            if (message.includes(doc.replace(/_/g, " "))) {
-                return text;
-            }
-        }
-
-        // 6. FAQ
-        for (const [topic, text] of Object.entries(kb.public.faq)) {
-            if (message.includes(topic.replace(/_/g, " "))) {
-                return text;
-            }
-        }
-
-        return "I’m not sure yet, but I’m learning more every day.";
+    // 4. If user asks about eligibility
+    if (leaveType && kb.public.eligibility[leaveType]) {
+        convoMemory.lastTopic = "eligibility";
+        return Object.values(kb.public.eligibility[leaveType]).join(" ");
     }
+
+    // 5. Federal laws
+    for (const [key, value] of Object.entries(kb.public.federal)) {
+        if (message.includes(key)) {
+            convoMemory.lastTopic = "federal";
+            return value;
+        }
+    }
+
+    // 6. Documentation
+    for (const [doc, text] of Object.entries(kb.public.documentation)) {
+        if (message.includes(doc.replace(/_/g, " "))) {
+            convoMemory.lastTopic = "documentation";
+            return text;
+        }
+    }
+
+    // 7. FAQ
+    for (const [topic, text] of Object.entries(kb.public.faq)) {
+        if (message.includes(topic.replace(/_/g, " "))) {
+            convoMemory.lastTopic = "faq";
+            return text;
+        }
+    }
+
+    // 8. If we have memory, use it
+    if (convoMemory.lastTopic === "state" && state) {
+        return Object.values(kb.public.states[state]).join(" ");
+    }
+
+    if (convoMemory.lastTopic === "eligibility" && leaveType) {
+        return Object.values(kb.public.eligibility[leaveType]).join(" ");
+    }
+
+    // 9. Fallback
+    return "I’m not sure yet, but I’m learning more every day. You can ask about eligibility, state laws, documentation, or federal rules.";
+}
+
 
 
     // -------------------------------
@@ -167,6 +191,13 @@ function detectLeaveType(message) {
         chatWindow.scrollTop = chatWindow.scrollHeight;
     }
 
+showSuggestions([
+    "Eligibility requirements",
+    "State leave laws",
+    "Required documentation",
+    "How much time can I take?",
+    "Does my job protect me?"
+]);
 
     // -------------------------------
     // Handle Chat Input
