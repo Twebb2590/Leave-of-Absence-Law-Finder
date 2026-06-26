@@ -8,15 +8,6 @@ let convoMemory = {
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-function showTyping() {
-    typingIndicator.style.display = "flex";
-    chatWindow.scrollTop = chatWindow.scrollHeight;
-}
-
-function hideTyping() {
-    typingIndicator.style.display = "none";
-}
-
     
     // -------------------------------
     // Load Knowledge Base
@@ -31,7 +22,6 @@ function hideTyping() {
 
     await loadKnowledgeBase();
 
-
     // -------------------------------
     // UI Elements
     // -------------------------------
@@ -43,7 +33,18 @@ function hideTyping() {
     const chatPopup = document.getElementById("chatPopup");
     const closeChat = document.getElementById("closeChat");
 
+    // -------------------------------
+    // Typing Indicator Helpers
+    // -------------------------------
+function showTyping() {
+    typingIndicator.style.display = "flex";
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+}
 
+function hideTyping() {
+    typingIndicator.style.display = "none";
+}
+    
     // -------------------------------
     // Welcome Message
     // -------------------------------
