@@ -6,7 +6,6 @@ let knowledgeBase = null;
 async function loadKnowledgeBase() {
     const res = await fetch("knowledgeBase.json");
     knowledgeBase = await res.json();
-    console.log("Knowledge Base Loaded");
 }
 
 await loadKnowledgeBase();
