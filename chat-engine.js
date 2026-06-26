@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const chatButton = document.getElementById("chatButton");
     const chatPopup = document.getElementById("chatPopup");
     const closeChat = document.getElementById("closeChat");
-
+    
     // -------------------------------
     // Typing Indicator Helpers
     // -------------------------------
@@ -44,7 +44,21 @@ function showTyping() {
 function hideTyping() {
     typingIndicator.style.display = "none";
 }
-    
+  function showSuggestions(list) {
+    const container = document.getElementById("suggestions");
+    container.innerHTML = "";
+
+    list.forEach(text => {
+        const chip = document.createElement("div");
+        chip.className = "suggestion-chip";
+        chip.textContent = text;
+        chip.addEventListener("click", () => {
+            chatInput.value = text;
+            handleChat();
+        });
+        container.appendChild(chip);
+    });
+}  
     // -------------------------------
     // Welcome Message
     // -------------------------------
@@ -88,22 +102,6 @@ function detectLeaveType(message) {
         }
     }
     return convoMemory.lastLeaveType; // fallback to memory
-}
-
-function showSuggestions(list) {
-    const container = document.getElementById("suggestions");
-    container.innerHTML = "";
-
-    list.forEach(text => {
-        const chip = document.createElement("div");
-        chip.className = "suggestion-chip";
-        chip.textContent = text;
-        chip.addEventListener("click", () => {
-            chatInput.value = text;
-            handleChat();
-        });
-        container.appendChild(chip);
-    });
 }
 
     
