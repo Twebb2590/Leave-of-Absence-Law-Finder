@@ -179,6 +179,70 @@ function detectLeaveType(message) {
     return "I’m not sure yet, but I’m learning more every day. You can ask about eligibility, state laws, documentation, or federal rules.";
 }
 
+ // -------------------------------
+// GENERATE FOLLOW UPS
+// -------------------------------
+    
+function generateFollowUps() {
+    const followUps = [];
+
+    // If we know the state
+    if (convoMemory.lastState) {
+        followUps.push(
+            `What are the eligibility rules in ${convoMemory.lastState}?`,
+            `Does ${convoMemory.lastState} offer paid leave?`
+        );
+    }
+
+    // If we know the leave type
+    if (convoMemory.lastLeaveType) {
+        followUps.push(
+            `How much time can I take under ${convoMemory.lastLeaveType}?`,
+            `What documentation is required for ${convoMemory.lastLeaveType}?`
+        );
+    }
+
+    // If the last topic was eligibility
+    if (convoMemory.lastTopic === "eligibility") {
+        followUps.push(
+            "Does my job protect me while I'm on leave?",
+            "What happens if I'm not eligible?"
+        );
+    }
+
+    // If the last topic was documentation
+    if (convoMemory.lastTopic === "documentation") {
+        followUps.push(
+            "How do I submit my paperwork?",
+            "What happens if my doctor delays the forms?"
+        );
+    }
+
+    // If the last topic was federal
+    if (convoMemory.lastTopic === "federal") {
+        followUps.push(
+            "How does FMLA interact with state leave?",
+            "Does FMLA protect my job?"
+        );
+    }
+
+    // If the last topic was state
+    if (convoMemory.lastTopic === "state") {
+        followUps.push(
+            "Does my state offer paid leave?",
+            "How does my state leave interact with FMLA?"
+        );
+    }
+
+    // Always include general options
+    followUps.push(
+        "What else should I know?",
+        "Can you summarize my situation?"
+    );
+
+    // Remove duplicates
+    return [...new Set(followUps)];
+}
 
 
     // -------------------------------
@@ -223,8 +287,10 @@ showSuggestions([
 
     const answer = findAnswer(msg, knowledgeBase, email);
     addMessage(answer, "bot");
-}
 
+    const followUpList = generateFollowUps();
+    showSuggestions(followUpList);
+    }
 
     chatSend.addEventListener("click", handleChat);
     chatInput.addEventListener("keypress", e => {
