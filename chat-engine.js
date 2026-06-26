@@ -142,6 +142,45 @@ function detectLeaveType(message) {
         return Object.values(kb.public.eligibility[leaveType]).join(" ");
     }
 
+       // 2A. Leave balance questions
+const balanceKeywords = [
+    "balance", "hours left", "time left", "how much leave",
+    "how many hours", "remaining leave", "leave left",
+    "pto balance", "vacation balance", "sick balance"
+];
+
+if (balanceKeywords.some(k => message.includes(k))) {
+    if (userEmail && kb.private?.users?.[userEmail]) {
+        const u = kb.private.users[userEmail];
+
+        let response = "Here’s what I found about your leave balances:\n\n";
+
+        if (u.leave_balance_hours !== undefined)
+            response += `• Available hours: ${u.leave_balance_hours}\n`;
+
+        if (u.leave_balance_days !== undefined)
+            response += `• Available days: ${u.leave_balance_days}\n`;
+
+        if (u.fmla_remaining)
+            response += `• FMLA remaining: ${u.fmla_remaining}\n`;
+
+        if (u.state_pfml_remaining)
+            response += `• State PFML remaining: ${u.state_pfml_remaining}\n`;
+
+        convoMemory.lastTopic = "leave_balance";
+        return response.trim();
+    }
+
+    return "I can check your leave balance once you're logged in.";
+}
+
+       if (convoMemory.lastTopic === "leave_balance") {
+    const u = kb.private?.users?.[userEmail];
+    if (u) {
+        return `You currently have ${u.leave_balance_hours} hours (${u.leave_balance_days} days) remaining.`;
+    }
+}
+
     // 5. Federal laws
     for (const [key, value] of Object.entries(kb.public.federal)) {
         if (message.includes(key)) {
@@ -234,6 +273,17 @@ function generateFollowUps() {
         );
     }
 
+    // If the last topic was hours 
+if (convoMemory.lastTopic === "leave_balance") {
+    followUps.push(
+        "How much FMLA have I used?",
+        "How much PFML do I have left?",
+        "What types of leave can I use?",
+        "Does my job protect me while I'm on leave?"
+    );
+}
+
+    
     // Always include general options
     followUps.push(
         "What else should I know?",
