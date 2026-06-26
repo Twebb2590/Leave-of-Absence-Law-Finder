@@ -38,6 +38,7 @@ function hideTyping() {
     const chatInput = document.getElementById("chatInput");
     const chatSend = document.getElementById("chatSend");
     const chatWindow = document.getElementById("chatWindow");
+    const typingIndicator = document.getElementById("typingIndicator");
     const chatButton = document.getElementById("chatButton");
     const chatPopup = document.getElementById("chatPopup");
     const closeChat = document.getElementById("closeChat");
