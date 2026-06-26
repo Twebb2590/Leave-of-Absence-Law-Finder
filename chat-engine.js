@@ -1,5 +1,15 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
+function showTyping() {
+    typingIndicator.style.display = "flex";
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+function hideTyping() {
+    typingIndicator.style.display = "none";
+}
+
+    
     // -------------------------------
     // Load Knowledge Base
     // -------------------------------
@@ -44,14 +54,48 @@ document.addEventListener("DOMContentLoaded", async () => {
         chatPopup.style.display = "none";
     });
 
+function detectState(message) {
+    const states = Object.keys(knowledgeBase.public.states);
+    message = message.toLowerCase();
+
+    for (const state of states) {
+        if (message.includes(state.toLowerCase())) {
+            return state;
+        }
+    }
+    return null;
+}
+
+function detectLeaveType(message) {
+    const types = ["fmla", "pfml", "paid family leave", "pregnancy leave", "sick leave", "disability"];
+    message = message.toLowerCase();
+
+    for (const type of types) {
+        if (message.includes(type)) return type;
+    }
+    return null;
+}
 
     // -------------------------------
     // Main Search Function
     // -------------------------------
-    function findAnswer(message, kb, userEmail = null) {
-        if (!kb) return "Still loading my knowledge… try again in a moment.";
+   function findAnswer(message, kb, userEmail = null) {
+    if (!kb) return "Still loading my knowledge… try again in a moment.";
 
-        message = message.toLowerCase();
+    message = message.toLowerCase();
+
+    // Auto-detect state
+    const detectedState = detectState(message);
+    if (detectedState) {
+        return Object.values(kb.public.states[detectedState]).join(" ");
+    }
+
+    // Auto-detect leave type
+    const detectedLeave = detectLeaveType(message);
+    if (detectedLeave && kb.public.eligibility[detectedLeave]) {
+        return Object.values(kb.public.eligibility[detectedLeave]).join(" ");
+    }
+
 
         // 1. Private user data
         if (userEmail && kb.private?.users?.[userEmail]) {
@@ -115,19 +159,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     // -------------------------------
     // Handle Chat Input
     // -------------------------------
-    function handleChat() {
-        const msg = chatInput.value.trim();
-        if (!msg) return;
+    async function handleChat() {
+    const msg = chatInput.value.trim();
+    if (!msg) return;
 
-        addMessage(msg, "user");
-        chatInput.value = "";
+    addMessage(msg, "user");
+    chatInput.value = "";
 
-        const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-        const email = loggedInUser?.email || null;
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    const email = loggedInUser?.email || null;
 
-        const answer = findAnswer(msg, knowledgeBase, email);
-        addMessage(answer, "bot");
-    }
+    showTyping();
+
+    // Natural delay (randomized)
+    const delay = 600 + Math.random() * 600;
+    await new Promise(resolve => setTimeout(resolve, delay));
+
+    hideTyping();
+
+    const answer = findAnswer(msg, knowledgeBase, email);
+    addMessage(answer, "bot");
+}
+
 
     chatSend.addEventListener("click", handleChat);
     chatInput.addEventListener("keypress", e => {
