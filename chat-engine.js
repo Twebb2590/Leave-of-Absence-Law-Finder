@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const typingIndicator = document.getElementById("typingIndicator");
     const chatButton = document.getElementById("chatButton");
     const chatPopup = document.getElementById("chatPopup");
+    const resetChat = document.getElementById("resetChat");
     const closeChat = document.getElementById("closeChat");
     
     // -------------------------------
@@ -230,4 +231,35 @@ showSuggestions([
         if (e.key === "Enter") handleChat();
     });
 
+resetChat.addEventListener("click", () => {
+    // Clear chat window
+    chatWindow.innerHTML = "";
+
+    // Clear suggestions
+    const suggestions = document.getElementById("suggestions");
+    if (suggestions) suggestions.innerHTML = "";
+
+    // Hide typing indicator
+    typingIndicator.style.display = "none";
+
+    // Clear input
+    chatInput.value = "";
+
+    // Reset memory
+    convoMemory.lastState = null;
+    convoMemory.lastLeaveType = null;
+    convoMemory.lastTopic = null;
+    convoMemory.lastQuestion = null;
+
+    // Replay welcome message
+    const welcome = document.createElement("div");
+    welcome.className = "bot-message welcome-message";
+    welcome.textContent =
+        "Let's start fresh. What would you like to explore today?";
+    chatWindow.appendChild(welcome);
+
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+});
+
+    
 });
