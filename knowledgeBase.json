@@ -97,7 +97,7 @@
 
   "private": {
     "users": {
-      "testuser@gmail.com": {
+      "test@gmail.com": {
         "name": "Test User",
         "leave_type": "FMLA",
         "hours_available": 480,
