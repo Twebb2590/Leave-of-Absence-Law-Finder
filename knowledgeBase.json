@@ -97,21 +97,19 @@
 
   "private": {
     "users": {
-      "test@example.com": {
+      "testuser@gmail.com": {
         "name": "Test User",
         "leave_type": "FMLA",
         "hours_available": 480,
-        "hours_used": 120,
-        "leave_balance_hours": 72,
-        "leave_balance_days": 9,
+        "hours_used": 80,
         "fmla_used": "2 weeks",
         "fmla_remaining": "10 weeks",
         "state_pfml_used": "0 weeks",
         "state_pfml_remaining": "12 weeks"
         "case_status": "Open",
-        "next_step": "Upload updated medical certification by 2026-07-01.",
+        "next_step": "Upload updated medical certification by 07-01-2026.",
         "documentation_status": "Certification on file; recertification requested.",
-        "return_to_work_date": "2026-07-15",
+        "return_to_work_date": "07-15-2026",
         "case_manager": "Alex Johnson"
       },
       "admin@example.com": {
