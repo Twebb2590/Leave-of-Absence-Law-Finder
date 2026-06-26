@@ -48,6 +48,8 @@ function hideTyping() {
   function showSuggestions(list) {
     const container = document.getElementById("suggestions");
     container.innerHTML = "";
+    container.style.maxHeight = "48px";
+
 
     list.forEach(text => {
         const chip = document.createElement("div");
