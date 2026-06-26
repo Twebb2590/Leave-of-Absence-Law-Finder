@@ -4,6 +4,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
+
   <body>
     <header class="header">
       <h1>Dashboard</h1>
@@ -19,58 +20,26 @@
     </main>
 
     <!-- Floating Chat Button -->
-<div id="chatButton" class="chat-button">💬</div>
+    <div id="chatButton" class="chat-button">💬</div>
 
-<!-- Chat Popup -->
-<div id="chatPopup" class="chat-popup">
-    <div class="chat-header">
+    <!-- Chat Popup -->
+    <div id="chatPopup" class="chat-popup" style="display:none;">
+      <div class="chat-header">
         <span>Leave Assistant</span>
         <button id="closeChat" class="close-chat">×</button>
-    </div>
+      </div>
 
-    <!-- CHAT WINDOW (messages appear here) -->
-    <div id="chatWindow" class="chat-window"></div>
+      <!-- CHAT WINDOW -->
+      <div id="chatWindow" class="chat-window"></div>
 
-    <!-- INPUT ROW -->
-    <div class="chat-input-row">
-        <input id="chatInput" type="text" placeholder="Type your question…">
+      <!-- INPUT ROW -->
+      <div class="chat-input-row">
+        <input id="chatInput" type="text" placeholder="Type your question…" />
         <button id="chatSend" class="chat-send">Send</button>
-    </div>
-</div>
-
-
-
-      <!-- Help Topics Menu -->
-      <div id="helpTopics">
-        <p class="help-title">How can I help you?</p>
-        <button class="help-option" data-topic="laws">
-          Understanding Leave Laws
-        </button>
-        <button class="help-option" data-topic="eligibility">
-          Eligibility Questions
-        </button>
-        <button class="help-option" data-topic="wizard">Using the Chat</button>
-        <button class="help-option" data-topic="account">
-          Account & Login Help
-        </button>
-      </div>
-
-      <!-- Chat Messages -->
-      <div id="chatMessages" style="display: none"></div>
-
-      <!-- Typing Indicator -->
-      <div id="typingIndicator" style="display: none">
-        <div class="typing-dots"><span></span><span></span><span></span></div>
-        <p>Support is typing…</p>
-      </div>
-
-      <!-- Input Area -->
-      <div id="chatInputArea" style="display: none">
-        <input type="text" id="chatInput" placeholder="Type a message..." />
-        <button id="sendChat">Send</button>
       </div>
     </div>
 
+    <!-- LOGIN / LOGOUT LOGIC -->
     <script>
       const user = JSON.parse(localStorage.getItem("loggedInUser"));
 
@@ -84,42 +53,12 @@
       document.getElementById("logoutBtn").addEventListener("click", () => {
         localStorage.removeItem("loggedInUser");
         window.location.href = "login.html";
-
-        let knowledgeBase = null;
-
-        async function loadKnowledgeBase() {
-          try {
-            const response = await fetch("knowledgeBase.json");
-            knowledgeBase = await response.json();
-            console.log("Knowledge base loaded:", knowledgeBase);
-          } catch (error) {
-            console.error("Error loading knowledge base:", error);
-          }
-        }
-
-        loadKnowledgeBase();
-
-        let KB = {};
-
-        fetch("knowledgeBase.json")
-          .then((res) => res.json())
-          .then((data) => (KB = data));
       });
 
-      function getLoggedInUserData() {
-    const user = JSON.parse(localStorage.getItem("loggedInUser"));
-    if (!user || !knowledgeBase || !knowledgeBase.privateUserData) return null;
-
-    return knowledgeBase.privateUserData[user.email] || null;
-}
-
-    </script>
-    <script>
       const authLink = document.getElementById("authLink");
       const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
       if (loggedInUser) {
-        // User is logged in → show Logout
         authLink.textContent = "Logout";
         authLink.href = "#";
 
@@ -129,127 +68,27 @@
           window.location.href = "login.html";
         });
       } else {
-        // User is not logged in → show Login
         authLink.textContent = "Login";
         authLink.href = "login.html";
       }
     </script>
 
+    <!-- CHAT POPUP OPEN/CLOSE -->
     <script>
       const chatButton = document.getElementById("chatButton");
       const chatPopup = document.getElementById("chatPopup");
       const closeChat = document.getElementById("closeChat");
-      const refreshChat = document.getElementById("refreshChat");
-      const sendChat = document.getElementById("sendChat");
-      const chatInput = document.getElementById("chatInput");
-      const chatMessages = document.getElementById("chatMessages");
-      const chatInputArea = document.getElementById("chatInputArea");
-      const helpTopics = document.getElementById("helpTopics");
-      const helpButtons = document.querySelectorAll(".help-option");
-      const typingIndicator = document.getElementById("typingIndicator");
 
-      // OPEN CHAT
       chatButton.addEventListener("click", () => {
         chatPopup.style.display = "flex";
       });
 
-      // CLOSE CHAT
       closeChat.addEventListener("click", () => {
         chatPopup.style.display = "none";
       });
-
-      // SEND MESSAGE
-      sendChat.addEventListener("click", () => {
-        const text = chatInput.value.trim();
-        if (!text) return;
-
-        const bubble = document.createElement("div");
-        bubble.textContent = text;
-        bubble.style.background = "#e8f0fe";
-        bubble.style.padding = "8px 12px";
-        bubble.style.margin = "6px 0";
-        bubble.style.borderRadius = "8px";
-        bubble.style.alignSelf = "flex-end";
-
-        chatMessages.appendChild(bubble);
-        chatInput.value = "";
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      });
-
-      // REFRESH CHAT
-      refreshChat.addEventListener("click", () => {
-        // Clear messages
-        chatMessages.innerHTML = "";
-
-        // Reset UI
-        helpTopics.style.display = "block";
-        chatMessages.style.display = "none";
-        chatInputArea.style.display = "none";
-        typingIndicator.style.display = "none";
-      });
-
-      // TYPING INDICATOR
-      function showTyping() {
-        typingIndicator.style.display = "flex";
-      }
-
-      function hideTyping() {
-        typingIndicator.style.display = "none";
-      }
-
-      function supportReply(text) {
-        showTyping();
-
-        setTimeout(() => {
-          hideTyping();
-
-          const bubble = document.createElement("div");
-          bubble.classList.add("support-bubble"); // <-- THIS is what applies the style
-          bubble.textContent = text;
-
-          chatMessages.appendChild(bubble);
-          chatMessages.scrollTop = chatMessages.scrollHeight;
-        }, 1200); // delay to simulate typing
-      }
-
-      // HELP TOPICS
-      helpButtons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const topic = btn.dataset.topic;
-
-          // Hide help menu, show chat
-          helpTopics.style.display = "none";
-          chatMessages.style.display = "block";
-          chatInputArea.style.display = "flex";
-
-          // CREATE THE BUBBLE HERE
-          const bubble = document.createElement("div");
-          bubble.classList.add("support-bubble");
-
-          // Set the text based on topic
-          if (topic === "laws") {
-            bubble.textContent =
-              "Here’s help with leave laws. What state or situation are you asking about?";
-          }
-          if (topic === "eligibility") {
-            bubble.textContent =
-              "Let’s talk eligibility. Are you asking about FMLA, state leave, or employer policy?";
-          }
-          if (topic === "chat") {
-            bubble.textContent =
-              "Need help using the Chat? Tell me what step you need assistance with.";
-          }
-          if (topic === "account") {
-            bubble.textContent =
-              "Account help: Are you having trouble logging in, registering, or resetting your password?";
-          }
-
-          chatMessages.appendChild(bubble);
-          chatMessages.scrollTop = chatMessages.scrollHeight;
-        });
-      });
     </script>
-    <script type="module" src="chat-engine.js"></script>
 
+    <!-- CHAT ENGINE -->
+    <script type="module" src="chat-engine.js"></script>
   </body>
 </html>
