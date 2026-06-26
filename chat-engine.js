@@ -10,6 +10,18 @@ async function loadKnowledgeBase() {
 
 await loadKnowledgeBase();
 
+// When chat opens, show welcome message once
+chatButton.addEventListener("click", () => {
+    chatPopup.style.display = "flex";
+
+    // Only show welcome message if chat is empty
+    if (chatWindow.children.length === 0) {
+        const welcome = document.createElement("div");
+        welcome.className = "bot-message welcome-message";
+        welcome.textContent = "Hi there, I’m here to help you understand your leave options. What would you like to explore today?";
+        chatWindow.appendChild(welcome);
+    }
+});
 
 // -------------------------------
 // Main Search Function
