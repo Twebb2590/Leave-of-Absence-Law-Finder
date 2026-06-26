@@ -1,111 +1,137 @@
-// -------------------------------
-// Load Knowledge Base
-// -------------------------------
-let knowledgeBase = null;
+document.addEventListener("DOMContentLoaded", async () => {
 
-async function loadKnowledgeBase() {
-    const res = await fetch("knowledgeBase.json");
-    knowledgeBase = await res.json();
-}
+    // -------------------------------
+    // Load Knowledge Base
+    // -------------------------------
+    let knowledgeBase = null;
 
-await loadKnowledgeBase();
-
-// When chat opens, show welcome message once
-chatButton.addEventListener("click", () => {
-    chatPopup.style.display = "flex";
-
-    // Only show welcome message if chat is empty
-    if (chatWindow.children.length === 0) {
-        const welcome = document.createElement("div");
-        welcome.className = "bot-message welcome-message";
-        welcome.textContent = "Hi there, I’m here to help you understand your leave options. What would you like to explore today?";
-        chatWindow.appendChild(welcome);
+    async function loadKnowledgeBase() {
+        const res = await fetch("knowledgeBase.json");
+        knowledgeBase = await res.json();
+        console.log("Knowledge Base Loaded");
     }
-});
 
-// -------------------------------
-// Main Search Function
-// -------------------------------
-function findAnswer(message, kb, userEmail = null) {
-    message = message.toLowerCase();
+    await loadKnowledgeBase();
 
-    // 1. Private user data (if logged in)
-    if (userEmail && kb.private.users[userEmail]) {
-        const userData = kb.private.users[userEmail];
-        for (const [key, value] of Object.entries(userData)) {
-            if (message.includes(key.replace(/_/g, " "))) {
-                return `${key.replace(/_/g, " ")}: ${value}`;
+
+    // -------------------------------
+    // UI Elements
+    // -------------------------------
+    const chatInput = document.getElementById("chatInput");
+    const chatSend = document.getElementById("chatSend");
+    const chatWindow = document.getElementById("chatWindow");
+    const chatButton = document.getElementById("chatButton");
+    const chatPopup = document.getElementById("chatPopup");
+    const closeChat = document.getElementById("closeChat");
+
+
+    // -------------------------------
+    // Welcome Message
+    // -------------------------------
+    chatButton.addEventListener("click", () => {
+        chatPopup.style.display = "flex";
+
+        if (chatWindow.children.length === 0) {
+            const welcome = document.createElement("div");
+            welcome.className = "bot-message welcome-message";
+            welcome.textContent =
+                "Hi there, I’m here to help you understand your leave options. What would you like to explore today?";
+            chatWindow.appendChild(welcome);
+        }
+    });
+
+    closeChat.addEventListener("click", () => {
+        chatPopup.style.display = "none";
+    });
+
+
+    // -------------------------------
+    // Main Search Function
+    // -------------------------------
+    function findAnswer(message, kb, userEmail = null) {
+        if (!kb) return "Still loading my knowledge… try again in a moment.";
+
+        message = message.toLowerCase();
+
+        // 1. Private user data
+        if (userEmail && kb.private?.users?.[userEmail]) {
+            const userData = kb.private.users[userEmail];
+            for (const [key, value] of Object.entries(userData)) {
+                if (message.includes(key.replace(/_/g, " "))) {
+                    return `${key.replace(/_/g, " ")}: ${value}`;
+                }
             }
         }
-    }
 
-    // 2. Federal laws
-    for (const [key, value] of Object.entries(kb.public.federal)) {
-        if (message.includes(key)) return value;
-    }
-
-    // 3. State laws
-    for (const [state, laws] of Object.entries(kb.public.states)) {
-        if (message.includes(state.toLowerCase())) {
-            return Object.values(laws).join(" ");
+        // 2. Federal laws
+        for (const [key, value] of Object.entries(kb.public.federal)) {
+            if (message.includes(key)) return value;
         }
-    }
 
-    // 4. Eligibility
-    for (const [law, rules] of Object.entries(kb.public.eligibility)) {
-        if (message.includes(law)) {
-            return Object.values(rules).join(" ");
+        // 3. State laws
+        for (const [state, laws] of Object.entries(kb.public.states)) {
+            if (message.includes(state.toLowerCase())) {
+                return Object.values(laws).join(" ");
+            }
         }
-    }
 
-    // 5. Documentation
-    for (const [doc, text] of Object.entries(kb.public.documentation)) {
-        if (message.includes(doc.replace(/_/g, " "))) {
-            return text;
+        // 4. Eligibility
+        for (const [law, rules] of Object.entries(kb.public.eligibility)) {
+            if (message.includes(law)) {
+                return Object.values(rules).join(" ");
+            }
         }
-    }
 
-    // 6. FAQ
-    for (const [topic, text] of Object.entries(kb.public.faq)) {
-        if (message.includes(topic.replace(/_/g, " "))) {
-            return text;
+        // 5. Documentation
+        for (const [doc, text] of Object.entries(kb.public.documentation)) {
+            if (message.includes(doc.replace(/_/g, " "))) {
+                return text;
+            }
         }
+
+        // 6. FAQ
+        for (const [topic, text] of Object.entries(kb.public.faq)) {
+            if (message.includes(topic.replace(/_/g, " "))) {
+                return text;
+            }
+        }
+
+        return "I’m not sure yet, but I’m learning more every day.";
     }
 
-    return "I’m not sure yet, but I’m learning more every day.";
-}
+
+    // -------------------------------
+    // Add Message to UI
+    // -------------------------------
+    function addMessage(text, sender = "bot") {
+        const div = document.createElement("div");
+        div.className = sender === "bot" ? "bot-message" : "user-message";
+        div.textContent = text;
+        chatWindow.appendChild(div);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
 
 
-// -------------------------------
-// Chat UI Handler
-// -------------------------------
-const chatInput = document.getElementById("chatInput");
-const chatSend = document.getElementById("chatSend");
-const chatWindow = document.getElementById("chatWindow");
+    // -------------------------------
+    // Handle Chat Input
+    // -------------------------------
+    function handleChat() {
+        const msg = chatInput.value.trim();
+        if (!msg) return;
 
-function addMessage(text, sender = "bot") {
-    const div = document.createElement("div");
-    div.className = sender === "bot" ? "bot-message" : "user-message";
-    div.textContent = text;
-    chatWindow.appendChild(div);
-    chatWindow.scrollTop = chatWindow.scrollHeight;
-}
+        addMessage(msg, "user");
+        chatInput.value = "";
 
-chatSend.addEventListener("click", handleChat);
-chatInput.addEventListener("keypress", e => {
-    if (e.key === "Enter") handleChat();
+        const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+        const email = loggedInUser?.email || null;
+
+        const answer = findAnswer(msg, knowledgeBase, email);
+        addMessage(answer, "bot");
+    }
+
+    chatSend.addEventListener("click", handleChat);
+    chatInput.addEventListener("keypress", e => {
+        if (e.key === "Enter") handleChat();
+    });
+
 });
-
-function handleChat() {
-    const msg = chatInput.value.trim();
-    if (!msg) return;
-
-    addMessage(msg, "user");
-    chatInput.value = "";
-
-    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-    const email = loggedInUser?.email || null;
-
-    const answer = findAnswer(msg, knowledgeBase, email);
-    addMessage(answer, "bot");
-}
