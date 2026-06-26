@@ -176,3 +176,25 @@
         transform: translateY(0);
     }
 }
+
+.suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.suggestion-chip {
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.suggestion-chip:hover {
+    background: #dbe4ff;
+}
+
