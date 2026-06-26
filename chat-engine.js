@@ -230,7 +230,10 @@ showSuggestions([
     chatInput.addEventListener("keypress", e => {
         if (e.key === "Enter") handleChat();
     });
-
+   
+    // -------------------------------
+    // RESET BUTTON
+    // -------------------------------
 resetChat.addEventListener("click", () => {
     // Clear chat window
     chatWindow.innerHTML = "";
