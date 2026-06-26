@@ -1,3 +1,11 @@
+let convoMemory = {
+    lastState: null,
+    lastLeaveType: null,
+    lastTopic: null,
+    lastQuestion: null
+};
+
+
 document.addEventListener("DOMContentLoaded", async () => {
 
 function showTyping() {
@@ -60,10 +68,11 @@ function detectState(message) {
 
     for (const state of states) {
         if (message.includes(state.toLowerCase())) {
+            convoMemory.lastState = state;
             return state;
         }
     }
-    return null;
+    return convoMemory.lastState; // fallback to memory
 }
 
 function detectLeaveType(message) {
@@ -71,9 +80,12 @@ function detectLeaveType(message) {
     message = message.toLowerCase();
 
     for (const type of types) {
-        if (message.includes(type)) return type;
+        if (message.includes(type)) {
+            convoMemory.lastLeaveType = type;
+            return type;
+        }
     }
-    return null;
+    return convoMemory.lastLeaveType; // fallback to memory
 }
 
     // -------------------------------
