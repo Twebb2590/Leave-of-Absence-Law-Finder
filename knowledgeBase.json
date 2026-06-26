@@ -102,6 +102,12 @@
         "leave_type": "FMLA",
         "hours_available": 480,
         "hours_used": 120,
+        "leave_balance_hours": 72,
+        "leave_balance_days": 9,
+        "fmla_used": "2 weeks",
+        "fmla_remaining": "10 weeks",
+        "state_pfml_used": "0 weeks",
+        "state_pfml_remaining": "12 weeks"
         "case_status": "Open",
         "next_step": "Upload updated medical certification by 2026-07-01.",
         "documentation_status": "Certification on file; recertification requested.",
