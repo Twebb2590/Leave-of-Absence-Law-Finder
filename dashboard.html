@@ -19,17 +19,26 @@
     </main>
 
     <!-- Floating Chat Button -->
-    <div id="chatButton">💬</div>
+<div id="chatButton" class="chat-button">💬</div>
 
-    <!-- Chat Popup -->
-    <div id="chatPopup">
-      <div id="chatHeader">
-        <span>Chat Support</span>
-        <div>
-          <button id="refreshChat">⟳</button>
-          <button id="closeChat">×</button>
-        </div>
-      </div>
+<!-- Chat Popup -->
+<div id="chatPopup" class="chat-popup">
+    <div class="chat-header">
+        <span>Leave Assistant</span>
+        <button id="closeChat" class="close-chat">×</button>
+    </div>
+
+    <!-- CHAT WINDOW (messages appear here) -->
+    <div id="chatWindow" class="chat-window"></div>
+
+    <!-- INPUT ROW -->
+    <div class="chat-input-row">
+        <input id="chatInput" type="text" placeholder="Type your question…">
+        <button id="chatSend" class="chat-send">Send</button>
+    </div>
+</div>
+
+
 
       <!-- Help Topics Menu -->
       <div id="helpTopics">
@@ -240,5 +249,7 @@
         });
       });
     </script>
+    <script type="module" src="chat-engine.js"></script>
+
   </body>
 </html>
