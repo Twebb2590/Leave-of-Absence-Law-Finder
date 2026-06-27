@@ -117,111 +117,119 @@ function detectLeaveType(message) {
     message = message.toLowerCase();
     convoMemory.lastQuestion = message;
 
-    // 1. Detect state + leave type
+    // Normalize email
+    const email = userEmail?.trim()?.toLowerCase() || null;
+    const userRecord = kb?.private?.users?.[email] || null;
+
+    // Detect state + leave type
     const state = detectState(message);
     const leaveType = detectLeaveType(message);
 
-    // 2. Private user data (improved lookup)
-const email = userEmail?.trim()?.toLowerCase();
-const userRecord = kb?.private?.users?.[email];
-
-if (userRecord) {
-    for (const [key, value] of Object.entries(userRecord)) {
-        if (message.includes(key.replace(/_/g, " "))) {
-            convoMemory.lastTopic = "private";
-            return `${key.replace(/_/g, " ")}: ${value}`;
-        }
-    }
-}
-
-// 2B. "How much time can I take?" logic
-if (message.includes("how much time can i take")) {
-
-    // If user is logged in and has a leave type
-    if (userRecord?.leave_type) {
-        convoMemory.lastTopic = "duration";
-
-        if (userRecord.leave_type.toLowerCase() === "fmla") {
-            return "Under FMLA, eligible employees can take up to 12 weeks of job‑protected leave in a 12‑month period.";
-        }
-
-        if (userRecord.leave_type.toLowerCase().includes("ada")) {
-            return "ADA leave has no fixed duration. It must be reasonable and based on medical need.";
+    // -----------------------------------------
+    // 1. PRIVATE USER DATA (direct field lookup)
+    // -----------------------------------------
+    if (userRecord) {
+        for (const [key, value] of Object.entries(userRecord)) {
+            const cleanedKey = key.replace(/_/g, " ");
+            if (message.includes(cleanedKey)) {
+                convoMemory.lastTopic = "private";
+                return `${cleanedKey}: ${value}`;
+            }
         }
     }
 
-    // If we know the leave type from detection
-    if (leaveType && kb.public.eligibility[leaveType]) {
-        convoMemory.lastTopic = "duration";
-        return `Most employees can take up to 12 weeks under ${leaveType.toUpperCase()}.`;
+    // -----------------------------------------
+    // 2. "HOW MUCH TIME CAN I TAKE?"
+    // -----------------------------------------
+    if (message.includes("how much time can i take")) {
+
+        // If user has a leave type
+        if (userRecord?.leave_type) {
+            convoMemory.lastTopic = "duration";
+
+            const lt = userRecord.leave_type.toLowerCase();
+
+            if (lt.includes("fmla")) {
+                return "Under FMLA, eligible employees can take up to 12 weeks of job‑protected leave in a 12‑month period.";
+            }
+
+            if (lt.includes("ada")) {
+                return "ADA leave has no fixed duration. It must be reasonable and based on medical need.";
+            }
+        }
+
+        // If leave type detected from message
+        if (leaveType && kb.public.eligibility[leaveType]) {
+            convoMemory.lastTopic = "duration";
+            return `Most employees can take up to 12 weeks under ${leaveType.toUpperCase()}.`;
+        }
+
+        // If state detected
+        if (state && kb.public.states[state]) {
+            convoMemory.lastTopic = "duration";
+            return `In ${state}, leave duration depends on the program:\n\n${Object.values(kb.public.states[state]).join(" ")}`;
+        }
+
+        // Default general answer
+        return "Most employees can take up to 12 weeks of job‑protected leave under FMLA. Some states offer additional paid leave depending on where you live.";
     }
 
-    // If we know the state
-    if (state && kb.public.states[state]) {
-        convoMemory.lastTopic = "duration";
-        return `In ${state}, leave duration depends on the program:\n\n${Object.values(kb.public.states[state]).join(" ")}`;
+    // -----------------------------------------
+    // 3. LEAVE BALANCE QUESTIONS
+    // -----------------------------------------
+    const balanceKeywords = [
+        "balance", "hours left", "time left", "how many hours",
+        "remaining leave", "leave left", "pto balance",
+        "vacation balance", "sick balance"
+    ];
+
+    if (balanceKeywords.some(k => message.includes(k))) {
+        if (userRecord) {
+            let response = "Here’s what I found about your leave balances:\n\n";
+
+            if (userRecord.leave_balance_hours !== undefined)
+                response += `• Available hours: ${userRecord.leave_balance_hours}\n`;
+
+            if (userRecord.leave_balance_days !== undefined)
+                response += `• Available days: ${userRecord.leave_balance_days}\n`;
+
+            if (userRecord.fmla_remaining)
+                response += `• FMLA remaining: ${userRecord.fmla_remaining}\n`;
+
+            if (userRecord.state_pfml_remaining)
+                response += `• State PFML remaining: ${userRecord.state_pfml_remaining}\n`;
+
+            convoMemory.lastTopic = "leave_balance";
+            return response.trim();
+        }
+
+        return "I can check your leave balance once you're logged in.";
     }
 
-    // Default general answer
-    return "Most employees can take up to 12 weeks of job‑protected leave under FMLA. State programs may offer additional paid time depending on where you live.";
-}
+    // Fallback for follow‑ups like “How much is left?”
+    if (convoMemory.lastTopic === "leave_balance" && userRecord) {
+        return `You currently have ${userRecord.leave_balance_hours} hours (${userRecord.leave_balance_days} days) remaining.`;
+    }
 
-    // 3. If user asks about state leave
+    // -----------------------------------------
+    // 4. STATE LEAVE
+    // -----------------------------------------
     if (state && kb.public.states[state]) {
         convoMemory.lastTopic = "state";
         return Object.values(kb.public.states[state]).join(" ");
     }
 
-    // 4. If user asks about eligibility
+    // -----------------------------------------
+    // 5. ELIGIBILITY
+    // -----------------------------------------
     if (leaveType && kb.public.eligibility[leaveType]) {
         convoMemory.lastTopic = "eligibility";
         return Object.values(kb.public.eligibility[leaveType]).join(" ");
     }
 
-       // 2A. Leave balance questions
-const balanceKeywords = [
-    "balance", "hours left", "time left", "how much leave",
-    "how many hours", "remaining leave", "leave left",
-    "pto balance", "vacation balance", "sick balance"
-];
-
-if (balanceKeywords.some(k => message.includes(k))) {
-    const email = userEmail?.trim()?.toLowerCase();
-    const u = kb?.private?.users?.[email];
-
-    if (u) {
-        let response = "Here’s what I found about your leave balances:\n\n";
-
-        if (u.leave_balance_hours !== undefined)
-            response += `• Available hours: ${u.leave_balance_hours}\n`;
-
-        if (u.leave_balance_days !== undefined)
-            response += `• Available days: ${u.leave_balance_days}\n`;
-
-        if (u.fmla_remaining)
-            response += `• FMLA remaining: ${u.fmla_remaining}\n`;
-
-        if (u.state_pfml_remaining)
-            response += `• State PFML remaining: ${u.state_pfml_remaining}\n`;
-
-        convoMemory.lastTopic = "leave_balance";
-        return response.trim();
-    }
-
-    return "I can check your leave balance once you're logged in.";
-}
-
-      if (convoMemory.lastTopic === "leave_balance") {
-    const email = userEmail?.trim()?.toLowerCase();
-    const u = kb?.private?.users?.[email];
-
-    if (u) {
-        return `You currently have ${u.leave_balance_hours} hours (${u.leave_balance_days} days) remaining.`;
-    }
-}
-
-
-    // 5. Federal laws
+    // -----------------------------------------
+    // 6. FEDERAL LAWS
+    // -----------------------------------------
     for (const [key, value] of Object.entries(kb.public.federal)) {
         if (message.includes(key)) {
             convoMemory.lastTopic = "federal";
@@ -229,7 +237,9 @@ if (balanceKeywords.some(k => message.includes(k))) {
         }
     }
 
-    // 6. Documentation
+    // -----------------------------------------
+    // 7. DOCUMENTATION
+    // -----------------------------------------
     for (const [doc, text] of Object.entries(kb.public.documentation)) {
         if (message.includes(doc.replace(/_/g, " "))) {
             convoMemory.lastTopic = "documentation";
@@ -237,7 +247,9 @@ if (balanceKeywords.some(k => message.includes(k))) {
         }
     }
 
-    // 7. FAQ
+    // -----------------------------------------
+    // 8. FAQ
+    // -----------------------------------------
     for (const [topic, text] of Object.entries(kb.public.faq)) {
         if (message.includes(topic.replace(/_/g, " "))) {
             convoMemory.lastTopic = "faq";
@@ -245,7 +257,9 @@ if (balanceKeywords.some(k => message.includes(k))) {
         }
     }
 
-    // 8. If we have memory, use it
+    // -----------------------------------------
+    // 9. MEMORY FALLBACKS
+    // -----------------------------------------
     if (convoMemory.lastTopic === "state" && state) {
         return Object.values(kb.public.states[state]).join(" ");
     }
@@ -254,7 +268,9 @@ if (balanceKeywords.some(k => message.includes(k))) {
         return Object.values(kb.public.eligibility[leaveType]).join(" ");
     }
 
-    // 9. Fallback
+    // -----------------------------------------
+    // 10. FINAL FALLBACK
+    // -----------------------------------------
     return "I’m not sure yet, but I’m learning more every day. You can ask about eligibility, state laws, documentation, or federal rules.";
 }
 
