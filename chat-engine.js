@@ -214,18 +214,16 @@ function detectLeaveType(message) {
     // -----------------------------------------
     // 4. STATE LEAVE
     // -----------------------------------------
-    if (state && kb.public.states[state]) {
-        convoMemory.lastTopic = "state";
-        return Object.values(kb.public.states[state]).join(" ");
-    }
+ // if (convoMemory.lastTopic === "state" && state) {
+//     return Object.values(kb.public.states[state]).join(" ");
+// }
 
     // -----------------------------------------
     // 5. ELIGIBILITY
     // -----------------------------------------
-    if (leaveType && kb.public.eligibility[leaveType]) {
-        convoMemory.lastTopic = "eligibility";
-        return Object.values(kb.public.eligibility[leaveType]).join(" ");
-    }
+   // if (convoMemory.lastTopic === "eligibility" && leaveType) {
+//     return Object.values(kb.public.eligibility[leaveType]).join(" ");
+// }
 
     // -----------------------------------------
     // 6. FEDERAL LAWS
@@ -392,6 +390,42 @@ showSuggestions([
 
     hideTyping();
 
+// -----------------------------------------
+// SUGGESTION CHIP ROUTER (explicit answers)
+// -----------------------------------------
+let answerOverride = null;
+
+switch (msg.toLowerCase()) {
+    case "eligibility requirements":
+        answerOverride = Object.values(knowledgeBase.public.eligibility.fmla).join(" ");
+        break;
+
+    case "state leave laws":
+        answerOverride = "Tell me your state (like PA, CA, NY) and I’ll explain your state leave programs.";
+        break;
+
+    case "required documentation":
+        answerOverride = Object.values(knowledgeBase.public.documentation).join(" ");
+        break;
+
+    case "how much time can i take?":
+        answerOverride = "Most employees can take up to 12 weeks of job‑protected leave under FMLA. Some states offer additional paid leave depending on where you live.";
+        break;
+
+    case "does my job protect me?":
+        answerOverride = knowledgeBase.public.faq.job_protection;
+        break;
+}
+
+// If a chip matched, skip findAnswer
+if (answerOverride) {
+    addMessage(answerOverride, "bot");
+    const followUpList = generateFollowUps();
+    showSuggestions(followUpList);
+    return;
+}
+
+        
     const answer = findAnswer(msg, knowledgeBase, email);
     addMessage(answer, "bot");
 
