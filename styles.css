@@ -271,6 +271,36 @@ bottom: 100px;
   }
 }
 
+.profile-summary {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.profile-summary h2 {
+    margin: 0 0 12px 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.profile-summary .row {
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.profile-summary .label {
+    font-weight: 600;
+    color: #374151;
+}
+
+.profile-summary .value {
+    color: #111827;
+}
+
+
 /* Search Section */
 #searchSection {
     margin: 1rem 0;
