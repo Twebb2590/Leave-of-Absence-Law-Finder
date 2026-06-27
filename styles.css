@@ -591,66 +591,88 @@ bottom: 100px;
     padding: 1rem;
     background: #eee;
 }
-/* NAVBAR BASE */
+/* NAVBAR WRAPPER */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    height: 60px;
-    background: #005bbb;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     z-index: 9999;
 }
 
-.navbar .logo {
-    color: white;
+/* INNER CONTAINER */
+.nav-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* LOGO */
+.nav-logo {
     font-size: 20px;
     font-weight: 600;
+    color: #1f2937;
     text-decoration: none;
 }
 
+/* MENU */
 .nav-menu {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 24px;
 }
 
 .nav-menu li a {
-    color: white;
     text-decoration: none;
+    color: #374151;
     font-size: 16px;
+    transition: color 0.2s ease;
+}
+
+.nav-menu li a:hover {
+    color: #111827;
 }
 
 /* HAMBURGER BUTTON */
 .nav-toggle {
     display: none;
+    flex-direction: column;
+    gap: 5px;
     background: none;
     border: none;
-    font-size: 28px;
-    color: white;
     cursor: pointer;
+}
+
+.nav-toggle span {
+    width: 24px;
+    height: 3px;
+    background: #374151;
+    border-radius: 3px;
 }
 
 /* MOBILE */
 @media (max-width: 768px) {
     .nav-toggle {
-        display: block;
+        display: flex;
     }
 
     .nav-menu {
         display: none;
         flex-direction: column;
-        background: #005bbb;
+        background: #ffffff;
         position: absolute;
         top: 60px;
         left: 0;
         right: 0;
         padding: 20px;
         gap: 15px;
+        border-bottom: 1px solid #e5e7eb;
     }
 
     .nav-menu.active {
@@ -658,7 +680,7 @@ bottom: 100px;
     }
 }
 
-/* Push page content down so navbar doesn't overlap */
+/* Push content down */
 body {
     padding-top: 70px;
 }
