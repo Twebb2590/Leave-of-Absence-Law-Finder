@@ -280,11 +280,12 @@ bottom: 100px;
     border: 1px solid #e5e7eb;
     border-radius: 12px;
     padding: 0;
-    margin: 30px auto 20px auto; /* centered + moved up */
+    margin: 10px auto 20px auto; /* moved up closer to welcome message */
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    max-width: 600px; /* your original width */
+    max-width: 600px;
     overflow: hidden;
 }
+
 
 /* Soft gradient header (neutral, professional) */
 .profile-header {
