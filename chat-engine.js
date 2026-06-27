@@ -121,16 +121,19 @@ function detectLeaveType(message) {
     const state = detectState(message);
     const leaveType = detectLeaveType(message);
 
-    // 2. Private user data
-    if (userEmail && kb.private?.users?.[userEmail]) {
-        const userData = kb.private.users[userEmail];
-        for (const [key, value] of Object.entries(userData)) {
-            if (message.includes(key.replace(/_/g, " "))) {
-                convoMemory.lastTopic = "private";
-                return `${key.replace(/_/g, " ")}: ${value}`;
-            }
+    // 2. Private user data (improved lookup)
+const email = userEmail?.trim()?.toLowerCase();
+const userRecord = kb?.private?.users?.[email];
+
+if (userRecord) {
+    for (const [key, value] of Object.entries(userRecord)) {
+        if (message.includes(key.replace(/_/g, " "))) {
+            convoMemory.lastTopic = "private";
+            return `${key.replace(/_/g, " ")}: ${value}`;
         }
     }
+}
+
 
     // 3. If user asks about state leave
     if (state && kb.public.states[state]) {
@@ -327,7 +330,8 @@ showSuggestions([
     chatInput.value = "";
 
     const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-    const email = loggedInUser?.email || null;
+    const email = loggedInUser?.email?.trim().toLowerCase() || null;
+
 
     showTyping();
 
