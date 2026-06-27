@@ -134,6 +134,37 @@ if (userRecord) {
     }
 }
 
+// 2B. "How much time can I take?" logic
+if (message.includes("how much time can i take")) {
+
+    // If user is logged in and has a leave type
+    if (userRecord?.leave_type) {
+        convoMemory.lastTopic = "duration";
+
+        if (userRecord.leave_type.toLowerCase() === "fmla") {
+            return "Under FMLA, eligible employees can take up to 12 weeks of job‑protected leave in a 12‑month period.";
+        }
+
+        if (userRecord.leave_type.toLowerCase().includes("ada")) {
+            return "ADA leave has no fixed duration. It must be reasonable and based on medical need.";
+        }
+    }
+
+    // If we know the leave type from detection
+    if (leaveType && kb.public.eligibility[leaveType]) {
+        convoMemory.lastTopic = "duration";
+        return `Most employees can take up to 12 weeks under ${leaveType.toUpperCase()}.`;
+    }
+
+    // If we know the state
+    if (state && kb.public.states[state]) {
+        convoMemory.lastTopic = "duration";
+        return `In ${state}, leave duration depends on the program:\n\n${Object.values(kb.public.states[state]).join(" ")}`;
+    }
+
+    // Default general answer
+    return "Most employees can take up to 12 weeks of job‑protected leave under FMLA. State programs may offer additional paid time depending on where you live.";
+}
 
     // 3. If user asks about state leave
     if (state && kb.public.states[state]) {
