@@ -155,9 +155,10 @@ const balanceKeywords = [
 ];
 
 if (balanceKeywords.some(k => message.includes(k))) {
-    if (userEmail && kb.private?.users?.[userEmail]) {
-        const u = kb.private.users[userEmail];
+    const email = userEmail?.trim()?.toLowerCase();
+    const u = kb?.private?.users?.[email];
 
+    if (u) {
         let response = "Here’s what I found about your leave balances:\n\n";
 
         if (u.leave_balance_hours !== undefined)
@@ -179,12 +180,15 @@ if (balanceKeywords.some(k => message.includes(k))) {
     return "I can check your leave balance once you're logged in.";
 }
 
-       if (convoMemory.lastTopic === "leave_balance") {
-    const u = kb.private?.users?.[userEmail];
+      if (convoMemory.lastTopic === "leave_balance") {
+    const email = userEmail?.trim()?.toLowerCase();
+    const u = kb?.private?.users?.[email];
+
     if (u) {
         return `You currently have ${u.leave_balance_hours} hours (${u.leave_balance_days} days) remaining.`;
     }
 }
+
 
     // 5. Federal laws
     for (const [key, value] of Object.entries(kb.public.federal)) {
