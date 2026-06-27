@@ -271,30 +271,44 @@ bottom: 100px;
   }
 }
 
+/* ------------------------------------------------------
+   DASHBOARD PAGE
+------------------------------------------------------ */
+
 .profile-summary {
     background: #ffffff;
     border: 1px solid #e5e7eb;
     border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 25px;
+    padding: 0;
+    margin: 40px auto 25px auto;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    max-width: 600px;
+    max-width: 650px;
+    overflow: hidden;
 }
 
-.profile-summary h2 {
-    margin: 0 0 16px 0;
+/* Gradient header */
+.profile-header {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.profile-header h2 {
+    margin: 0;
     font-size: 22px;
     font-weight: 600;
-    color: #1f2937;
 }
 
+/* Table styling */
 .profile-table {
     width: 100%;
     border-collapse: collapse;
+    margin: 0 auto;
 }
 
 .profile-table td {
-    padding: 10px 8px;
+    padding: 12px 10px;
     border-bottom: 1px solid #f3f4f6;
     font-size: 15px;
 }
@@ -312,6 +326,34 @@ bottom: 100px;
 .profile-table tr:last-child td {
     border-bottom: none;
 }
+
+/* Collapsible section */
+.details-toggle {
+    background: #f9fafb;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #4f46e5;
+    border-top: 1px solid #e5e7eb;
+    user-select: none;
+}
+
+.details-toggle:hover {
+    background: #f3f4f6;
+}
+
+.details-content {
+    display: none;
+    padding: 15px 16px;
+    border-top: 1px solid #e5e7eb;
+    background: #fafafa;
+}
+
+.details-content p {
+    margin: 6px 0;
+    font-size: 15px;
+}
+
 
 
 /* Search Section */
