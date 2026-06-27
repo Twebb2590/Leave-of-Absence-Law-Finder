@@ -130,21 +130,23 @@ async function loadProfileSummary() {
 
     container.innerHTML = `
         <h2>Your Leave Profile</h2>
-
-        <div class="row"><span class="label">Name:</span> <span class="value">${user.name}</span></div>
-        <div class="row"><span class="label">Leave Type:</span> <span class="value">${user.leave_type}</span></div>
-        <div class="row"><span class="label">Hours Available:</span> <span class="value">${user.hours_available}</span></div>
-        <div class="row"><span class="label">Hours Used:</span> <span class="value">${user.hours_used}</span></div>
-        <div class="row"><span class="label">FMLA Remaining:</span> <span class="value">${user.fmla_remaining}</span></div>
-        <div class="row"><span class="label">State PFML Remaining:</span> <span class="value">${user.state_pfml_remaining}</span></div>
-        <div class="row"><span class="label">Case Status:</span> <span class="value">${user.case_status}</span></div>
-        <div class="row"><span class="label">Next Step:</span> <span class="value">${user.next_step}</span></div>
-        <div class="row"><span class="label">Case Manager:</span> <span class="value">${user.case_manager}</span></div>
+        <table class="profile-table">
+            <tr><td class="label">Name</td><td class="value">${user.name}</td></tr>
+            <tr><td class="label">Leave Type</td><td class="value">${user.leave_type}</td></tr>
+            <tr><td class="label">Hours Available</td><td class="value">${user.hours_available}</td></tr>
+            <tr><td class="label">Hours Used</td><td class="value">${user.hours_used}</td></tr>
+            <tr><td class="label">FMLA Remaining</td><td class="value">${user.fmla_remaining}</td></tr>
+            <tr><td class="label">State PFML Remaining</td><td class="value">${user.state_pfml_remaining}</td></tr>
+            <tr><td class="label">Case Status</td><td class="value">${user.case_status}</td></tr>
+            <tr><td class="label">Next Step</td><td class="value">${user.next_step}</td></tr>
+            <tr><td class="label">Case Manager</td><td class="value">${user.case_manager}</td></tr>
+        </table>
     `;
 }
 
 loadProfileSummary();
 </script>
+
 
     
   </body>
