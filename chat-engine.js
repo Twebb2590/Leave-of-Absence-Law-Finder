@@ -1,9 +1,44 @@
 let convoMemory = {
-    lastState: null,
-    lastLeaveType: null,
-    lastTopic: null,
-    lastQuestion: null
+    state: null,
+    leaveType: null,
+    lastTopic: null
 };
+
+// Only store memory when the user explicitly mentions something
+function updateMemory({ state, leaveType, topic }) {
+    if (state) convoMemory.state = state;
+    if (leaveType) convoMemory.leaveType = leaveType;
+    if (topic) convoMemory.lastTopic = topic;
+}
+
+// Only detect state when the user actually types a state
+function detectState(message, kb) {
+    const states = Object.keys(kb.public.states);
+    const msg = message.toLowerCase();
+
+    for (const st of states) {
+        if (msg.includes(st.toLowerCase())) {
+            updateMemory({ state: st });
+            return st;
+        }
+    }
+    return null;
+}
+
+// Only detect leave type when explicitly mentioned
+function detectLeaveType(message) {
+    const types = ["fmla", "pfml", "pregnancy", "sick", "disability"];
+    const msg = message.toLowerCase();
+
+    for (const t of types) {
+        if (msg.includes(t)) {
+            updateMemory({ leaveType: t });
+            return t;
+        }
+    }
+    return null;
+}
+
 
 
 document.addEventListener("DOMContentLoaded", async () => {
