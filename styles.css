@@ -274,30 +274,43 @@ bottom: 100px;
 .profile-summary {
     background: #ffffff;
     border: 1px solid #e5e7eb;
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    max-width: 600px;
 }
 
 .profile-summary h2 {
-    margin: 0 0 12px 0;
-    font-size: 20px;
+    margin: 0 0 16px 0;
+    font-size: 22px;
     font-weight: 600;
+    color: #1f2937;
 }
 
-.profile-summary .row {
-    margin-bottom: 8px;
+.profile-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.profile-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #f3f4f6;
     font-size: 15px;
 }
 
-.profile-summary .label {
+.profile-table td.label {
     font-weight: 600;
     color: #374151;
+    width: 40%;
 }
 
-.profile-summary .value {
+.profile-table td.value {
     color: #111827;
+}
+
+.profile-table tr:last-child td {
+    border-bottom: none;
 }
 
 
