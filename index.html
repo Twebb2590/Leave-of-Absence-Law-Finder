@@ -72,13 +72,18 @@
 
   <!-- Scripts -->
     <script>
-  const navToggle = document.getElementById("navToggle");
-  const navMenu = document.getElementById("navMenu");
+document.addEventListener("DOMContentLoaded", () => {
+    const navToggle = document.getElementById("navToggle");
+    const navMenu = document.getElementById("navMenu");
 
-  navToggle.addEventListener("click", () => {
-    navMenu.classList.toggle("active");
-  });
+    if (navToggle && navMenu) {
+        navToggle.addEventListener("click", () => {
+            navMenu.classList.toggle("active");
+        });
+    }
+});
 </script>
+
   <script type="module" src="data-loader.js"></script>
   <script type="module" src="wizard.js"></script>
   <script type="module" src="script.js"></script>
