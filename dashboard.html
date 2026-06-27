@@ -105,5 +105,47 @@
 
     <!-- CHAT ENGINE -->
     <script type="module" src="chat-engine.js"></script>
+
+<script>
+async function loadProfileSummary() {
+    const container = document.getElementById("profileSummary");
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+    if (!loggedInUser) {
+        container.innerHTML = "<p>You are not logged in.</p>";
+        return;
+    }
+
+    const email = loggedInUser.email.trim().toLowerCase();
+
+    const res = await fetch("knowledgeBase.json");
+    const kb = await res.json();
+
+    const user = kb.private?.users?.[email];
+
+    if (!user) {
+        container.innerHTML = "<p>No profile data found.</p>";
+        return;
+    }
+
+    container.innerHTML = `
+        <h2>Your Leave Profile</h2>
+
+        <div class="row"><span class="label">Name:</span> <span class="value">${user.name}</span></div>
+        <div class="row"><span class="label">Leave Type:</span> <span class="value">${user.leave_type}</span></div>
+        <div class="row"><span class="label">Hours Available:</span> <span class="value">${user.hours_available}</span></div>
+        <div class="row"><span class="label">Hours Used:</span> <span class="value">${user.hours_used}</span></div>
+        <div class="row"><span class="label">FMLA Remaining:</span> <span class="value">${user.fmla_remaining}</span></div>
+        <div class="row"><span class="label">State PFML Remaining:</span> <span class="value">${user.state_pfml_remaining}</span></div>
+        <div class="row"><span class="label">Case Status:</span> <span class="value">${user.case_status}</span></div>
+        <div class="row"><span class="label">Next Step:</span> <span class="value">${user.next_step}</span></div>
+        <div class="row"><span class="label">Case Manager:</span> <span class="value">${user.case_manager}</span></div>
+    `;
+}
+
+loadProfileSummary();
+</script>
+
+    
   </body>
 </html>
