@@ -19,7 +19,10 @@
       <h2 id="welcome"></h2>
     </main>
 
-<div id="profileSummary" class="profile-summary"></div>
+<div id="profileSummary" class="profile-summary">
+    <!-- Content will be injected by JS -->
+</div>
+
 
 
     
@@ -129,7 +132,10 @@ async function loadProfileSummary() {
     }
 
     container.innerHTML = `
-        <h2>Your Leave Profile</h2>
+        <div class="profile-header">
+            <h2>Your Leave Profile</h2>
+        </div>
+
         <table class="profile-table">
             <tr><td class="label">Name</td><td class="value">${user.name}</td></tr>
             <tr><td class="label">Leave Type</td><td class="value">${user.leave_type}</td></tr>
@@ -137,15 +143,36 @@ async function loadProfileSummary() {
             <tr><td class="label">Hours Used</td><td class="value">${user.hours_used}</td></tr>
             <tr><td class="label">FMLA Remaining</td><td class="value">${user.fmla_remaining}</td></tr>
             <tr><td class="label">State PFML Remaining</td><td class="value">${user.state_pfml_remaining}</td></tr>
-            <tr><td class="label">Case Status</td><td class="value">${user.case_status}</td></tr>
-            <tr><td class="label">Next Step</td><td class="value">${user.next_step}</td></tr>
-            <tr><td class="label">Case Manager</td><td class="value">${user.case_manager}</td></tr>
         </table>
+
+        <div class="details-toggle" onclick="toggleDetails()">
+            More Details ▼
+        </div>
+
+        <div id="detailsContent" class="details-content">
+            <p><strong>Case Status:</strong> ${user.case_status}</p>
+            <p><strong>Next Step:</strong> ${user.next_step}</p>
+            <p><strong>Case Manager:</strong> ${user.case_manager}</p>
+        </div>
     `;
+}
+
+function toggleDetails() {
+    const section = document.getElementById("detailsContent");
+    const toggle = document.querySelector(".details-toggle");
+
+    if (section.style.display === "block") {
+        section.style.display = "none";
+        toggle.innerHTML = "More Details ▼";
+    } else {
+        section.style.display = "block";
+        toggle.innerHTML = "More Details ▲";
+    }
 }
 
 loadProfileSummary();
 </script>
+
 
 
     
