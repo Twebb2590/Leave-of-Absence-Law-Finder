@@ -100,8 +100,13 @@ document.getElementById("compareBtn").addEventListener("click", () => {
     return;
   }
 
-  const lawsA = states[a];
-  const lawsB = states[b];
+  const stateAData = states.find(s => s.code === a);
+  const stateBData = states.find(s => s.code === b);
+
+  // Now you can compare them
+  console.log(stateAData, stateBData);
+});
+
 
   // Build comparison rows dynamically
   const categories = Object.keys(lawsA);
