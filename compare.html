@@ -100,15 +100,18 @@ document.getElementById("compareBtn").addEventListener("click", () => {
     return;
   }
 
-  const stateAData = states[a];
-  const stateBData = states[b];
+  // Find the selected states by code
+  const stateAData = states.find(s => s.code === a);
+  const stateBData = states.find(s => s.code === b);
 
-  console.log(stateAData, stateBData);
-});
+  if (!stateAData || !stateBData) {
+    output.innerHTML = "<p>State data not found.</p>";
+    return;
+  }
 
+  const lawsA = stateAData.laws;
+  const lawsB = stateBData.laws;
 
-
-  // Build comparison rows dynamically
   const categories = Object.keys(lawsA);
 
   const cardA = categories.map(cat => `
@@ -128,17 +131,18 @@ document.getElementById("compareBtn").addEventListener("click", () => {
   output.innerHTML = `
     <div class="comparison-grid">
       <div class="compare-card">
-        <h3>${a}</h3>
+        <h3>${stateAData.name}</h3>
         ${cardA}
       </div>
 
       <div class="compare-card">
-        <h3>${b}</h3>
+        <h3>${stateBData.name}</h3>
         ${cardB}
       </div>
     </div>
   `;
 });
+
 
   </script>
 
