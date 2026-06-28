@@ -58,13 +58,18 @@
   </footer>
 
   <script>
-  const navToggle = document.getElementById("navToggle");
-  const navMenu = document.getElementById("navMenu");
+document.addEventListener("DOMContentLoaded", () => {
+    const navToggle = document.getElementById("navToggle");
+    const navMenu = document.getElementById("navMenu");
 
-  navToggle.addEventListener("click", () => {
-    navMenu.classList.toggle("active");
-  });
+    if (navToggle && navMenu) {
+        navToggle.addEventListener("click", () => {
+            navMenu.classList.toggle("active");
+        });
+    }
+});
 </script>
+ 
   <script>
   const authLink = document.getElementById("authLink");
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
