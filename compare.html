@@ -154,26 +154,36 @@ document.getElementById("compareBtn").addEventListener("click", async () => {
   `).join("");
 
   output.innerHTML = `
-   <div class="comparison-grid">
+  <div class="comparison-grid">
 
-      <div class="compare-card">
-        <h3>${stateAData.name}</h3>
-        <p><strong>Name:</strong> ${lawsA.name}</p>
-        <p><strong>Description:</strong> ${lawsA.description}</p>
-        <p><strong>URL:</strong> <a href="${lawsA.official_url}" target="_blank">${lawsA.official_url}</a></p>
-      </div>
-
-      <div class="compare-card">
-        <h3>${stateBData.name}</h3>
-        <p><strong>Name:</strong> ${lawsB.name}</p>
-        <p><strong>Description:</strong> ${lawsB.description}</p>
-        <p><strong>URL:</strong> <a href="${lawsB.official_url}" target="_blank">${lawsB.official_url}</a></p>
-      </div>
-
+    <div class="compare-card">
+      <h3>${stateAData.name}</h3>
+      ${lawsA.laws.map(law => `
+        <div class="law-block">
+          <p><strong>Name:</strong> ${law.name}</p>
+          <p><strong>Description:</strong> ${law.description}</p>
+          <p><strong>Official URL:</strong> 
+            <a href="${law.official_url}" target="_blank">${law.official_url}</a>
+          </p>
+        </div>
+      `).join("")}
     </div>
-  `;
-});
 
+    <div class="compare-card">
+      <h3>${stateBData.name}</h3>
+      ${lawsB.laws.map(law => `
+        <div class="law-block">
+          <p><strong>Name:</strong> ${law.name}</p>
+          <p><strong>Description:</strong> ${law.description}</p>
+          <p><strong>Official URL:</strong> 
+            <a href="${law.official_url}" target="_blank">${law.official_url}</a>
+          </p>
+        </div>
+      `).join("")}
+    </div>
+
+  </div>
+`;
   </script>
 
 
