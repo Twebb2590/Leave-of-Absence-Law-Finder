@@ -154,21 +154,25 @@ document.getElementById("compareBtn").addEventListener("click", async () => {
   `).join("");
 
   output.innerHTML = `
-    <div class="comparison-grid">
+   <div class="comparison-grid">
+
       <div class="compare-card">
         <h3>${stateAData.name}</h3>
-        ${cardA}
+        <p><strong>Name:</strong> ${lawsA.name}</p>
+        <p><strong>Description:</strong> ${lawsA.description}</p>
+        <p><strong>URL:</strong> <a href="${lawsA.url}" target="_blank">${lawsA.url}</a></p>
       </div>
 
       <div class="compare-card">
         <h3>${stateBData.name}</h3>
-        ${cardB}
+        <p><strong>Name:</strong> ${lawsB.name}</p>
+        <p><strong>Description:</strong> ${lawsB.description}</p>
+        <p><strong>URL:</strong> <a href="${lawsB.url}" target="_blank">${lawsB.url}</a></p>
       </div>
+
     </div>
   `;
 });
-
-
 
   </script>
 
