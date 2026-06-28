@@ -730,23 +730,40 @@ body {
 }
 
 .compare-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
+  display: grid;
+  grid-template-columns: 1fr 120px 120px;
+  align-items: center;
+  padding: 14px 18px;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  transition: background 0.2s ease, transform 0.15s ease;
 }
 
-.compare-row:last-child {
-    border-bottom: none;
+.compare-row:hover {
+  background: #f9fafb;
+  transform: translateY(-1px);
 }
 
-.compare-label {
-    font-weight: bold;
+.compare-row-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
 }
 
 .compare-value {
-    text-align: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 6px 10px;
 }
+
 
 .yes {
     color: #2e8b57;
