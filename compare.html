@@ -78,11 +78,12 @@ const stateASelect = document.getElementById("stateA");
 const stateBSelect = document.getElementById("stateB");
 const output = document.getElementById("comparisonOutput");
 
-// Populate dropdowns
-Object.keys(states).forEach(state => {
-  stateASelect.innerHTML += `<option value="${state}">${state}</option>`;
-  stateBSelect.innerHTML += `<option value="${state}">${state}</option>`;
+// Populate dropdowns with state names
+states.forEach(state => {
+  stateASelect.innerHTML += `<option value="${state.code}">${state.name}</option>`;
+  stateBSelect.innerHTML += `<option value="${state.code}">${state.name}</option>`;
 });
+
 
 function formatValue(value) {
   if (value === true) return `<span class="yes">✔ Yes</span>`;
