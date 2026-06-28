@@ -752,37 +752,27 @@ body {
   color: #111827;
 }
 
-.compare-label {
-  font-size: 15px;
-  font-weight: 600;
-  color: #111827;
-}
-
 .compare-value {
-  font-size: 15px;
-  font-weight: 600;
-  color: #2563eb;
-  background: #f3f4f6;
-  padding: 6px 10px;
-  border-radius: 8px;
-  text-align: center;
-}
-
-.compare-button {
-  padding: 10px 16px;
-  background: #2563eb;
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 14px;
   font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.15s ease;
+  color: #111827;
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 6px 10px;
 }
 
-.compare-button:hover {
-  background: #1e4fc9;
-  transform: translateY(-1px);
+
+.yes {
+    color: #2e8b57;
+    font-weight: bold;
+}
+
+.no {
+    color: #c0392b;
+    font-weight: bold;
 }
 
 @media (max-width: 768px) {
