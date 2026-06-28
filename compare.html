@@ -78,6 +78,11 @@ const stateASelect = document.getElementById("stateA");
 const stateBSelect = document.getElementById("stateB");
 const output = document.getElementById("comparisonOutput");
 
+async function loadStateLaws(code) {
+  const response = await fetch(`./states/${code}/laws.json`);
+  return await response.json();
+}
+    
 // Populate dropdowns with state names
 states.forEach(state => {
   stateASelect.innerHTML += `<option value="${state.code}">${state.name}</option>`;
@@ -91,7 +96,7 @@ function formatValue(value) {
   return value;
 }
 
-document.getElementById("compareBtn").addEventListener("click", () => {
+document.getElementById("compareBtn").addEventListener("click", async () => {
   const a = stateASelect.value;
   const b = stateBSelect.value;
 
@@ -100,17 +105,12 @@ document.getElementById("compareBtn").addEventListener("click", () => {
     return;
   }
 
-  // Find the selected states by code
+  // Load laws from your folders
+  const lawsA = await loadStateLaws(a);
+  const lawsB = await loadStateLaws(b);
+
   const stateAData = states.find(s => s.code === a);
   const stateBData = states.find(s => s.code === b);
-
-  if (!stateAData || !stateBData) {
-    output.innerHTML = "<p>State data not found.</p>";
-    return;
-  }
-
-  const lawsA = stateAData.laws;
-  const lawsB = stateBData.laws;
 
   const categories = Object.keys(lawsA);
 
@@ -142,6 +142,7 @@ document.getElementById("compareBtn").addEventListener("click", () => {
     </div>
   `;
 });
+
 
 
   </script>
