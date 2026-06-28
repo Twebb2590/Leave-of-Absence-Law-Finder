@@ -24,7 +24,7 @@
 
         <ul id="navMenu" class="nav-menu">
             <li><a href="about.html">About</a></li>
-            <li><a href="search.html">Search</a></li>
+            <li><a href="index.html">Chat</a></li>
             <li><a href="compare.html">Compare</a></li>
             <li><a href="login.html">Login</a></li>
         </ul>
@@ -56,6 +56,19 @@
     <p>© 2026 Leave of Absence Law Finder</p>
   </footer>
 
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const navToggle = document.getElementById("navToggle");
+    const navMenu = document.getElementById("navMenu");
+
+    if (navToggle && navMenu) {
+        navToggle.addEventListener("click", () => {
+            navMenu.classList.toggle("active");
+        });
+    }
+});
+</script>
+ 
   <!-- Load your existing data + logic -->
   <script type="module" src="data-loader.js"></script>
   <script type="module">
