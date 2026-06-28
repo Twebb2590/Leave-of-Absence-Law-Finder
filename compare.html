@@ -90,11 +90,20 @@ states.forEach(state => {
 });
 
 
-function formatValue(value) {
+ffunction formatValue(value) {
   if (value === true) return `<span class="yes">✔ Yes</span>`;
   if (value === false) return `<span class="no">✘ No</span>`;
+
+  // If it's an object, pretty-print it
+  if (typeof value === "object" && value !== null) {
+    return Object.entries(value)
+      .map(([key, val]) => `<div><strong>${key}:</strong> ${val}</div>`)
+      .join("");
+  }
+
   return value;
 }
+
 
 document.getElementById("compareBtn").addEventListener("click", async () => {
   const a = stateASelect.value;
